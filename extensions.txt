@@ -1,0 +1,15 @@
+﻿brunomnsilva.mingw-c-configuration
+docter60.vscode-terminal-for-ubuntu
+github.codespaces
+github.copilot-chat
+ms-python.debugpy
+ms-python.python
+ms-python.vscode-pylance
+ms-python.vscode-python-envs
+ms-vscode.cmake-tools
+ms-vscode.cpp-devtools
+ms-vscode.cpptools
+ms-vscode.cpptools-extension-pack
+ms-vscode.cpptools-themes
+ritwickdey.liveserver
+tonybaloney.vscode-pets

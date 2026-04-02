@@ -1,0 +1,102 @@
+[debug] [2026-04-01T20:25:31.641Z] ----------------------------------------------------------------------
+[debug] [2026-04-01T20:25:31.647Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\ASUS\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2026-04-01T20:25:31.648Z] CLI Version:   15.12.0
+[debug] [2026-04-01T20:25:31.648Z] Platform:      win32
+[debug] [2026-04-01T20:25:31.649Z] Node Version:  v24.13.0
+[debug] [2026-04-01T20:25:31.649Z] Time:          Thu Apr 02 2026 01:55:31 GMT+0530 (India Standard Time)
+[debug] [2026-04-01T20:25:31.649Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\ASUS\Desktop\Smart_Inventory_AI_System
+
+[debug] [2026-04-01T20:25:48.694Z] ExitPromptError: User force closed the prompt with SIGINT
+    at Interface.sigint (C:\Users\ASUS\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\@inquirer\core\dist\commonjs\lib\create-prompt.js:101:37)
+    at Interface.emit (node:events:508:28)
+    at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1327:18)
+    at ReadStream.onkeypress (node:internal/readline/interface:284:20)
+    at ReadStream.emit (node:events:520:35)
+    at emitKeys (node:internal/readline/utils:371:14)
+    at emitKeys.next (<anonymous>)
+    at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+    at ReadStream.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-04-02T09:24:23.132Z] ----------------------------------------------------------------------
+[debug] [2026-04-02T09:24:23.135Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\ASUS\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2026-04-02T09:24:23.136Z] CLI Version:   15.12.0
+[debug] [2026-04-02T09:24:23.136Z] Platform:      win32
+[debug] [2026-04-02T09:24:23.136Z] Node Version:  v24.13.0
+[debug] [2026-04-02T09:24:23.136Z] Time:          Thu Apr 02 2026 14:54:23 GMT+0530 (India Standard Time)
+[debug] [2026-04-02T09:24:23.136Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\ASUS\Desktop\Smart_Inventory_AI_System
+
+[debug] [2026-04-02T10:50:26.973Z] ----------------------------------------------------------------------
+[debug] [2026-04-02T10:50:26.979Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\ASUS\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2026-04-02T10:50:26.979Z] CLI Version:   15.12.0
+[debug] [2026-04-02T10:50:26.979Z] Platform:      win32
+[debug] [2026-04-02T10:50:26.979Z] Node Version:  v24.13.0
+[debug] [2026-04-02T10:50:26.980Z] Time:          Thu Apr 02 2026 16:20:26 GMT+0530 (India Standard Time)
+[debug] [2026-04-02T10:50:26.980Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\ASUS\Desktop\Smart_Inventory_AI_System
+
+[debug] [2026-04-02T10:50:53.885Z] ----------------------------------------------------------------------
+[debug] [2026-04-02T10:50:53.890Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\ASUS\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2026-04-02T10:50:53.890Z] CLI Version:   15.12.0
+[debug] [2026-04-02T10:50:53.890Z] Platform:      win32
+[debug] [2026-04-02T10:50:53.891Z] Node Version:  v24.13.0
+[debug] [2026-04-02T10:50:53.891Z] Time:          Thu Apr 02 2026 16:20:53 GMT+0530 (India Standard Time)
+[debug] [2026-04-02T10:50:53.891Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\ASUS\Desktop\Smart_Inventory_AI_System
+
+[debug] [2026-04-02T10:53:23.208Z] ExitPromptError: User force closed the prompt with SIGINT
+    at Interface.sigint (C:\Users\ASUS\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\@inquirer\core\dist\commonjs\lib\create-prompt.js:101:37)
+    at Interface.emit (node:events:508:28)
+    at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1327:18)
+    at ReadStream.onkeypress (node:internal/readline/interface:284:20)
+    at ReadStream.emit (node:events:520:35)
+    at emitKeys (node:internal/readline/utils:371:14)
+    at emitKeys.next (<anonymous>)
+    at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+    at ReadStream.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+[error] 
+[error] Error: An unexpected error has occurred.

@@ -1,0 +1,19 @@
+{
+  "python.analysis.extraPaths": [
+    "./Backend/backend",
+    "./Demand-Forecasting-System/Backend/backend",
+    "./Backend/venv/Lib/site-packages",
+    "./Demand-Forecasting-System/Backend/venv/Lib/site-packages",
+    "./AI-Model"
+  ],
+  "python.autoComplete.extraPaths": [
+    "./Backend/backend",
+    "./Demand-Forecasting-System/Backend/backend",
+    "./Backend/venv/Lib/site-packages",
+    "./Demand-Forecasting-System/Backend/venv/Lib/site-packages",
+    "./AI-Model"
+  ],
+  "python.defaultInterpreterPath": "Backend/venv/Scripts/python.exe",
+  "python.venvPath": "Backend",
+  "python.terminal.activateEnvironment": true
+}

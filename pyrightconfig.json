@@ -1,0 +1,8 @@
+{
+  "extraPaths": [
+    "Backend/backend",
+    "Demand-Forecasting-System/Backend/backend",
+    "Backend/venv/Lib/site-packages",
+    "Demand-Forecasting-System/Backend/venv/Lib/site-packages"
+  ]
+}

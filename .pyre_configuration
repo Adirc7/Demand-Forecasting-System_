@@ -1,0 +1,14 @@
+{
+  "source_directories": [
+    "."
+  ],
+  "search_path": [
+    "Backend/venv/Lib/site-packages",
+    "Demand-Forecasting-System/Backend/venv/Lib/site-packages",
+    "Backend/backend",
+    "Demand-Forecasting-System/Backend/backend"
+  ],
+  "exclude": [
+    ".*/venv/.*"
+  ]
+}
