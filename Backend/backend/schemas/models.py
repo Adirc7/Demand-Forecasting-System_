@@ -17,3 +17,24 @@ class ProductUpdate(BaseModel):
     unit_price: Optional[float] = None
     current_stock: Optional[int] = None
     service_level: Optional[float] = None
+
+class SaleCreate(BaseModel):
+    sku: str
+    quantity: int
+    amount: Optional[float] = None
+    category: Optional[str] = ""
+    force_emergency: Optional[bool] = False
+    date: str
+
+class SaleUpdate(BaseModel):
+    quantity: int
+    force_emergency: Optional[bool] = False
+
+class InventoryUpdate(BaseModel):
+    current_stock: Optional[int] = None
+    unit_price: Optional[float] = None
+    acknowledged: Optional[bool] = None
+
+class OverrideUpdate(BaseModel):
+    reorder_point: int
+

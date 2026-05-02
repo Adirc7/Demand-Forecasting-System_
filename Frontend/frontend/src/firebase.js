@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCEZuCS0F8MBGzBM5rQDTeTc8D7QJkGv9M",
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     authDomain: "demand-forecasting-syste-7098b.firebaseapp.com",
     projectId: "demand-forecasting-syste-7098b",
     storageBucket: "demand-forecasting-syste-7098b.firebasestorage.app",

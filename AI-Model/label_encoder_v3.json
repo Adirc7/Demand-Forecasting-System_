@@ -1,22 +1,8 @@
 {
   "classes": [
-    "Automotive",
-    "Beauty_Health",
-    "Electronics",
-    "General",
-    "Health & Supplements",
-    "Kitchen & Home",
-    "Outdoor",
-    "Tools"
+    "Generic"
   ],
   "mapping": {
-    "Automotive": 0,
-    "Beauty_Health": 1,
-    "Electronics": 2,
-    "General": 3,
-    "Health & Supplements": 4,
-    "Kitchen & Home": 5,
-    "Outdoor": 6,
-    "Tools": 7
+    "Generic": 0
   }
 }

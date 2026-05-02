@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { validateEmail, validatePassword } from "../utils/validation";
 
 const CSS = `
 @keyframes scanline{0%{transform:translateY(-100vh)}100%{transform:translateY(100vh)}}
@@ -25,7 +26,7 @@ body,html{height:100%;overflow:hidden;background:#050508;}
   width:100vw;height:100vh;
   background:#050508;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Share Tech Mono',monospace;
+  font-family:'Inter',sans-serif;
   position:relative;overflow:hidden;
 }
 
@@ -82,7 +83,7 @@ canvas{position:absolute;inset:0;z-index:0}
 }
 
 /* Welcome Screen Elements */
-.welcome-brand{font-family:'Orbitron',monospace;font-weight:900;font-size:13px;color:rgba(249,115,22,.5);letter-spacing:6px;text-transform:uppercase;margin-bottom:40px;animation:fadeInDown .6s ease .2s both}
+.welcome-brand{font-family:'Outfit',monospace;font-weight:900;font-size:13px;color:rgba(249,115,22,.5);letter-spacing:6px;text-transform:uppercase;margin-bottom:40px;animation:fadeInDown .6s ease .2s both}
 .admin-icon-wrap{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:36px;cursor:pointer;animation:fadeInUp .7s ease .4s both;}
 .orbit-ring{position:absolute;width:180px;height:180px;border:1px dashed rgba(249,115,22,.2);border-radius:50%;animation:orbitRing 12s linear infinite;}
 .orbit-ring-2{position:absolute;width:220px;height:220px;border:1px dashed rgba(249,115,22,.1);border-radius:50%;animation:orbitRing 20s linear infinite reverse;}
@@ -104,9 +105,9 @@ canvas{position:absolute;inset:0;z-index:0}
 .admin-hex-btn:hover{transform:scale(1.06)}
 
 .admin-icon-svg{font-size:40px;margin-bottom:4px;filter:drop-shadow(0 0 10px rgba(249,115,22,.7))}
-.admin-icon-label{font-family:'Orbitron',monospace;font-size:7px;color:#f97316;letter-spacing:2px}
+.admin-icon-label{font-family:'Outfit',monospace;font-size:7px;color:#f97316;letter-spacing:2px}
 
-.welcome-title{font-family:'Orbitron',monospace;font-weight:900;color:#fff;text-align:center;margin-bottom:10px;animation:fadeInUp .6s ease .6s both;}
+.welcome-title{font-family:'Outfit',monospace;font-weight:900;color:#fff;text-align:center;margin-bottom:10px;animation:fadeInUp .6s ease .6s both;}
 .welcome-word{font-size:clamp(36px,5vw,56px); letter-spacing:12px; line-height:1.2; text-shadow:0 0 40px rgba(249,115,22,.6);}
 .to-the-word{font-size:clamp(12px,1.5vw,14px); color:rgba(226,232,240,.4); letter-spacing:6px; font-weight:700; margin-bottom:8px;}
 .portal-word{font-size:clamp(18px,3vw,28px); letter-spacing:4px; text-shadow:0 0 30px rgba(249,115,22,.2);}
@@ -115,7 +116,7 @@ canvas{position:absolute;inset:0;z-index:0}
 .welcome-sub em{color:rgba(249,115,22,.6);font-style:normal}
 
 .modules-row{display:flex;gap:12px;margin-bottom:40px;animation:fadeInUp .6s ease .8s both}
-.mod-chip{font-family:'Orbitron',monospace;font-size:8px;letter-spacing:2px;color:rgba(226,232,240,.3);border:1px solid rgba(249,115,22,.15);padding:6px 14px;border-radius:2px;display:flex;align-items:center;gap:6px;}
+.mod-chip{font-family:'Outfit',monospace;font-size:8px;letter-spacing:2px;color:rgba(226,232,240,.3);border:1px solid rgba(249,115,22,.15);padding:6px 14px;border-radius:2px;display:flex;align-items:center;gap:6px;}
 .mod-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;box-shadow:0 0 5px #22c55e;}
 
 .arrow-hint{
@@ -131,7 +132,7 @@ canvas{position:absolute;inset:0;z-index:0}
 .back-btn{
   position:absolute;top:28px;left:40px;
   background:transparent;border:1px solid rgba(249,115,22,.3);
-  color:#f97316;font-family:'Orbitron',monospace;font-size:9px;letter-spacing:2px;
+  color:#f97316;font-family:'Outfit',monospace;font-size:9px;letter-spacing:2px;
   padding:8px 18px;cursor:pointer;border-radius:2px;z-index:20;
   transition:all .3s;display:flex;align-items:center;gap:8px;
 }
@@ -184,7 +185,7 @@ canvas{position:absolute;inset:0;z-index:0}
   box-shadow:0 0 30px rgba(249,115,22,.6),0 0 60px rgba(249,115,22,.2);
 }
 .logo-title{
-  font-family:'Orbitron',monospace;font-weight:900;font-size:28px;
+  font-family:'Outfit',monospace;font-weight:900;font-size:28px;
   color:#f97316;letter-spacing:4px;
   animation:logoFlicker 6s infinite;
 }
@@ -206,7 +207,7 @@ canvas{position:absolute;inset:0;z-index:0}
   border-radius:2px;
   padding:13px 16px 13px 40px;
   color:#e2e8f0;
-  font-family:'Share Tech Mono',monospace;
+  font-family:'Inter',sans-serif;
   font-size:13px;letter-spacing:1px;
   outline:none;
   transition:all .3s;
@@ -223,7 +224,7 @@ canvas{position:absolute;inset:0;z-index:0}
   border:none;
   padding:15px;
   color:#fff;
-  font-family:'Orbitron',monospace;font-weight:700;
+  font-family:'Outfit',monospace;font-weight:700;
   font-size:12px;letter-spacing:3px;
   text-transform:uppercase;
   cursor:pointer;
@@ -242,8 +243,8 @@ canvas{position:absolute;inset:0;z-index:0}
 .card-footer{margin-top:20px;text-align:center;font-size:9px;color:rgba(226,232,240,.15);letter-spacing:2px}
 .cursor{display:inline-block;animation:blinkCursor 1s step-end infinite}
 
-.success-msg{background:rgba(34,197,94,.1);color:#22c55e;padding:12px;border-radius:4px;font-size:10px;font-family:'Orbitron',monospace;letter-spacing:1px;border:1px solid rgba(34,197,94,.3);margin-bottom:16px;text-align:center;}
-.forgot-link{font-family:'Share Tech Mono',monospace;font-size:10px;color:rgba(249,115,22,.6);text-decoration:none;cursor:pointer;float:right;margin-top:6px;transition:all .2s;text-transform:uppercase;letter-spacing:2px;}
+.success-msg{background:rgba(34,197,94,.1);color:#22c55e;padding:12px;border-radius:4px;font-size:10px;font-family:'Outfit',monospace;letter-spacing:1px;border:1px solid rgba(34,197,94,.3);margin-bottom:16px;text-align:center;}
+.forgot-link{font-family:'Inter',sans-serif;font-size:10px;color:rgba(249,115,22,.6);text-decoration:none;cursor:pointer;float:right;margin-top:6px;transition:all .2s;text-transform:uppercase;letter-spacing:2px;}
 .forgot-link:hover{color:#f97316;text-shadow:0 0 10px rgba(249,115,22,.4);}
 
 /* Version tag */
@@ -253,7 +254,7 @@ canvas{position:absolute;inset:0;z-index:0}
   border:1px solid rgba(249,115,22,.3);
   color:#f97316;font-size:8px;letter-spacing:2px;
   padding:2px 10px;border-radius:2px;
-  font-family:'Orbitron',monospace;
+  font-family:'Outfit',monospace;
 }
 `;
 
@@ -261,7 +262,9 @@ function useCanvas() {
   const ref = useRef(null);
   useEffect(() => {
     const canvas = ref.current;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
+    if (!ctx) return;
     let W = canvas.width = window.innerWidth;
     let H = canvas.height = window.innerHeight;
     let raf;
@@ -354,7 +357,7 @@ function useCanvas() {
           ctx.save();
           ctx.globalAlpha = s.alpha * fade;
           ctx.fillStyle = i === 0 ? "#f97316" : "rgba(249,115,22,0.8)";
-          ctx.font = `10px 'Share Tech Mono'`;
+          ctx.font = `10px 'Inter'`;
           const ci = Math.floor((t * 0.05 + i) % s.chars.length);
           ctx.fillText(s.chars[ci], x, fy);
           ctx.restore();
@@ -452,11 +455,13 @@ export default function Login() {
     setErr("");
     setMsg("");
 
+    const emailErr = validateEmail(email);
+    if (emailErr) {
+      setErr(emailErr);
+      return;
+    }
+
     if (isForgotPass) {
-      if (!email) {
-        setErr("Please enter your email address.");
-        return;
-      }
       try {
         await resetPassword(email);
         setMsg("Password reset link sent! Check your inbox.");
@@ -467,9 +472,15 @@ export default function Login() {
       return;
     }
 
+    const passErr = validatePassword(pass);
+    if (passErr) {
+      setErr(passErr);
+      return;
+    }
+
     try {
       await login(email, pass);
-      navigate('/inventory');
+      navigate('/dashboard');
     } catch (error) {
       if (error.code === 'auth/invalid-credential' || (error.message && error.message.includes('auth/invalid-credential'))) {
         setErr("Invalid Credentials");
@@ -486,24 +497,8 @@ export default function Login() {
         <canvas ref={canvasRef} />
 
         {/* Persistent UI Elements (always show) */}
-        <div className="scanline-sweep" />
-        <div className="hud-tl" /><div className="hud-tr" />
-        <div className="hud-bl" /><div className="hud-br" />
 
-        <div className="ticker-left">
-          <div className="ticker-inner">
-            {[...tickerData, ...tickerData].map((d, i) => (
-              <div key={i} style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}>{d}</div>
-            ))}
-          </div>
-        </div>
-        <div className="ticker-right">
-          <div className="ticker-inner" style={{ animationDelay: "-10s" }}>
-            {[...tickerData, ...tickerData].reverse().map((d, i) => (
-              <div key={i} style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}>{d}</div>
-            ))}
-          </div>
-        </div>
+
 
         <div className="status-line">
           {[
@@ -570,7 +565,7 @@ export default function Login() {
             <div className="divider" />
 
             {err && (
-              <div style={{ background: 'rgba(239,68,68,.1)', color: '#ef4444', padding: '12px', borderRadius: '4px', fontSize: '10px', fontFamily: "'Orbitron', monospace", letterSpacing: '1px', border: '1px solid rgba(239,68,68,.3)', marginBottom: '16px', textAlign: 'center' }}>
+              <div style={{ background: 'rgba(239,68,68,.1)', color: '#ef4444', padding: '12px', borderRadius: '4px', fontSize: '10px', fontFamily: "'Outfit', monospace", letterSpacing: '1px', border: '1px solid rgba(239,68,68,.3)', marginBottom: '16px', textAlign: 'center' }}>
                 [ERR] {err}
               </div>
             )}

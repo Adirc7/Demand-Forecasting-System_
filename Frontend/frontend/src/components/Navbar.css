@@ -10,7 +10,7 @@ nav {
     position: sticky;
     top: 0;
     z-index: 100;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Inter', sans-serif;
 }
 
 .logo {
@@ -28,7 +28,7 @@ nav {
 }
 
 .logo-text {
-    font-family: 'Orbitron', monospace;
+    font-family: 'Outfit', monospace;
     font-weight: 900;
     font-size: 18px;
     color: #f97316;
@@ -42,38 +42,55 @@ nav {
 
 .nav-links {
     display: flex;
-    gap: 24px
+    gap: 8px;
 }
 
 .nav-link {
     position: relative;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Inter', sans-serif;
     letter-spacing: 1px;
     text-transform: uppercase;
-    font-size: 11px;
+    font-size: 10px;
+    font-weight: 600;
     cursor: pointer;
-    color: rgba(226, 232, 240, .45);
-    transition: color .3s;
+    color: rgba(226, 232, 240, 0.7);
     text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+        0 4px 6px rgba(0, 0, 0, 0.3), 
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-link:hover {
-    color: rgba(249, 115, 22, .8)
+    color: #fff;
+    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(0,0,0,0.2));
+    border-color: rgba(249, 115, 22, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.4), 
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .nav-link.active {
-    color: #f97316
+    color: #fff;
+    background: linear-gradient(145deg, #f97316, #c2410c);
+    border: 1px solid rgba(255, 165, 100, 0.3);
+    box-shadow: 
+        0 4px 15px rgba(249, 115, 22, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
 }
 
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #f97316, transparent);
-    box-shadow: 0 0 8px #f97316
+.nav-link.active:active {
+    transform: translateY(1px);
+    box-shadow: 
+        0 2px 5px rgba(249, 115, 22, 0.4),
+        inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .nav-email {
@@ -83,7 +100,7 @@ nav {
 }
 
 .logout-btn {
-    font-family: 'Orbitron', monospace;
+    font-family: 'Outfit', monospace;
     font-size: 11px;
     color: #ef4444;
     letter-spacing: 2px;

@@ -7,7 +7,7 @@ router = APIRouter(prefix='/categories', tags=['Categories'])
 
 @router.get('/')
 async def list_categories(user=Depends(get_current_user)):
-    return [d.to_dict() for d in get_cached_collection('categories')]
+    return [{'_doc_id': d.id, **d.to_dict()} for d in get_cached_collection('categories')]
 
 @router.post('/')
 async def create_category(data:dict, user=Depends(require_admin)):

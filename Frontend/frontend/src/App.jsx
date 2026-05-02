@@ -19,11 +19,7 @@ function PrivateRoute({ children, roles }) {
   if (!user) return <Navigate to="/login" />;
 
   if (roles && !user.isAdmin && !roles.includes(user.role)) {
-    if (user.role === 'sales_manager') return <Navigate to="/sales" />;
-    if (user.role === 'forecast_manager') return <Navigate to="/forecasts" />;
-    if (user.role === 'report_analyst') return <Navigate to="/reports" />;
-    if (user.role === 'product_manager') return <Navigate to="/products/add" />;
-    return <Navigate to="/inventory" />;
+    return <Navigate to="/dashboard" />;
   }
 
   return <>{children}</>;
@@ -32,17 +28,9 @@ function PrivateRoute({ children, roles }) {
 export default function App() {
   const { user } = useAuth();
 
-  let defaultRoute = "/dashboard";
-  if (user && !user.isAdmin) {
-    if (user.role === 'sales_manager') defaultRoute = "/sales";
-    if (user.role === 'forecast_manager') defaultRoute = "/forecasts";
-    if (user.role === 'report_analyst') defaultRoute = "/reports";
-    if (user.role === 'product_manager') defaultRoute = "/products/add";
-  }
-
   return (
     <Router>
-      <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#050508' }}>
+      <div className="min-h-screen flex flex-col">
         {user && <Navbar />}
         <main className="flex-1 w-full m-0 p-0">
           <SessionManager>
@@ -55,7 +43,7 @@ export default function App() {
               <Route path="/forecasts" element={<PrivateRoute roles={['forecast_manager']}><Forecasts /></PrivateRoute>} />
               <Route path="/reports" element={<PrivateRoute roles={['report_analyst']}><Reports /></PrivateRoute>} />
               <Route path="/users" element={<PrivateRoute roles={['admin']}><UserManagement /></PrivateRoute>} />
-              <Route path="/" element={<Navigate to={defaultRoute} />} />
+              <Route path="/" element={<Navigate to="/dashboard" />} />
             </Routes>
           </SessionManager>
         </main>

@@ -24,13 +24,21 @@ def get_cached_collection(collection_name: str) -> list:
             return data
             
     # Cache miss or expired - fetch from DB
-    db = get_db()
-    
-    # Handle where queries for products
-    if collection_name == 'products_active':
-        docs = [d for d in db.collection('products').where('active','==',True).stream()]
-    else:
-        docs = [d for d in db.collection(collection_name).stream()]
+    try:
+        db = get_db()
         
-    CACHE[collection_name] = (docs, now)
-    return docs
+        # Handle where queries for products
+        if collection_name == 'products_active':
+            docs = [d for d in db.collection('products').where('active','==',True).stream(timeout=10)]
+        else:
+            docs = [d for d in db.collection(collection_name).stream(timeout=10)]
+            
+        CACHE[collection_name] = (docs, now)
+        return docs
+    except Exception as e:
+        print(f"Error fetching collection '{collection_name}': {e}")
+        # Fallback to stale cache if it exists to prevent complete failure
+        if collection_name in CACHE:
+            print(f"Falling back to stale cache for '{collection_name}'")
+            return CACHE[collection_name][0]
+        return []

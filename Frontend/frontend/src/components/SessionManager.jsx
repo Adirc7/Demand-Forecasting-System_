@@ -134,9 +134,9 @@ export default function SessionManager({ children }) {
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm">
                     <div className="bg-[#0a050f] border border-[#f97316] rounded-xl p-8 max-w-md w-full shadow-[0_0_30px_rgba(249,115,22,0.2)] text-center animate-in zoom-in-95 duration-200">
                         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#f97316]/20 flex items-center justify-center">
-                            <span className="text-[#f97316] text-3xl font-bold font-['Orbitron']">!</span>
+                            <span className="text-[#f97316] text-3xl font-bold font-['Outfit']">!</span>
                         </div>
-                        <h2 className="text-2xl font-bold text-white mb-2 font-['Orbitron']">SESSION EXPIRING</h2>
+                        <h2 className="text-2xl font-bold text-white mb-2 font-['Outfit']">SESSION EXPIRING</h2>
                         <p className="text-slate-300 mb-6 font-['Share_Tech_Mono']">
                             You've been inactive for a while. For your security, you will be logged out in:
                         </p>

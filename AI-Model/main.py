@@ -1,4 +1,6 @@
 from fastapi import FastAPI, HTTPException  # type: ignore
+from pydantic import BaseModel
+from typing import List, Optional
 import joblib  # type: ignore
 import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
@@ -9,6 +11,7 @@ from datetime import datetime, timedelta
 # Attach backend to access Firebase
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../Backend/backend")))
 from firebase.client import get_db  # type: ignore
+from firebase.cache import get_cached_collection # type: ignore
 
 with open(os.path.join(os.path.dirname(__file__), 'label_encoder_v3.json'), 'r') as f:
     ENCODER = json.load(f).get('mapping', {})
@@ -35,23 +38,62 @@ def register_sku(data: dict):
 @app.post("/stock-advice")
 def stock_advice(data: dict):
     # Dummy logic to return a recommendation
-    # Typically this would involve running inference on the 'model' object
-    # using the provided data (e.g., category, lead_time_days).
     category = data.get("category", "")
-    lead_time_days = data.get("lead_time_days", 5)
+    lead_time_days = data.get("lead_time_days", 7)
+    unit_price = data.get("unit_price", 0.0)
     
-    # Simple proxy logic as a placeholder
-    rec = 100 if category == "Electronics" else 200
-    proxy_price = 49.99 if category == "Electronics" else (19.99 if category == "Home Goods" else 29.99)
-    proxy_lead_time = 7 if category == "Electronics" else 5
+    today = datetime.now()
+    cat_encoded = ENCODER.get(category, 3) # default generic
+
+    # Cold-start 1-day prediction feature vector (Zero history)
+    features = pd.DataFrame([{
+        'lag_7': 0.0, 'lag_14': 0.0, 'lag_30': 0.0,
+        'rolling_mean_7': 0.0, 'rolling_mean_14': 0.0, 'rolling_mean_30': 0.0,
+        'rolling_std_7': 0.0, 'rolling_max_7': 0.0,
+        'month': today.month, 'day': today.day, 'dayofweek': today.weekday(),
+        'is_weekend': int(today.weekday() >= 5),
+        'week_of_year': today.isocalendar()[1],
+        'is_black_friday': int(today.month == 11 and today.day == 28),
+        'category_encoded': cat_encoded,
+        'days_since_start': (today - datetime(2025, 8, 1)).days
+    }])
+    
+    pred_1d = 0.0
+    if model:
+        try:
+            # We predict daily demand using the trained model based purely on category & temporal factors
+            pred_1d = max(1.5, float(model.predict(features)[0]))
+        except Exception as e:
+            print("Prediction error:", e)
+            pred_1d = 2.0
+    else:
+        pred_1d = 5.0
+
+    # Avurudu Seasonality Multiplier (mid-March to mid-April)
+    is_avurudu = (today.month == 4 and today.day <= 15) or (today.month == 3 and today.day >= 15)
+    if is_avurudu and category in ["Apparel", "Electronics"]:
+        pred_1d *= 1.3
+
+    # Simple proxy logic for base unit price (LKR conversion)
+    proxy_price = 15000 if category == "Electronics" else (6000 if category == "Home Goods" else 9000)
+    
+    # Price Elasticity
+    if unit_price and float(unit_price) > 0:
+        elasticity_modifier = min(1.0, max(0.2, proxy_price / float(unit_price)))
+        pred_1d *= elasticity_modifier
+
+    # Calculate recommended stock logic based on ML demand:
+    # Should cover standard 30-day buffer + lead_time delivery safety buffer
+    buffer_days = 30 + float(lead_time_days)
+    rec = int(round(pred_1d * buffer_days))
     
     return {
         "recommended": rec,
         "recommended_price": proxy_price,
-        "recommended_lead_time": proxy_lead_time,
-        "confidence": "LOW (category proxy)",
-        "reorder_point": int(rec * 0.3),
-        "avg_daily_demand": 5.0
+        "recommended_lead_time": lead_time_days,
+        "confidence": "MODERATE (ML Category Baseline)",
+        "reorder_point": int(round(pred_1d * float(lead_time_days))),
+        "avg_daily_demand": round(pred_1d, 2)
     }
 
 @app.post("/warmup-tick")
@@ -137,20 +179,33 @@ def forecast_batch(data: dict):
         else:
             pred_1d = 0
             
-        # Simple Multi-Horizon strategy: Constant demand assumption for stable goods
-        pred_7d = int(round(pred_1d * 7))
-        pred_30d = int(round(pred_1d * 30))
+        # Mathematically stable Multi-Horizon strategy
+        # Use rolling_mean_7 to smooth out day-of-week spikes (e.g., weekend rushes)
+        base_daily = rm_7 if rm_7 > 0 else pred_1d
+        
+        # Avurudu Seasonality Multiplier
+        is_avurudu = (today.month == 4 and today.day <= 15) or (today.month == 3 and today.day >= 15)
+        if is_avurudu and category in ["Apparel", "Electronics"]:
+            pred_1d *= 1.3
+            base_daily *= 1.3
+            
+        pred_7d = int(round(base_daily * 7))
+        pred_30d = int(round(base_daily * 30))
 
         # Dynamically calculate Local Feature Importance proxy based on mathematically derived history
         base_momentum = float(round((rm_7 - rm_30), 2))
         volatility_penalty = float(round(-(rstd_7 * 0.2), 2))
         weekend_boost = float(round((rm_7 * 0.15), 2) if today.weekday() >= 5 else round(-(rm_7 * 0.05), 2))
         historical_base = float(round(rm_30, 2))
+        
+        cv = (rstd_7 / rm_7) if rm_7 > 0 else 0
 
         results.append({
             "sku": str(sku_id),
             "forecast_7d": int(pred_7d),
             "forecast_30d": int(pred_30d),
+            "volatility_cv": float(cv),
+            "error_margin": int(round(pred_30d * (0.05 + float(cv) * 0.2))),
             "confidence": "HIGH" if bool(sum(history_30) > 5) else "LOW (Cold Start)",
             "is_cold": bool(sum(history_30) <= 5),
             "shap_factors": [
@@ -162,9 +217,16 @@ def forecast_batch(data: dict):
         })
     return results
 
+class RetrainConfig(BaseModel):
+    categories: Optional[List[str]] = []
+    epochs: Optional[int] = 1
+
 @app.post("/forecast/retrain")
-def forecast_retrain():
+def forecast_retrain(config: RetrainConfig = None):
     global model, ENCODER
+    
+    categories_to_boost = config.categories if config and config.categories else []
+    epochs_multiplier = config.epochs if config and config.epochs else 1
     try:
         from sklearn.ensemble import GradientBoostingRegressor  # type: ignore
         from sklearn.preprocessing import LabelEncoder  # type: ignore
@@ -175,9 +237,12 @@ def forecast_retrain():
         print("Starting Dynamic Retraining from Firebase...")
         db = get_db()
         
-        # 1. Fetch raw data
-        sales = [s.to_dict() for s in db.collection('sales').stream()]
-        prods = {p.id: p.to_dict() for p in db.collection('products').stream()}
+        # 1. Fetch raw data from High-Speed RAM Cache instead of burning Firebase Reads
+        sales_docs = get_cached_collection('sales')
+        sales = [s.to_dict() for s in sales_docs]
+        
+        prod_docs = get_cached_collection('products')
+        prods = {p.id: p.to_dict() for p in prod_docs}
         
         if not sales or not prods:
             return {"status": "error", "msg": "Not enough data to train."}
@@ -229,14 +294,30 @@ def forecast_retrain():
             df['days_since_start'] = (df['date'] - df['date'].min()).dt.days
             return df
             
-        daily_fe = create_feats(daily_filled).fillna(0).reset_index(drop=True)
+        feats = create_feats(daily_filled)
         
-        feats = ['lag_7','lag_14','lag_30','rolling_mean_7','rolling_mean_14','rolling_mean_30',
-                 'rolling_std_7','rolling_max_7','month','day','dayofweek','is_weekend','week_of_year',
-                 'is_black_friday','category_encoded','days_since_start']
-                 
-        X = daily_fe[feats]
-        y = daily_fe['total_quantity']
+        # --- NEW: Targeted Semantic Bias Injection ---
+        if categories_to_boost and epochs_multiplier > 1:
+            print(f"Applying Targeted Boosting x{epochs_multiplier} to: {categories_to_boost}")
+            # Identify rows belonging to targeted categories
+            mask = feats['category'].isin(categories_to_boost)
+            targeted_data = feats[mask]
+            
+            # Duplicate the targeted data (epochs_multiplier - 1) times to artificially weight it
+            if not targeted_data.empty:
+                duplicates = [targeted_data] * (epochs_multiplier - 1)
+                feats = pd.concat([feats] + duplicates, ignore_index=True)
+                # Re-shuffle the dataframe to prevent ordered bias
+                feats = feats.sample(frac=1).reset_index(drop=True)
+        # ---------------------------------------------
+        
+        feats = feats.dropna()
+        
+        X = feats[['lag_7','lag_14','lag_30','rolling_mean_7','rolling_mean_14',
+                   'rolling_mean_30','rolling_std_7','rolling_max_7',
+                   'month','day','dayofweek','is_weekend','week_of_year',
+                   'is_black_friday','category_encoded','days_since_start']]
+        y = feats['total_quantity']
         
         # 5. Train Model
         print(f"Training on {len(X)} rows...")

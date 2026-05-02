@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import AssistantBot from '../components/AssistantBot';
 
 export default function Dashboard() {
     const navigate = useNavigate();
@@ -58,54 +59,86 @@ export default function Dashboard() {
         },
     ];
 
-    // Filter modules based on user access
-    const visibleModules = allModules.filter(mod => 
-        user?.isAdmin || mod.roleMatch.includes(user?.role)
-    );
+    // Check if user has access to a module
+    const hasAccess = (mod) => {
+        return user?.isAdmin || mod.roleMatch.includes(user?.role);
+    };
 
     return (
-        <div style={{ backgroundColor: '#050508', minHeight: 'calc(100vh - 70px)' }} className="text-white p-10 flex flex-col items-center">
+        <div style={{ minHeight: 'calc(100vh - 70px)' }} className="bg-slate-900 text-white p-10 flex flex-col items-center">
+            <style>
+                {`
+                @keyframes gradientShift {
+                    0% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                    100% { background-position: 0% 50%; }
+                }
+                `}
+            </style>
             <div className="max-w-6xl w-full">
                 <header className="mb-12 text-center">
-                    <h1 className="text-4xl font-extrabold tracking-tight mb-3" style={{ background: 'linear-gradient(to right, #ffffff, #a1a1aa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                        Welcome to Dropex.AI, {user?.name || user?.email?.split('@')[0] || 'Admin'}
+                    <h1 className="text-4xl font-extrabold tracking-tight mb-3 text-white">
+                        Welcome to Dropex.AI<br/>
+                        <span style={{ 
+                            background: 'linear-gradient(270deg, #3b82f6, #a855f7, #ec4899, #f97316)',
+                            backgroundSize: '300% 300%',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            animation: 'gradientShift 4s ease infinite'
+                        }}>
+                            {user?.name || user?.email?.split('@')[0] || 'Admin'}
+                        </span>
                     </h1>
-                    <p className="text-gray-400 text-lg">
+                    <p className="text-slate-400 text-lg">
                         Select a module to manage your smart inventory system.
                     </p>
                 </header>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {visibleModules.map((module) => (
-                        <div 
-                            key={module.name} 
-                            onClick={() => navigate(module.path)}
-                            className="bg-[#111115] rounded-2xl p-8 cursor-pointer transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl border border-[#1f1f23] hover:border-gray-500 relative overflow-hidden group flex flex-col justify-between"
-                            style={{ minHeight: '220px' }}
-                        >
-                            {/* Decorative background glow */}
+                    {allModules.map((module) => {
+                        const accessible = hasAccess(module);
+                        return (
+                        <div key={module.name} className="relative group">
                             <div 
-                                className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-2xl"
-                                style={{ background: module.gradient }}
-                            ></div>
+                                onClick={() => accessible && navigate(module.path)}
+                                className={`bg-slate-800 rounded-2xl p-8 transition duration-300 border border-slate-700 flex flex-col justify-between h-full ${accessible ? 'cursor-pointer hover:-translate-y-2 hover:shadow-2xl hover:border-slate-500 transform relative overflow-hidden' : 'opacity-60 grayscale blur-[3px] pointer-events-none'}`}
+                                style={{ minHeight: '220px' }}
+                            >
+                                {/* Decorative background glow */}
+                                <div 
+                                    className={`absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-0 ${accessible ? 'group-hover:opacity-20 transition-opacity duration-500 blur-2xl' : ''}`}
+                                    style={{ background: module.gradient }}
+                                ></div>
 
-                            <div>
-                                <div className="text-4xl mb-4 p-3 inline-block rounded-xl" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                                    {module.icon}
+                                <div>
+                                    <div className="text-4xl mb-4 p-3 inline-block rounded-xl" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                                        {module.icon}
+                                    </div>
+                                    <h2 className="text-2xl font-bold mb-2 tracking-wide">{module.name}</h2>
+                                    <p className="text-slate-400 text-sm leading-relaxed">
+                                        {module.desc}
+                                    </p>
                                 </div>
-                                <h2 className="text-2xl font-bold mb-2 tracking-wide">{module.name}</h2>
-                                <p className="text-gray-400 text-sm leading-relaxed">
-                                    {module.desc}
-                                </p>
+
+                                <div className={`mt-6 flex items-center text-sm font-semibold tracking-wider transition duration-200 ${accessible ? 'text-slate-300 group-hover:text-white' : 'text-slate-500'}`}>
+                                    ENTER MODULE <span className="ml-2 group-hover:translate-x-1 transition-transform duration-200">→</span>
+                                </div>
                             </div>
 
-                            <div className="mt-6 flex items-center text-sm font-semibold tracking-wider text-gray-300 group-hover:text-white transition duration-200">
-                                ENTER MODULE <span className="ml-2 group-hover:translate-x-1 transition-transform duration-200">→</span>
-                            </div>
+                            {/* Lock overlay that appears on hover for inaccessible modules */}
+                            {!accessible && (
+                                <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-not-allowed">
+                                    <div className="bg-black/80 px-4 py-2 rounded-md border border-red-500 flex items-center gap-2 text-red-500 font-bold tracking-widest text-sm shadow-xl">
+                                        <span>🔒</span> ACCESS DENIED
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    ))}
+                    )})}
                 </div>
             </div>
+            
+            <AssistantBot />
         </div>
     );
 }

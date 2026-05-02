@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getUsers, createUser, updateUser, deactivateUser } from '../services/api';
+import { getUsers, createUser, updateUser, deactivateUser, getAdminSettings, updateSessionTimeout } from '../services/api';
+import { validateEmail, validatePassword } from '../utils/validation';
 import './UserManagement.css';
-
 export default function UserManagement() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,13 +18,32 @@ export default function UserManagement() {
     const [role, setRole] = useState('staff');
     const [formError, setFormError] = useState('');
 
+    // Security Settings
+    const [sessionTimeout, setSessionTimeout] = useState(30);
+    const [savingTimeout, setSavingTimeout] = useState(false);
+    const [timeoutSaved, setTimeoutSaved] = useState(false);
+
     const rolesAvailable = [
         'admin', 'staff', 'inventory_manager', 
         'forecast_manager', 'sales_manager', 
         'product_manager', 'report_analyst'
     ];
 
-    useEffect(() => { loadUsers(); }, []);
+    useEffect(() => { 
+        loadUsers(); 
+        loadSettings();
+    }, []);
+
+    const loadSettings = async () => {
+        try {
+            const settings = await getAdminSettings();
+            if (settings && settings.session_timeout_minutes) {
+                setSessionTimeout(settings.session_timeout_minutes);
+            }
+        } catch (e) {
+            console.error("Failed to load settings", e);
+        }
+    };
 
     const loadUsers = async () => {
         try {
@@ -37,7 +56,14 @@ export default function UserManagement() {
     const handleCreateUser = async () => {
         try {
             setFormError('');
-            if (!email || !password) return setFormError('Email and Password required');
+            
+            const emailErr = validateEmail(email);
+            const passErr = validatePassword(password);
+            
+            if (emailErr || passErr) {
+                return setFormError(emailErr || passErr);
+            }
+            
             await createUser({ email, password, role });
             setIsAddModalOpen(false);
             resetForm();
@@ -74,6 +100,22 @@ export default function UserManagement() {
         }
     };
 
+    const handleTimeoutChange = async (e) => {
+        const val = parseInt(e.target.value);
+        setSessionTimeout(val);
+        setSavingTimeout(true);
+        setTimeoutSaved(false);
+        try {
+            await updateSessionTimeout(val);
+            setTimeoutSaved(true);
+            setTimeout(() => setTimeoutSaved(false), 3000);
+        } catch (err) {
+            setErr("Failed to update session timeout: " + err.message);
+        } finally {
+            setSavingTimeout(false);
+        }
+    };
+
     const resetForm = () => {
         setEmail('');
         setPassword('');
@@ -97,18 +139,48 @@ export default function UserManagement() {
 
     return (
         <div className="user-wrap">
-            <div className="grid-bg" />
-            <div className="scanline" />
+
             <div className="blob1" style={{background: 'radial-gradient(circle, rgba(139, 92, 246, .05) 0%, transparent 70%)'}} />
             
-            <main>
-                <div className="page-header" style={{ marginBottom: '32px', display: 'flex', justifyContent: 'space-between' }}>
+            <main style={{ padding: '0 40px' }}>
+                <div className="page-header" style={{ marginTop: '40px', marginBottom: '32px', display: 'flex', justifyContent: 'space-between' }}>
                     <div>
-                        <div className="page-subtitle" style={{ color: '#8b5cf6', textShadow: '0 0 10px rgba(139,92,246,0.5)' }}>// SYSTEM MODULE: ADMIN</div>
+
                         <h1 className="page-title" style={{textShadow: '0 0 30px rgba(139,92,246,.3)'}}>USER <span>MANAGEMENT</span></h1>
                         <div className="title-bar" style={{ background: 'linear-gradient(90deg, #8b5cf6, transparent)', boxShadow: '0 0 10px rgba(139,92,246,.4)' }} />
                     </div>
                     <button className="add-btn" onClick={openAddModal}>+ INITALIZE NEW USER</button>
+                </div>
+
+                {/* SECURITY SETTINGS PANEL */}
+                <div style={{ background: 'linear-gradient(135deg, rgba(12,12,22,.98), rgba(20,8,35,.98))', border: '1px solid rgba(139,92,246,.4)', borderRadius: '12px', padding: '24px', marginBottom: '32px', animation: 'fadeInUp .4s ease both' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+                        <span style={{ fontSize: '18px' }}>🔐</span>
+                        <h2 style={{ fontFamily: "'Outfit', monospace", fontSize: '14px', color: '#e2e8f0', letterSpacing: '2px', margin: 0 }}>GLOBAL SECURITY SETTINGS</h2>
+                    </div>
+                    
+                    <div>
+                        <label style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#a78bfa', fontFamily: "'Outfit', monospace", marginBottom: '12px', letterSpacing: '1px' }}>
+                            <span>IDLE SESSION TIMEOUT</span>
+                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '14px' }}>{sessionTimeout} MINUTES</span>
+                        </label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                            <input 
+                                type="range" 
+                                min="5" max="120" step="5" 
+                                value={sessionTimeout} 
+                                onChange={handleTimeoutChange}
+                                disabled={savingTimeout}
+                                style={{ flex: 1, accentColor: '#8b5cf6', cursor: savingTimeout ? 'wait' : 'pointer' }} 
+                            />
+                            <div style={{ width: '100px', fontSize: '11px', fontFamily: "'Outfit', monospace", fontWeight: 'bold', letterSpacing: '1px', color: timeoutSaved ? '#22c55e' : (savingTimeout ? '#a78bfa' : 'transparent'), transition: 'color 0.3s' }}>
+                                {savingTimeout ? 'SAVING...' : (timeoutSaved ? '✓ SAVED' : '')}
+                            </div>
+                        </div>
+                        <p style={{ fontSize: '11px', color: 'rgba(226,232,240,.5)', marginTop: '12px', fontFamily: "'Outfit', monospace", lineHeight: '1.5' }}>
+                            Users will be automatically logged out after this period of inactivity. Changes apply immediately and are enforced system-wide.
+                        </p>
+                    </div>
                 </div>
 
                 {err ? <div className="text-red-500 mb-4 bg-red-900/20 p-4 border border-red-500">{err}</div> : null}

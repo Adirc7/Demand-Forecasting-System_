@@ -106,19 +106,13 @@ function PulsingRing({ delay = 0 }) {
 
 export default function WhyPopup({ alert, onClose }) {
     const [visible, setVisible] = useState(false);
-    const [scanLine, setScanLine] = useState(0);
 
     useEffect(() => {
         const t = setTimeout(() => setVisible(true), 100);
         return () => clearTimeout(t);
     }, []);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setScanLine(p => (p + 1) % 100);
-        }, 40);
-        return () => clearInterval(interval);
-    }, []);
+
 
     if (!alert) return null;
 
@@ -158,7 +152,7 @@ export default function WhyPopup({ alert, onClose }) {
             }}
         >
             <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;600;700;900&display=swap');
 
         @keyframes ping {
           0% { transform: scale(1); opacity: 0.6; }
@@ -207,19 +201,7 @@ export default function WhyPopup({ alert, onClose }) {
                     boxShadow: "0 0 0 1px rgba(0, 229, 255, 0.15), 0 0 60px rgba(0, 229, 255, 0.08), 0 40px 80px rgba(0,0,0,0.8)",
                 }}
             >
-                {/* Scan line overlay */}
-                <div
-                    style={{
-                        position: "absolute",
-                        left: 0,
-                        right: 0,
-                        height: "2px",
-                        background: "linear-gradient(90deg, transparent, rgba(0,229,255,0.12), transparent)",
-                        top: `${scanLine}%`,
-                        pointerEvents: "none",
-                        zIndex: 10,
-                    }}
-                />
+
 
                 {/* Top corner decorations */}
                 <div style={{ position: "absolute", top: 0, left: 0, width: "40px", height: "40px" }}>
@@ -251,7 +233,7 @@ export default function WhyPopup({ alert, onClose }) {
                                     <PulsingRing delay={0.7} />
                                 </div>
                                 <span style={{
-                                    fontFamily: "'Orbitron', sans-serif",
+                                    fontFamily: "'Outfit', sans-serif",
                                     fontSize: "10px",
                                     color: alert.urgency === 'OK' ? "#22c55e" : "#ff3d6b",
                                     letterSpacing: "0.2em",
@@ -263,7 +245,7 @@ export default function WhyPopup({ alert, onClose }) {
 
                             <h1
                                 style={{
-                                    fontFamily: "'Orbitron', sans-serif",
+                                    fontFamily: "'Outfit', sans-serif",
                                     fontSize: "24px",
                                     fontWeight: 900,
                                     color: "#ffffff",
@@ -354,7 +336,7 @@ export default function WhyPopup({ alert, onClose }) {
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
                             <div style={{ fontSize: "14px", animation: "float 3s ease-in-out infinite" }}>✦</div>
                             <span style={{
-                                fontFamily: "'Orbitron', sans-serif",
+                                fontFamily: "'Outfit', sans-serif",
                                 fontSize: "10px",
                                 color: "#00e5ff",
                                 letterSpacing: "0.18em",
@@ -390,7 +372,7 @@ export default function WhyPopup({ alert, onClose }) {
                     <div style={{ marginBottom: "16px" }}>
                         <div style={{ display: "flex", alignItems: "baseline", gap: "10px", marginBottom: "4px" }}>
                             <span style={{
-                                fontFamily: "'Orbitron', sans-serif",
+                                fontFamily: "'Outfit', sans-serif",
                                 fontSize: "11px",
                                 color: "#ffffff",
                                 letterSpacing: "0.12em",
@@ -491,7 +473,7 @@ export default function WhyPopup({ alert, onClose }) {
                             color: "#000",
                             padding: "10px 24px",
                             borderRadius: "6px",
-                            fontFamily: "'Orbitron', sans-serif",
+                            fontFamily: "'Outfit', sans-serif",
                             fontSize: "10px",
                             fontWeight: 700,
                             letterSpacing: "0.15em",

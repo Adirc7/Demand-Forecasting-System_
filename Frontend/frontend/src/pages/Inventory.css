@@ -72,9 +72,8 @@
 .inv-wrap {
     min-height: 80vh;
     /* Don't overwrite the main Nav size */
-    background: linear-gradient(135deg, #050508 0%, #0a050f 50%, #050510 100%);
     color: #e2e8f0;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Inter', sans-serif;
     position: relative;
     overflow-x: hidden;
     margin: -32px;
@@ -124,8 +123,9 @@
 }
 
 .inv-wrap main {
-    max-width: 1300px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 40px;
     position: relative;
     z-index: 20;
 }
@@ -134,6 +134,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    margin-top: 40px;
     margin-bottom: 32px;
     animation: slideInLeft .6s ease
 }
@@ -147,7 +148,7 @@
 }
 
 .page-title {
-    font-family: 'Orbitron', monospace;
+    font-family: 'Outfit', monospace;
     font-size: 26px;
     font-weight: 900;
     color: #fff;
@@ -176,7 +177,7 @@
     color: #f97316;
     font-size: 10px;
     letter-spacing: 2px;
-    font-family: 'Orbitron', monospace;
+    font-family: 'Outfit', monospace;
     font-weight: 700;
     cursor: pointer;
     border-radius: 2px;
@@ -210,13 +211,16 @@
 
 .item-card {
     position: relative;
-    background: linear-gradient(135deg, rgba(12, 12, 22, .97), rgba(18, 8, 28, .97));
-    border: 1px solid rgba(249, 115, 22, .2);
-    border-radius: 3px;
+    background: linear-gradient(135deg, rgba(24, 28, 40, .97), rgba(30, 24, 45, .97));
+    border: 1px solid rgba(249, 115, 22, .3);
+    border-radius: 20px;
     padding: 16px;
     cursor: pointer;
-    transition: all .25s ease;
-    animation: fadeInUp .5s ease both;
+    transition: all .25s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp .5s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .item-card::before {
@@ -224,10 +228,11 @@
     position: absolute;
     top: -1px;
     left: -1px;
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     border-top: 1px solid #f97316;
-    border-left: 1px solid #f97316
+    border-left: 1px solid #f97316;
+    border-top-left-radius: 20px;
 }
 
 .item-card::after {
@@ -235,16 +240,18 @@
     position: absolute;
     bottom: -1px;
     right: -1px;
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     border-bottom: 1px solid #f97316;
-    border-right: 1px solid #f97316
+    border-right: 1px solid #f97316;
+    border-bottom-right-radius: 20px;
 }
 
 .item-card:hover {
-    border-color: rgba(249, 115, 22, .6);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(249, 115, 22, .15)
+    border-color: rgba(249, 115, 22, .8);
+    transform: scale(1.04) translateY(-4px);
+    box-shadow: 0 12px 30px rgba(249, 115, 22, .25);
+    z-index: 10;
 }
 
 .card-top {
@@ -255,7 +262,7 @@
 }
 
 .card-name {
-    font-family: 'Orbitron', monospace;
+    font-family: 'Outfit', monospace;
     font-size: 11px;
     font-weight: 700;
     color: #e2e8f0;
@@ -272,15 +279,16 @@
     background: rgba(34, 197, 94, .1);
     border: 1px solid rgba(34, 197, 94, .4);
     color: #22c55e;
-    font-family: 'Orbitron', monospace;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    padding: 3px 8px;
-    border-radius: 2px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 12px;
     flex-shrink: 0;
-    animation: okPulse 2.5s ease-in-out infinite;
-    text-shadow: 0 0 8px rgba(34, 197, 94, .5);
+    display: flex;
+    align-items: center;
+    text-shadow: none;
 }
 
 .card-sku {
@@ -292,26 +300,37 @@
 
 .card-stats {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     margin-bottom: 12px
+}
+
+.stat-block {
+    background: rgba(15, 23, 42, 0.6);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 
 .stat-label-sm {
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.9);
+    color: #94a3b8;
     letter-spacing: 2px;
     text-transform: uppercase;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 500;
     margin-bottom: 3px
 }
 
 .stat-val-sm {
-    font-family: 'Orbitron', monospace;
-    font-size: 20px;
-    font-weight: 900;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 800;
     color: #f97316;
-    text-shadow: 0 0 10px rgba(249, 115, 22, .4);
     line-height: 1
 }
 
@@ -373,10 +392,10 @@
 }
 
 .stat-lbl {
-    color: rgba(226, 232, 240, .3)
+    color: rgba(226, 232, 240, .7)
 }
 
 .stat-v {
-    font-family: 'Orbitron', monospace;
+    font-family: 'Outfit', monospace;
     font-weight: 700
 }

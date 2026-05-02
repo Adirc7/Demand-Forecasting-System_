@@ -1,0 +1,43 @@
+<mxfile host="65bd71144e">
+    <diagram id="er1" name="ER Diagram">
+        <mxGraphModel dx="792" dy="584" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="users" value="USERS" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="100" width="200" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="u1" value="+ ObjectId _id (PK)&#10;+ string username&#10;+ string email&#10;+ string passwordHash&#10;+ string role" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;" parent="users" vertex="1">
+                    <mxGeometry y="30" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="reports" value="REPORTS" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="100" width="200" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="r1" value="+ ObjectId _id (PK)&#10;+ ObjectId userID (FK)&#10;+ string reportTitle&#10;+ string chartType&#10;+ date createdAt" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;" parent="reports" vertex="1">
+                    <mxGeometry y="30" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="inventory" value="INVENTORY" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="350" width="200" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="i1" value="+ string sku (PK)&#10;+ int current_stock&#10;+ int reorder_threshold&#10;+ timestamp last_updated" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;" parent="inventory" vertex="1">
+                    <mxGeometry y="30" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="metrics" value="FORECASTS" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fillColor=#008a00;strokeColor=#005700;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="350" width="200" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="m1" value="+ string id (PK)&#10;+ string sku (FK)&#10;+ date forecast_date&#10;+ float predicted_demand&#10;+ float confidence" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;" parent="metrics" vertex="1">
+                    <mxGeometry y="30" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_ur" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;endFill=1;" parent="1" source="users" target="reports" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_ui" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;endFill=1;" parent="1" source="users" target="inventory" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_im" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;startArrow=none;endFill=1;" parent="1" source="inventory" target="metrics" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

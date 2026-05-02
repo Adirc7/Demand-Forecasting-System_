@@ -11,7 +11,7 @@ export default function Navbar() {
 
     return (
         <nav>
-            <div style={{ display: "flex", alignItems: "center", gap: 36 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
                 <Link to="/dashboard" style={{ textDecoration: 'none' }}>
                     <div className="logo">
                         <div className="logo-hex" />
