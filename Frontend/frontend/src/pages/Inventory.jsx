@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getAlerts, acknowledge_alert, setOverrideThreshold, updateInventory, adjustInventory } from '../services/api';
+import { getAlerts, acknowledge_alert, setOverrideThreshold, updateInventory, adjustInventory, getInventoryHistory } from '../services/api';
 import WhyPopup from '../components/WhyPopup';
 import './Inventory.css';
 
 export default function Inventory() {
     const [alerts, setAlerts] = useState([]);
+    const [invHistory, setInvHistory] = useState([]);
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState('');
     const [selectedSku, setSelectedSku] = useState(null);
@@ -44,7 +45,24 @@ export default function Inventory() {
     const needAction = filteredAlerts.filter(a => !a.acknowledged && ['EMERGENCY', 'CRITICAL', 'REORDER', 'URGENT'].includes(a.urgency)).length;
     const orderPlaced = filteredAlerts.filter(a => a.acknowledged).length;
 
-    useEffect(() => { loadAlerts(); }, []);
+    useEffect(() => { 
+        loadAlerts(); 
+        loadHistory();
+    }, []);
+
+    const loadHistory = async () => {
+        try {
+            setInvHistory(await getInventoryHistory());
+        } catch (e) { console.error("Failed to load inventory history", e); }
+    };
+
+    const currentMonth = new Date().toISOString().substring(0, 7);
+    const monthlyCapitalSpent = invHistory.reduce((sum, h) => {
+        if (h.timestamp && h.timestamp.startsWith(currentMonth) && h.type === 'RESTOCK' && h.cost) {
+            return sum + Number(h.cost);
+        }
+        return sum;
+    }, 0);
 
     const loadAlerts = async () => {
         try {
@@ -194,6 +212,10 @@ export default function Inventory() {
                     <div className="summary-card" style={{ background: 'linear-gradient(135deg, rgba(24, 28, 40, .97), rgba(30, 24, 45, .97))', padding: '24px', borderRadius: '12px', border: '1px solid rgba(34, 197, 94, 0.2)' }}>
                         <div style={{ fontSize: '11px', color: '#94a3b8', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>Order Placed</div>
                         <div style={{ fontSize: '32px', fontFamily: "'Outfit', monospace", fontWeight: 'bold', color: '#22c55e' }}>{orderPlaced}</div>
+                    </div>
+                    <div className="summary-card" style={{ background: 'linear-gradient(135deg, rgba(24, 28, 40, .97), rgba(30, 24, 45, .97))', padding: '24px', borderRadius: '12px', border: '1px solid rgba(234, 179, 8, 0.2)' }}>
+                        <div style={{ fontSize: '11px', color: '#94a3b8', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>Monthly Capital Spent</div>
+                        <div style={{ fontSize: '26px', fontFamily: "'Outfit', monospace", fontWeight: 'bold', color: '#eab308', marginTop: '6px' }}>Rs. {monthlyCapitalSpent.toLocaleString()}</div>
                     </div>
                 </div>
 

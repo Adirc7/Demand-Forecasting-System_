@@ -20,4 +20,5 @@ def get_db():
     return firestore.client()
 
 def verify_token(token):
+    # Reverting to 60 as 3600 is illegal
     return firebase_admin.auth.verify_id_token(token, clock_skew_seconds=60)

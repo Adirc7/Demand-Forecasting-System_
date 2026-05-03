@@ -40,7 +40,26 @@ async function apiFetch(path, options = {}) {
         ...options,
         headers,
     });
-    if (!res.ok) throw new Error(await res.text());
+    
+    if (!res.ok) {
+        const text = await res.text();
+        try {
+            const data = JSON.parse(text);
+            if (data && data.detail) {
+                throw new Error(data.detail);
+            } else if (data && data.message) {
+                throw new Error(data.message);
+            }
+        } catch (e) {
+            // If it's a syntax error (i.e., text is not JSON), or we just threw the error above,
+            // we handle it here.
+            if (e.name !== 'SyntaxError') {
+                throw e;
+            }
+        }
+        throw new Error(text);
+    }
+    
     return res.json();
 }
 

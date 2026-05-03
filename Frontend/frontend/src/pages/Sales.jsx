@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { getSales, recordSale, uploadSalesCSV, getProducts, triggerAdminEmail, updateSale, deleteSale, getStockAdvice, getStockAdviceSku, getInventoryHistory } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
+import './Sales.css';
 
 export default function Sales() {
     const [sales, setSales] = useState([]);
@@ -131,71 +132,87 @@ export default function Sales() {
         fetchHistory();
     }, []);
 
-    const currentMonth = new Date().toISOString().substring(0, 7);
-    const currentMonthName = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
+    const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().substring(0, 7));
 
-    const currentMonthSales = useMemo(() => {
-        return sales.filter(s => s.date && s.date.startsWith(currentMonth));
-    }, [sales, currentMonth]);
+    const availableMonths = useMemo(() => {
+        const months = new Set();
+        sales.forEach(s => {
+            if (s.date && s.date.length >= 7) months.add(s.date.substring(0, 7));
+        });
+        months.add(new Date().toISOString().substring(0, 7));
+        return Array.from(months).sort().reverse();
+    }, [sales]);
 
-    const currentMonthHistory = useMemo(() => {
-        return invHistory.filter(h => h.timestamp && h.timestamp.startsWith(currentMonth));
-    }, [invHistory, currentMonth]);
+    const activeMonthName = useMemo(() => {
+        const [y, m] = selectedMonth.split('-');
+        const d = new Date(y, parseInt(m)-1, 1);
+        return d.toLocaleString('default', { month: 'long', year: 'numeric' });
+    }, [selectedMonth]);
 
-    const { totalRevenue, totalCost } = useMemo(() => {
-        let rev = 0;
-        let cogs = 0;
-        
-        // Sum total revenue and COGS from sales
-        currentMonthSales.forEach(s => {
+    const activeMonthSales = useMemo(() => {
+        return sales.filter(s => s.date && s.date.startsWith(selectedMonth));
+    }, [sales, selectedMonth]);
+
+    const activeMonthHistory = useMemo(() => {
+        return invHistory.filter(h => h.timestamp && h.timestamp.startsWith(selectedMonth));
+    }, [invHistory, selectedMonth]);
+
+    const { totalRevenue, totalCost, totalCapitalSpent } = useMemo(() => {
+        let rev = 0; let cogs = 0;
+        activeMonthSales.forEach(s => {
             const prodPrice = products.find(p => p.sku === s.sku)?.unit_price;
             const fallbackPrice = prodPrice ? prodPrice : 1500;
             const q = Number(s.quantity) || 1;
-            
-            // Apply a standard 25% markup to legacy data missing an explicit sales amount 
-            // to accurately reflect standard business operations profitability.
             const amount = Number(s.amount || (q * (fallbackPrice * 1.25)));
-            
-            rev += amount;
-            cogs += (fallbackPrice * q);
+            rev += amount; cogs += (fallbackPrice * q);
         });
-
-        return { totalRevenue: rev, totalCost: cogs };
-    }, [currentMonthSales, products]);
+        
+        let spent = 0;
+        activeMonthHistory.forEach(h => {
+            if (h.type === 'RESTOCK' && h.cost) spent += Number(h.cost);
+        });
+        
+        return { totalRevenue: rev, totalCost: cogs, totalCapitalSpent: spent };
+    }, [activeMonthSales, activeMonthHistory, products]);
 
     const previousMonth = useMemo(() => {
-        const d = new Date();
+        const [y, m] = selectedMonth.split('-');
+        const d = new Date(y, parseInt(m)-1, 1);
         d.setMonth(d.getMonth() - 1);
         return d.toISOString().substring(0, 7);
-    }, []);
+    }, [selectedMonth]);
 
     const previousMonthName = useMemo(() => {
-        const d = new Date();
+        const [y, m] = selectedMonth.split('-');
+        const d = new Date(y, parseInt(m)-1, 1);
         d.setMonth(d.getMonth() - 1);
         return d.toLocaleString('default', { month: 'long', year: 'numeric' });
-    }, []);
+    }, [selectedMonth]);
 
-    const previousMonthProfit = useMemo(() => {
-        let rev = 0;
-        let cogs = 0;
+    const { prevRevenue, prevCost, previousMonthProfit, prevCapitalSpent } = useMemo(() => {
+        let rev = 0; let cogs = 0;
         const prevSales = sales.filter(s => s.date && s.date.startsWith(previousMonth));
         prevSales.forEach(s => {
             const prodPrice = products.find(p => p.sku === s.sku)?.unit_price;
             const fallbackPrice = prodPrice ? prodPrice : 1500;
             const q = Number(s.quantity) || 1;
             const amount = Number(s.amount || (q * (fallbackPrice * 1.25)));
-            rev += amount;
-            cogs += (fallbackPrice * q);
+            rev += amount; cogs += (fallbackPrice * q);
         });
-        return rev - cogs;
-    }, [sales, products, previousMonth]);
+        
+        let spent = 0;
+        const prevHist = invHistory.filter(h => h.timestamp && h.timestamp.startsWith(previousMonth));
+        prevHist.forEach(h => {
+            if (h.type === 'RESTOCK' && h.cost) spent += Number(h.cost);
+        });
+        
+        return { prevRevenue: rev, prevCost: cogs, previousMonthProfit: rev - cogs, prevCapitalSpent: spent };
+    }, [sales, products, invHistory, previousMonth]);
 
     const profit = totalRevenue - totalCost;
     const profitDiff = profit - previousMonthProfit;
-    const mostRecentSale = currentMonthSales.length > 0 ? currentMonthSales[0] : null;
-    
-    // Most recent history event for context (restock or edit)
-    const mostRecentRestock = currentMonthHistory.length > 0 ? currentMonthHistory[0] : null;
+    const mostRecentSale = activeMonthSales.length > 0 ? activeMonthSales[0] : null;
+    const mostRecentRestock = activeMonthHistory.length > 0 ? activeMonthHistory[0] : null;
 
     // Proactive AI Reminder Logic (Calculates on page load)
     useEffect(() => {
@@ -452,175 +469,8 @@ export default function Sales() {
     const hasClearance = user && (user.role === 'admin' || user.role === 'sales_manager');
     const tableColumns = hasClearance ? '1fr 1.2fr 1fr 1fr 1.5fr 0.8fr' : '1fr 1.2fr 1fr 1fr 1.5fr';
 
-    const CSS = `
-.wrap{
-  min-height:100vh;
-  background:transparent;
-  color:#e2e8f0;font-family:'Outfit', sans-serif;
-  position:relative;overflow-x:hidden;
-}
-/* DASHBOARD LAYOUT */
-.dashboard-layout { display: grid; grid-template-columns: 32% 66%; gap: 32px; align-items: start; margin-bottom: 28px; }
-@media (max-width: 1200px) { .dashboard-layout { grid-template-columns: 1fr; } }
-.left-panel { display: flex; flex-direction: column; gap: 24px; }
-.right-panel { display: flex; flex-direction: column; gap: 24px; }
-
-.metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.metric-card {
-  background: linear-gradient(135deg, rgba(12,12,22,.97), rgba(18,8,28,.97));
-  border: 1px solid rgba(249,115,22,.2); border-radius: 20px; padding: 24px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.6); position: relative; overflow: hidden;
-  animation: fadeInUp .5s ease both;
-}
-.metric-card.revenue { border-color: rgba(56, 189, 248, 0.4); animation-delay: 0.1s; }
-.metric-card.cost { border-color: rgba(239, 68, 68, 0.4); animation-delay: 0.2s; }
-.metric-card.profit.positive { border-color: rgba(34, 197, 94, 0.4); animation-delay: 0.3s; }
-.metric-card.profit.negative { border-color: rgba(239, 68, 68, 0.4); animation-delay: 0.3s; }
-
-.metric-title { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(226,232,240,0.6); margin-bottom: 8px; font-family: 'Outfit', monospace; }
-.metric-value { font-family: 'Space Mono', monospace; font-size: 26px; font-weight: bold; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
-
-.context-box { margin-top: 16px; padding-top: 16px; border-top: 1px dashed rgba(255,255,255,0.1); }
-.context-title { font-size: 10px; color: #f97316; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
-.context-detail { font-size: 12px; color: #e2e8f0; line-height: 1.5; }
-
-.cyber-card{
-  position:relative;
-  background:linear-gradient(135deg, rgba(12,12,22,.97), rgba(18,8,28,.97));
-  border:1px solid rgba(249,115,22,.2);border-radius:20px;padding:28px;
-  animation:fadeInUp .6s ease both;
-  transition:border-color .3s, box-shadow .3s;
-}
-.cyber-card:hover{border-color:rgba(249,115,22,.4); box-shadow:0 0 15px rgba(249,115,22,.1)}
-
-.card-title{font-family:'Outfit',monospace;font-size:14px;font-weight:700;color:#f97316;letter-spacing:3px;margin-bottom:24px;text-shadow:0 0 5px rgba(249,115,22,.3)}
-
-.field-label{font-size:12px;color:#ffffff;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;margin-top:16px}
-.field-label:first-of-type{margin-top:0}
-
-.cyber-input{
-  width:100%;background:rgba(5,5,10,.8);
-  border:1px solid rgba(249,115,22,.15);border-radius:2px;
-  padding:12px 14px;color:#e2e8f0;font-family:'Share Tech Mono',monospace;
-  font-size:13px;letter-spacing:1px;outline:none;transition:all .3s;
-}
-.cyber-input:focus{border-color:rgba(249,115,22,.5);box-shadow:0 0 8px rgba(249,115,22,.15);}
-.cyber-input::placeholder{color:rgba(226,232,240,.2)}
-
-.cyber-select {
-  cursor: pointer;
-}
-.cyber-select option {
-  background: #0a050f;
-  color: #e2e8f0;
-}
-
-.record-btn{
-  margin-top:20px;position:relative;
-  background:linear-gradient(135deg,rgba(249,115,22,.8),rgba(234,88,12,.8));
-  border:1px solid rgba(249,115,22,.4);padding:12px 24px;color:#fff;font-size:11px;letter-spacing:2px;
-  font-family:'Outfit',monospace;font-weight:700;text-transform:uppercase;
-  cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
-  overflow:hidden;transition:all .3s;
-}
-.record-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transition:left .5s}
-.record-btn:hover::before{left:100%}
-.record-btn:hover{box-shadow:0 0 12px rgba(249,115,22,.3); background:linear-gradient(135deg,#f97316,#ea580c);}
-.record-btn:disabled{opacity:0.5;cursor:not-allowed; box-shadow:none;}
-
-/* CSV CARD */
-.csv-hint{font-size:13px;color:#ffffff;letter-spacing:1px;margin-bottom:20px;line-height:1.8}
-.csv-hint code{color:#f97316;background:rgba(249,115,22,.1);padding:1px 6px;border-radius:2px;font-family:'Share Tech Mono',monospace}
-
-.csv-select-label{font-size:12px;color:#ffffff;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
-
-.file-row{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-.choose-btn{
-  background:rgba(249,115,22,.05);border:1px solid rgba(249,115,22,.3);
-  color:#f97316;font-family:'Outfit',monospace;font-size:10px;letter-spacing:2px;
-  padding:8px 16px;cursor:pointer;border-radius:2px;transition:all .3s;white-space:nowrap;
-}
-.choose-btn:hover{background:rgba(249,115,22,.15)}
-.file-name{font-size:11px;color:rgba(226,232,240,.3);letter-spacing:1px}
-
-.upload-btn{
-  position:relative;background:linear-gradient(135deg,rgba(34,197,94,.8),rgba(22,163,74,.8));
-  border:1px solid rgba(34,197,94,.4);padding:12px 24px;color:#fff;font-size:11px;letter-spacing:2px;
-  font-family:'Outfit',monospace;font-weight:700;text-transform:uppercase;
-  cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
-  overflow:hidden;transition:all .3s;
-}
-.upload-btn:hover{box-shadow:0 0 12px rgba(34,197,94,.3); background:linear-gradient(135deg,#22c55e,#16a34a);}
-.upload-btn:disabled{opacity:0.5;cursor:not-allowed; box-shadow:none;}
-
-/* HISTORY TABLE */
-.history-card{
-  position:relative;
-  background:linear-gradient(135deg, rgba(12,12,22,.97), rgba(18,8,28,.97));
-  border:1px solid rgba(249,115,22,.2);border-radius:20px;overflow:hidden;
-  animation:fadeInUp .6s ease .3s both;
-  transition:border-color .3s, box-shadow .3s;
-}
-.history-card:hover{border-color:rgba(249,115,22,.4); box-shadow:0 0 15px rgba(249,115,22,.1)}
-
-.history-header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px 24px;border-bottom:1px solid rgba(249,115,22,.15);
-  background:rgba(249,115,22,.04);
-}
-.history-title{font-family:'Outfit',monospace;font-size:14px;font-weight:700;color:#f97316;letter-spacing:3px;text-shadow:0 0 10px rgba(249,115,22,.4)}
-
-.refresh-btn{
-  background:transparent;border:1px solid rgba(249,115,22,.3);
-  color:#f97316;font-family:'Outfit',monospace;font-size:10px;letter-spacing:2px;
-  padding:6px 16px;cursor:pointer;border-radius:2px;transition:all .3s;
-}
-.refresh-btn:hover{background:rgba(249,115,22,.1);border-color:#f97316}
-
-.table-head{display:grid;grid-template-columns:1fr 1.2fr 1fr 1.5fr;padding:14px 24px;border-bottom:1px solid rgba(249,115,22,.15)}
-.th{font-family:'Outfit',monospace;font-size:11px;font-weight:700;color:#f97316;letter-spacing:3px;text-shadow:0 0 8px rgba(249,115,22,.4);cursor:pointer;user-select:none;transition:all .3s;}
-.th:hover{color:#fff;text-shadow:0 0 10px rgba(255,255,255,.5)}
-
-.table-row{
-  display:grid;grid-template-columns:1fr 1.2fr 1fr 1.5fr;
-  padding:16px 24px;border-bottom:1px solid rgba(249,115,22,.06);
-  border-left:2px solid transparent;transition:all .2s;cursor:pointer;
-}
-.table-row:last-child{border-bottom:none}
-.table-row:hover{background:rgba(249,115,22,.04);border-left-color:#f97316}
-
-.td-date{font-size:14px;color:#ffffff;letter-spacing:1px;display:flex;align-items:center;}
-
-.td-sku{font-family:'Outfit',monospace;font-size:13px;font-weight:700;color:#ffffff;letter-spacing:1px}
-.td-qty{font-family:'Outfit',monospace;font-size:16px;font-weight:700;color:#ffffff;}
-.td-user{font-size:13px;color:#ffffff;letter-spacing:1px}
-
-@keyframes inputGlow{0%,100%{box-shadow:0 0 0px transparent}50%{box-shadow:0 0 10px rgba(249,115,22,.3)}}
-
-.status-bar{margin-top:24px;display:flex;gap:28px;animation:fadeInUp .6s ease .7s both}
-.stat{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:2px}
-.stat-dot{width:7px;height:7px;border-radius:50%}
-.stat-label{color:rgba(226,232,240,.3)}
-.stat-val{font-family:'Outfit',monospace;font-weight:700}
-
-.custom-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-.custom-scroll::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.2); 
-}
-.custom-scroll::-webkit-scrollbar-thumb {
-  background: rgba(249,115,22,0.3); 
-  border-radius: 4px;
-}
-.custom-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(249,115,22,0.6); 
-}
-    `;
-
     return (
         <>
-            <style>{CSS}</style>
             <div className="wrap" style={{ position: 'relative', zIndex: 10, padding: '32px 40px' }}>
                 <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '36px', animation: 'slideInLeft .6s ease', marginTop: '40px' }}>
                     <div>
@@ -688,7 +538,8 @@ export default function Sales() {
                                                 }}
                                                 onMouseOver={(e) => e.currentTarget.style.background = 'rgba(249,115,22,0.15)'}
                                                 onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-                                                onClick={() => {
+                                                onMouseDown={(e) => {
+                                                    e.preventDefault(); // Prevent input onBlur from firing immediately
                                                     setSku(p.sku);
                                                     setSkuSearch(`${p.sku} - ${p.product_name || ''}`);
                                                     setIsDropdownOpen(false);
@@ -836,15 +687,36 @@ export default function Sales() {
                     {/* RIGHT PANEL DASHBOARD */}
                     <div className="right-panel">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                            <h2 style={{ fontFamily: "'Outfit', monospace", fontSize: '20px', color: '#fff', letterSpacing: '2px', textShadow: '0 0 10px rgba(255,255,255,0.3)', margin: 0 }}>
-                                {currentMonthName} Performance
-                            </h2>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                <h2 style={{ fontFamily: "'Outfit', monospace", fontSize: '20px', color: '#fff', letterSpacing: '2px', textShadow: '0 0 10px rgba(255,255,255,0.3)', margin: 0 }}>
+                                    Performance
+                                </h2>
+                                <select 
+                                    className="cyber-select"
+                                    style={{ 
+                                        background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.3)', 
+                                        color: '#f97316', padding: '6px 12px', borderRadius: '4px', outline: 'none', 
+                                        fontFamily: "'Share Tech Mono', monospace", fontSize: '13px', cursor: 'pointer'
+                                    }}
+                                    value={selectedMonth}
+                                    onChange={e => setSelectedMonth(e.target.value)}
+                                >
+                                    {availableMonths.map(m => {
+                                        const [y, mm] = m.split('-');
+                                        const label = new Date(y, parseInt(mm)-1, 1).toLocaleString('default', { month: 'long', year: 'numeric' });
+                                        return <option key={m} value={m}>{label}</option>;
+                                    })}
+                                </select>
+                            </div>
                         </div>
 
                         <div className="metrics-grid">
                             <div className="metric-card revenue">
                                 <div className="metric-title">Total Revenue</div>
                                 <div className="metric-value" style={{ color: '#38bdf8' }}>Rs. {totalRevenue.toLocaleString()}</div>
+                                <div style={{ fontSize: '12px', color: 'rgba(226,232,240,0.5)', marginTop: '6px', fontFamily: "'Outfit', sans-serif" }}>
+                                    {previousMonthName}: <span style={{ color: 'rgba(56,189,248,0.7)' }}>Rs. {prevRevenue.toLocaleString()}</span>
+                                </div>
                                 <div className="context-box">
                                     <div className="context-title">Most Recent Sale</div>
                                     {mostRecentSale ? (
@@ -862,14 +734,17 @@ export default function Sales() {
                             <div className="metric-card cost">
                                 <div className="metric-title">Total Cost (COGS)</div>
                                 <div className="metric-value" style={{ color: '#ef4444' }}>Rs. {totalCost.toLocaleString()}</div>
+                                <div style={{ fontSize: '12px', color: 'rgba(226,232,240,0.5)', marginTop: '6px', fontFamily: "'Outfit', sans-serif" }}>
+                                    {previousMonthName}: <span style={{ color: 'rgba(239,68,68,0.7)' }}>Rs. {prevCost.toLocaleString()}</span>
+                                </div>
                                 <div className="context-box">
                                     <div className="context-title">
                                         {mostRecentRestock?.type === 'EDIT' ? 'RECENT INVENTORY EDIT' : 'RECENT RESTOCK'}
                                     </div>
                                     {mostRecentRestock ? (
                                         <div className="context-detail">
-                                            <strong style={{color:'#fff'}}>{Math.abs(mostRecentRestock.quantityAdded)}x {mostRecentRestock.itemName}</strong><br/>
-                                            {mostRecentRestock.type === 'EDIT' && mostRecentRestock.quantityAdded < 0 ? 'Value Lost: ' : 'Cost: '} 
+                                            <strong style={{color:'#fff'}}>{Math.abs(mostRecentRestock.quantity_added)}x {mostRecentRestock.item_name}</strong><br/>
+                                            {mostRecentRestock.type === 'EDIT' && mostRecentRestock.quantity_added < 0 ? 'Value Lost: ' : 'Cost: '} 
                                             Rs. {Math.abs(mostRecentRestock.cost).toLocaleString()}<br/>
                                             <span style={{ fontSize: '10px', color: '#94a3b8' }}>{mostRecentRestock.timestamp.split('T')[0]}</span>
                                         </div>
@@ -883,6 +758,9 @@ export default function Sales() {
                                 <div className="metric-title">Net Profit</div>
                                 <div className="metric-value" style={{ color: profit >= 0 ? '#22c55e' : '#ef4444' }}>
                                     Rs. {profit.toLocaleString()}
+                                </div>
+                                <div style={{ fontSize: '12px', color: 'rgba(226,232,240,0.5)', marginTop: '6px', fontFamily: "'Outfit', sans-serif" }}>
+                                    {previousMonthName}: <span style={{ color: previousMonthProfit >= 0 ? 'rgba(34,197,94,0.7)' : 'rgba(239,68,68,0.7)' }}>Rs. {previousMonthProfit.toLocaleString()}</span>
                                 </div>
                                 <div className="context-box">
                                     <div className="context-title">Status (MoM Tracking)</div>
@@ -901,6 +779,24 @@ export default function Sales() {
                                         ) : (
                                             <div style={{ color: '#94a3b8' }}>Matched previous month exactly.</div>
                                         )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="metric-card capital-spent" style={{ borderColor: 'rgba(234,179,8,0.3)', boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 0 15px rgba(234,179,8,0.05)' }}>
+                                <div className="metric-title">Capital Spent (Restocks)</div>
+                                <div className="metric-value" style={{ color: '#eab308' }}>
+                                    Rs. {totalCapitalSpent.toLocaleString()}
+                                </div>
+                                <div style={{ fontSize: '12px', color: 'rgba(226,232,240,0.5)', marginTop: '6px', fontFamily: "'Outfit', sans-serif" }}>
+                                    {previousMonthName}: <span style={{ color: 'rgba(234,179,8,0.7)' }}>Rs. {prevCapitalSpent.toLocaleString()}</span>
+                                </div>
+                                <div className="context-box">
+                                    <div className="context-title">Investment Tracking</div>
+                                    <div className="context-detail">
+                                        <div style={{ color: '#94a3b8' }}>
+                                            Total money used to purchase new inventory this month.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
