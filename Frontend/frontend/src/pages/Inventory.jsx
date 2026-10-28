@@ -168,15 +168,15 @@ export default function Inventory() {
 
     const getUrgencyBadge = (u) => {
         switch (u) {
-            case 'EMERGENCY': return { text: 'EMERGENCY', color: '#ff0055', bg: 'rgba(255,0,85,.15)' };
-            case 'CRITICAL': return { text: 'CRITICAL', color: '#ef4444', bg: 'rgba(239,68,68,.1)' };
-            case 'URGENT': return { text: 'URGENT', color: '#f97316', bg: 'rgba(249,115,22,.1)' };
-            case 'REORDER': return { text: 'REORDER', color: '#eab308', bg: 'rgba(234,179,8,.1)' };
-            default: return { text: 'OK', color: '#22c55e', bg: 'rgba(34,197,94,.1)' };
+            case 'EMERGENCY': return { text: 'EMERGENCY', color: '#b8003d', bg: 'rgba(255,0,85,.15)' };
+            case 'CRITICAL': return { text: 'CRITICAL', color: '#dc2626', bg: 'rgba(239,68,68,.1)' };
+            case 'URGENT': return { text: 'URGENT', color: '#ea580c', bg: 'rgba(249,115,22,.1)' };
+            case 'REORDER': return { text: 'REORDER', color: '#ca8a04', bg: 'rgba(234,179,8,.1)' };
+            default: return { text: 'OK', color: '#16a34a', bg: 'rgba(34,197,94,.1)' };
         }
     };
 
-    if (loading) return <div className="p-8 text-center text-gray-500">Scanning inventory for alerts...</div>;
+    if (loading) return <div className="p-8 text-center text-slate-500">Scanning inventory for alerts...</div>;
 
     return (
         <div className="inv-wrap"> {/* Scoped to not break other components */}
@@ -201,21 +201,21 @@ export default function Inventory() {
                     gap: '16px',
                     marginBottom: '24px'
                 }}>
-                    <div className="summary-card" style={{ background: 'linear-gradient(135deg, rgba(24, 28, 40, .97), rgba(30, 24, 45, .97))', padding: '24px', borderRadius: '12px', border: '1px solid rgba(59, 130, 246, 0.2)' }}>
-                        <div style={{ fontSize: '11px', color: '#94a3b8', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>Total SKUs</div>
-                        <div style={{ fontSize: '32px', fontFamily: "'Outfit', monospace", fontWeight: 'bold', color: '#3b82f6' }}>{totalSkus}</div>
+                    <div className="summary-card" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,255,255,0.97))', padding: '24px', borderRadius: '12px', border: '1px solid rgba(59, 130, 246, 0.2)' }}>
+                        <div style={{ fontSize: '11px', color: '#556781', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>Total SKUs</div>
+                        <div style={{ fontSize: '32px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 'bold', color: '#2563eb' }}>{totalSkus}</div>
                     </div>
-                    <div className="summary-card" style={{ background: 'linear-gradient(135deg, rgba(24, 28, 40, .97), rgba(30, 24, 45, .97))', padding: '24px', borderRadius: '12px', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
-                        <div style={{ fontSize: '11px', color: '#94a3b8', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>Need Action</div>
-                        <div style={{ fontSize: '32px', fontFamily: "'Outfit', monospace", fontWeight: 'bold', color: '#ef4444' }}>{needAction}</div>
+                    <div className="summary-card" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,255,255,0.97))', padding: '24px', borderRadius: '12px', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
+                        <div style={{ fontSize: '11px', color: '#556781', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>Need Action</div>
+                        <div style={{ fontSize: '32px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 'bold', color: '#dc2626' }}>{needAction}</div>
                     </div>
-                    <div className="summary-card" style={{ background: 'linear-gradient(135deg, rgba(24, 28, 40, .97), rgba(30, 24, 45, .97))', padding: '24px', borderRadius: '12px', border: '1px solid rgba(34, 197, 94, 0.2)' }}>
-                        <div style={{ fontSize: '11px', color: '#94a3b8', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>Order Placed</div>
-                        <div style={{ fontSize: '32px', fontFamily: "'Outfit', monospace", fontWeight: 'bold', color: '#22c55e' }}>{orderPlaced}</div>
+                    <div className="summary-card" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,255,255,0.97))', padding: '24px', borderRadius: '12px', border: '1px solid rgba(34, 197, 94, 0.2)' }}>
+                        <div style={{ fontSize: '11px', color: '#556781', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>Order Placed</div>
+                        <div style={{ fontSize: '32px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 'bold', color: '#16a34a' }}>{orderPlaced}</div>
                     </div>
-                    <div className="summary-card" style={{ background: 'linear-gradient(135deg, rgba(24, 28, 40, .97), rgba(30, 24, 45, .97))', padding: '24px', borderRadius: '12px', border: '1px solid rgba(234, 179, 8, 0.2)' }}>
-                        <div style={{ fontSize: '11px', color: '#94a3b8', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>Monthly Capital Spent</div>
-                        <div style={{ fontSize: '26px', fontFamily: "'Outfit', monospace", fontWeight: 'bold', color: '#eab308', marginTop: '6px' }}>Rs. {monthlyCapitalSpent.toLocaleString()}</div>
+                    <div className="summary-card" style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,255,255,0.97))', padding: '24px', borderRadius: '12px', border: '1px solid rgba(234, 179, 8, 0.2)' }}>
+                        <div style={{ fontSize: '11px', color: '#556781', letterSpacing: '2px', marginBottom: '8px', textTransform: 'uppercase' }}>Monthly Capital Spent</div>
+                        <div style={{ fontSize: '26px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 'bold', color: '#ca8a04', marginTop: '6px' }}>Rs. {monthlyCapitalSpent.toLocaleString()}</div>
                     </div>
                 </div>
 
@@ -223,7 +223,7 @@ export default function Inventory() {
                     <select
                         value={filterUrgency}
                         onChange={e => setFilterUrgency(e.target.value)}
-                        style={{ padding: '8px 12px', background: 'rgba(6, 10, 16, 0.8)', color: '#94a3b8', border: '1px solid #334155', borderRadius: '6px', outline: 'none', fontFamily: "'Inter', sans-serif", fontSize: '13px' }}
+                        style={{ padding: '8px 12px', background: '#ffffff', color: '#556781', border: '1px solid #334155', borderRadius: '6px', outline: 'none', fontFamily: "'Inter', sans-serif", fontSize: '13px' }}
                     >
                         <option value="ALL">All Urgencies</option>
                         <option value="EMERGENCY">Emergency Backorders</option>
@@ -235,7 +235,7 @@ export default function Inventory() {
                     <select
                         value={filterCategory}
                         onChange={e => setFilterCategory(e.target.value)}
-                        style={{ padding: '8px 12px', background: 'rgba(6, 10, 16, 0.8)', color: '#94a3b8', border: '1px solid #334155', borderRadius: '6px', outline: 'none', fontFamily: "'Inter', sans-serif", fontSize: '13px' }}
+                        style={{ padding: '8px 12px', background: '#ffffff', color: '#556781', border: '1px solid #334155', borderRadius: '6px', outline: 'none', fontFamily: "'Inter', sans-serif", fontSize: '13px' }}
                     >
                         {categories.map(c => <option key={c} value={c}>{c === 'ALL' ? 'All Categories' : c}</option>)}
                     </select>
@@ -243,7 +243,7 @@ export default function Inventory() {
                     <select
                         value={filterStatus}
                         onChange={e => setFilterStatus(e.target.value)}
-                        style={{ padding: '8px 12px', background: 'rgba(6, 10, 16, 0.8)', color: '#94a3b8', border: '1px solid #334155', borderRadius: '6px', outline: 'none', fontFamily: "'Inter', sans-serif", fontSize: '13px' }}
+                        style={{ padding: '8px 12px', background: '#ffffff', color: '#556781', border: '1px solid #334155', borderRadius: '6px', outline: 'none', fontFamily: "'Inter', sans-serif", fontSize: '13px' }}
                     >
                         <option value="ALL">All Special Statuses</option>
                         <option value="MANUAL_OVERRIDE">Manually Overridden</option>
@@ -281,7 +281,7 @@ export default function Inventory() {
                                         background: 'transparent',
                                         boxShadow: `0 0 10px ${badge.color}15`
                                     }}>
-                                        <span style={{ fontSize: '8px', marginRight: '6px' }}>●</span> {badge.text}
+                                        <span style={{ fontSize: '11px', marginRight: '6px' }}>●</span> {badge.text}
                                     </div>
                                 </div>
                                 <div className="card-sku">{a.sku}</div>
@@ -290,10 +290,10 @@ export default function Inventory() {
                                     <div className="stat-block">
                                         <div className="stat-label-sm">Stock</div>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                            <div className="stat-val-sm" style={{ color: a.current_stock < a.reorder_point ? '#f97316' : '#22c55e', textShadow: a.current_stock < a.reorder_point ? '0 0 10px rgba(249,115,22,0.4)' : '0 0 10px rgba(34,197,94,0.4)' }}>{a.current_stock}</div>
+                                            <div className="stat-val-sm" style={{ color: a.current_stock < a.reorder_point ? '#ea580c' : '#16a34a', textShadow: a.current_stock < a.reorder_point ? '0 0 10px transparent' : '0 0 10px transparent' }}>{a.current_stock}</div>
                                             <button 
                                                 onClick={() => { setAdjustSku(a); setAdjustVal(a.current_stock); }}
-                                                style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '10px' }}
+                                                style={{ background: 'transparent', border: 'none', color: '#556781', cursor: 'pointer', fontSize: '12px' }}
                                                 title="Correct Stock Entry"
                                             >
                                                 ✏️
@@ -301,15 +301,15 @@ export default function Inventory() {
                                         </div>
                                     </div>
                                     <div className="stat-block">
-                                        <div className="stat-label-sm" style={{ color: '#60a5fa' }}>Days Left</div>
-                                        <div className="stat-val-sm" style={{ color: "#3b82f6", textShadow: "0 0 10px rgba(59,130,246,0.4)" }}>
+                                        <div className="stat-label-sm" style={{ color: '#2563eb' }}>Days Left</div>
+                                        <div className="stat-val-sm" style={{ color: "#2563eb", }}>
                                             {a.days_of_stock >= 999 ? '999+' : a.days_of_stock}
                                         </div>
                                     </div>
                                     {!!a.reorder_flag && a.recommended_order_quantity > 0 && (
                                         <div className="stat-block">
-                                            <div className="stat-label-sm" style={{ color: '#c084fc' }}>Order Qty</div>
-                                            <div className="stat-val-sm" style={{ color: "#d8b4fe", textShadow: "0 0 10px rgba(216,180,254,0.4)" }}>
+                                            <div className="stat-label-sm" style={{ color: '#9333ea' }}>Order Qty</div>
+                                            <div className="stat-val-sm" style={{ color: "#6803d3", }}>
                                                 +{a.recommended_order_quantity}
                                             </div>
                                         </div>
@@ -326,26 +326,26 @@ export default function Inventory() {
                                     
                                     {/* Node 1: Triggered */}
                                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', zIndex: 2, position: 'relative' }}>
-                                        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#3b82f6', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', boxShadow: '0 0 10px rgba(59,130,246,0.4)' }}>
+                                        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#3b82f6', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', boxShadow: '0 0 10px rgba(59,130,246,0.14)' }}>
                                             ✓
                                         </div>
-                                        <div style={{ position: 'absolute', top: '32px', fontSize: '10px', color: '#3b82f6', fontFamily: "'Inter', sans-serif", fontWeight: '500' }}>Triggered</div>
+                                        <div style={{ position: 'absolute', top: '32px', fontSize: '12px', color: '#2563eb', fontFamily: "'Inter', sans-serif", fontWeight: '500' }}>Triggered</div>
                                     </div>
 
                                     {/* Node 2: Ordered */}
                                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', zIndex: 2, position: 'relative' }}>
-                                        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: a.acknowledged || isCompleting ? '#3b82f6' : '#1e293b', border: a.acknowledged || isCompleting ? 'none' : '1px solid #334155', color: a.acknowledged || isCompleting ? 'white' : '#94a3b8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', transition: 'all 0.5s', boxShadow: a.acknowledged || isCompleting ? '0 0 10px rgba(59,130,246,0.4)' : 'none' }}>
+                                        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: a.acknowledged || isCompleting ? '#3b82f6' : '#f5f7fa', border: a.acknowledged || isCompleting ? 'none' : '1px solid #334155', color: a.acknowledged || isCompleting ? 'white' : '#94a3b8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', transition: 'all 0.5s', boxShadow: a.acknowledged || isCompleting ? '0 0 10px rgba(59,130,246,0.14)' : 'none' }}>
                                             {a.acknowledged || isCompleting ? '✓' : '2'}
                                         </div>
-                                        <div style={{ position: 'absolute', top: '32px', fontSize: '10px', color: a.acknowledged || isCompleting ? '#3b82f6' : '#64748b', fontFamily: "'Inter', sans-serif", fontWeight: '500', transition: 'color 0.5s' }}>Ordered</div>
+                                        <div style={{ position: 'absolute', top: '32px', fontSize: '12px', color: a.acknowledged || isCompleting ? '#2563eb' : '#64748b', fontFamily: "'Inter', sans-serif", fontWeight: '500', transition: 'color 0.5s' }}>Ordered</div>
                                     </div>
 
                                     {/* Node 3: Resolved */}
                                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', zIndex: 2, position: 'relative' }}>
-                                        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: isCompleting ? '#3b82f6' : '#1e293b', border: isCompleting ? 'none' : '1px solid #334155', color: isCompleting ? 'white' : '#94a3b8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', transition: 'all 0.5s', boxShadow: isCompleting ? '0 0 10px rgba(59,130,246,0.4)' : 'none' }}>
+                                        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: isCompleting ? '#3b82f6' : '#f5f7fa', border: isCompleting ? 'none' : '1px solid #334155', color: isCompleting ? 'white' : '#94a3b8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', transition: 'all 0.5s', boxShadow: isCompleting ? '0 0 10px rgba(59,130,246,0.14)' : 'none' }}>
                                             {isCompleting ? '✓' : '3'}
                                         </div>
-                                        <div style={{ position: 'absolute', top: '32px', fontSize: '10px', color: isCompleting ? '#3b82f6' : '#64748b', fontFamily: "'Inter', sans-serif", fontWeight: '500', transition: 'color 0.5s' }}>Resolved</div>
+                                        <div style={{ position: 'absolute', top: '32px', fontSize: '12px', color: isCompleting ? '#2563eb' : '#64748b', fontFamily: "'Inter', sans-serif", fontWeight: '500', transition: 'color 0.5s' }}>Resolved</div>
                                     </div>
                                 </div>
 
@@ -355,7 +355,7 @@ export default function Inventory() {
                                         style={{
                                             background: 'rgba(139, 92, 246, 0.1)',
                                             border: '1px solid rgba(139, 92, 246, 0.4)',
-                                            color: '#d8b4fe',
+                                            color: '#6803d3',
                                             padding: '8px 14px',
                                             borderRadius: '8px',
                                             fontSize: '11px',
@@ -379,12 +379,12 @@ export default function Inventory() {
                                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                                         {a.acknowledged ? (
                                             <>
-                                                <div style={{ fontSize: '9px', color: '#64748b', border: '1px solid #334155', padding: '4px 8px', borderRadius: '2px', background: 'rgba(51,65,85,.1)', fontFamily: "'Outfit', monospace", letterSpacing: '1px' }}>
+                                                <div style={{ fontSize: '11px', color: '#64748b', border: '1px solid #334155', padding: '4px 8px', borderRadius: '2px', background: '#f2f4f7', fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '1px' }}>
                                                     ORDER PLACED ✓
                                                 </div>
                                                 <button
                                                     onClick={() => { setArrivedModal(a); setArrivedQty(''); }}
-                                                    style={{ fontSize: '9px', color: '#22c55e', border: '1px solid rgba(34,197,94,.4)', padding: '4px 8px', borderRadius: '2px', background: 'transparent', cursor: 'pointer', fontFamily: "'Outfit', monospace", letterSpacing: '1px', transition: 'all 0.2s', marginLeft: '8px' }}
+                                                    style={{ fontSize: '11px', color: '#16a34a', border: '1px solid rgba(34,197,94,.4)', padding: '4px 8px', borderRadius: '2px', background: 'transparent', cursor: 'pointer', fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '1px', transition: 'all 0.2s', marginLeft: '8px' }}
                                                     onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(34,197,94,.1)'; e.currentTarget.style.boxShadow = '0 0 8px rgba(34,197,94,.3)'; }}
                                                     onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.boxShadow = 'none'; }}
                                                 >
@@ -394,7 +394,7 @@ export default function Inventory() {
                                         ) : (
                                             <button
                                                 onClick={() => handleAcknowledge(a.sku)}
-                                                style={{ fontSize: '9px', color: '#f97316', border: '1px solid rgba(249,115,22,.4)', padding: '4px 8px', borderRadius: '2px', background: 'transparent', cursor: 'pointer', fontFamily: "'Outfit', monospace", letterSpacing: '1px', transition: 'all 0.2s' }}
+                                                style={{ fontSize: '11px', color: '#ea580c', border: '1px solid rgba(249,115,22,.4)', padding: '4px 8px', borderRadius: '2px', background: 'transparent', cursor: 'pointer', fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '1px', transition: 'all 0.2s' }}
                                                 onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(249,115,22,.1)'; e.currentTarget.style.boxShadow = '0 0 8px rgba(249,115,22,.3)'; }}
                                                 onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.boxShadow = 'none'; }}
                                             >
@@ -403,7 +403,7 @@ export default function Inventory() {
                                         )}
                                         <button
                                             onClick={() => setOverrideSku(a)}
-                                            style={{ fontSize: '10px', color: '#94a3b8', border: '1px solid #334155', padding: '4px 8px', borderRadius: '2px', background: 'transparent', cursor: 'pointer', transition: 'all 0.2s', marginLeft: '4px', fontFamily: "'Outfit', sans-serif" }}
+                                            style={{ fontSize: '12px', color: '#556781', border: '1px solid #334155', padding: '4px 8px', borderRadius: '2px', background: 'transparent', cursor: 'pointer', transition: 'all 0.2s', marginLeft: '4px', fontFamily: "'Inter', system-ui, sans-serif" }}
                                             title="Set Manual Override Threshold"
                                             onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(148,163,184,.1)'; }}
                                             onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
@@ -426,11 +426,11 @@ export default function Inventory() {
                             minHeight: '400px',
                             opacity: 0.8
                         }}>
-                            <div style={{ fontSize: '48px', marginBottom: '16px', filter: 'drop-shadow(0 0 10px rgba(0,229,255,0.3))' }}>📦</div>
-                            <h2 style={{ fontSize: '24px', fontFamily: "'Orbitron', sans-serif", letterSpacing: '4px', color: '#fff', textAlign: 'center', textShadow: '0 0 20px rgba(0, 229, 255, 0.4)' }}>
+                            <div style={{ fontSize: '48px', marginBottom: '16px', filter: 'drop-shadow(0 0 10px rgba(0,229,255,0.105))' }}>📦</div>
+                            <h2 style={{ fontSize: '24px', fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '0.06em', color: '#0f172a', textAlign: 'center', }}>
                                 NO ALERTS GENERATED
                             </h2>
-                            <p style={{ fontFamily: "'Space Mono', monospace", color: '#94a3b8', marginTop: '12px', fontSize: '14px' }}>
+                            <p style={{ fontFamily: "'Inter', system-ui, sans-serif", color: '#556781', marginTop: '12px', fontSize: '14px' }}>
                                 Your inventory is perfectly balanced according to current filters.
                             </p>
                         </div>
@@ -441,10 +441,10 @@ export default function Inventory() {
 
                 <div className="status-bar" style={{ marginTop: 'auto' }}>
                     {[
-                        { label: "SYSTEM STATUS", val: "ONLINE", color: "#22c55e" },
-                        { label: "MODULE", val: "M3", color: "#f97316" },
-                        { label: "TOTAL SKUs VIEWED", val: `${filteredAlerts.length}`, color: "#3b82f6" },
-                        { label: "ALERT LEVEL", val: filteredAlerts.some(a => a.urgency === 'CRITICAL') ? "CRITICAL" : "NOMINAL", color: "#818cf8" },
+                        { label: "SYSTEM STATUS", val: "ONLINE", color: "#16a34a" },
+                        { label: "MODULE", val: "M3", color: "#ea580c" },
+                        { label: "TOTAL SKUs VIEWED", val: `${filteredAlerts.length}`, color: "#2563eb" },
+                        { label: "ALERT LEVEL", val: filteredAlerts.some(a => a.urgency === 'CRITICAL') ? "CRITICAL" : "NOMINAL", color: "#4f46e5" },
                     ].map(s => (
                         <div key={s.label} className="stat">
                             <span className="stat-dot" style={{ background: s.color, boxShadow: `0 0 8px ${s.color}` }} />
@@ -460,27 +460,27 @@ export default function Inventory() {
             {overrideSku && (
                 <div style={{
                     position: "fixed", inset: 0,
-                    background: "rgba(6, 10, 16, 0.8)", backdropFilter: "blur(6px)",
+                    background: "rgba(15,23,42,0.45)", backdropFilter: "blur(6px)",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     padding: "16px", zIndex: 9999
                 }}>
                     <div style={{
-                        background: "linear-gradient(145deg, #0d1520 0%, #080e18 100%)",
+                        background: "linear-gradient(145deg, #ffffff 0%, #ffffff 100%)",
                         border: "1px solid rgba(0, 229, 255, 0.15)",
-                        boxShadow: "0 0 0 1px rgba(0, 229, 255, 0.15), 0 0 60px rgba(0, 229, 255, 0.08), 0 40px 80px rgba(0,0,0,0.8)",
+                        boxShadow: "0 0 0 1px rgba(0,229,255,0.052), 0 0 60px rgba(0,229,255,0.028), 0 40px 80px rgba(15,23,42,0.09)",
                         borderRadius: "16px", padding: "24px", maxWidth: "400px", width: "100%", position: "relative"
                     }}>
-                        <button onClick={() => setOverrideSku(null)} className="absolute top-4 right-4 text-gray-500 hover:text-white">✕</button>
-                        <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: "'Outfit', sans-serif" }}>Set Manual Override</h3>
-                        <p className="text-sm text-gray-400 mb-4">Set a custom fallback reorder point for <strong>{overrideSku.sku}</strong>. This bypasses AI constraints.</p>
+                        <button onClick={() => setOverrideSku(null)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-900">✕</button>
+                        <h3 className="text-xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>Set Manual Override</h3>
+                        <p className="text-sm text-slate-500 mb-4">Set a custom fallback reorder point for <strong>{overrideSku.sku}</strong>. This bypasses AI constraints.</p>
                         <form onSubmit={handleSetOverride}>
                             <input 
                                 type="number" 
                                 style={{
-                                    width: "100%", background: "#060a10", color: "#00e5ff", 
+                                    width: "100%", background: "#ffffff", color: "#0891b2", 
                                     border: "1px solid rgba(0, 229, 255, 0.2)", borderRadius: "6px", 
-                                    padding: "12px", marginBottom: "16px", fontFamily: "'Space Mono', monospace",
-                                    outline: "none", boxShadow: "inset 0 2px 4px rgba(0,0,0,0.5)"
+                                    padding: "12px", marginBottom: "16px", fontFamily: "'Inter', system-ui, sans-serif",
+                                    outline: "none", boxShadow: "inset 0 2px 4px rgba(15,23,42,0.09)"
                                 }}
                                 placeholder="E.g. 100"
                                 value={overrideVal}
@@ -489,13 +489,13 @@ export default function Inventory() {
                             />
                             <div style={{ display: "flex", gap: "12px" }}>
                                 <button type="button" onClick={() => setOverrideSku(null)} style={{
-                                    flex: 1, padding: "10px", background: "transparent", color: "#8899aa", 
-                                    border: "1px solid rgba(255,255,255,0.1)", borderRadius: "6px", cursor: "pointer", fontFamily: "'Space Mono', monospace"
+                                    flex: 1, padding: "10px", background: "transparent", color: "#64748b", 
+                                    border: "1px solid rgba(15,23,42,0.11)", borderRadius: "6px", cursor: "pointer", fontFamily: "'Inter', system-ui, sans-serif"
                                 }}>Cancel</button>
                                 <button type="submit" style={{
                                     flex: 1, padding: "10px", background: "linear-gradient(135deg, #00c8e0, #0088cc)", 
                                     color: "#000", fontWeight: "bold", border: "none", borderRadius: "6px", cursor: "pointer", 
-                                    fontFamily: "'Space Mono', monospace", boxShadow: "0 0 15px rgba(0, 229, 255, 0.3)"
+                                    fontFamily: "'Inter', system-ui, sans-serif", boxShadow: "0 0 15px rgba(0,229,255,0.105)"
                                 }}>Save Rule</button>
                             </div>
                         </form>
@@ -506,28 +506,28 @@ export default function Inventory() {
             {adjustSku && (
                 <div style={{
                     position: "fixed", inset: 0,
-                    background: "rgba(6, 10, 16, 0.8)", backdropFilter: "blur(6px)",
+                    background: "rgba(15,23,42,0.45)", backdropFilter: "blur(6px)",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     padding: "16px", zIndex: 9999
                 }}>
                     <div style={{
-                        background: "linear-gradient(145deg, #0d1520 0%, #080e18 100%)",
+                        background: "linear-gradient(145deg, #ffffff 0%, #ffffff 100%)",
                         border: "1px solid rgba(0, 229, 255, 0.15)",
-                        boxShadow: "0 0 0 1px rgba(0, 229, 255, 0.15), 0 0 60px rgba(0, 229, 255, 0.08), 0 40px 80px rgba(0,0,0,0.8)",
+                        boxShadow: "0 0 0 1px rgba(0,229,255,0.052), 0 0 60px rgba(0,229,255,0.028), 0 40px 80px rgba(15,23,42,0.09)",
                         borderRadius: "16px", padding: "24px", maxWidth: "400px", width: "100%", position: "relative"
                     }}>
-                        <button onClick={() => setAdjustSku(null)} className="absolute top-4 right-4 text-gray-500 hover:text-white">✕</button>
-                        <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: "'Orbitron', sans-serif" }}>Adjust Stock</h3>
-                        <p className="text-sm text-gray-400 mb-4">Correct the actual physical stock for <strong>{adjustSku.sku}</strong>. This action will be logged.</p>
+                        <button onClick={() => setAdjustSku(null)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-900">✕</button>
+                        <h3 className="text-xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>Adjust Stock</h3>
+                        <p className="text-sm text-slate-500 mb-4">Correct the actual physical stock for <strong>{adjustSku.sku}</strong>. This action will be logged.</p>
                         <form onSubmit={handleAdjustSubmit}>
-                            <label style={{ display: 'block', color: '#8899aa', fontSize: '12px', marginBottom: '4px', fontFamily: "'Space Mono', monospace" }}>New Physical Stock Count (Current: {adjustSku.current_stock})</label>
+                            <label style={{ display: 'block', color: '#64748b', fontSize: '12px', marginBottom: '4px', fontFamily: "'Inter', system-ui, sans-serif" }}>New Physical Stock Count (Current: {adjustSku.current_stock})</label>
                             <input 
                                 type="number" 
                                 style={{
-                                    width: "100%", background: "#060a10", color: "#00e5ff", 
+                                    width: "100%", background: "#ffffff", color: "#0891b2", 
                                     border: "1px solid rgba(0, 229, 255, 0.2)", borderRadius: "6px", 
-                                    padding: "12px", marginBottom: "16px", fontFamily: "'Space Mono', monospace",
-                                    outline: "none", boxShadow: "inset 0 2px 4px rgba(0,0,0,0.5)"
+                                    padding: "12px", marginBottom: "16px", fontFamily: "'Inter', system-ui, sans-serif",
+                                    outline: "none", boxShadow: "inset 0 2px 4px rgba(15,23,42,0.09)"
                                 }}
                                 placeholder="Exact Count"
                                 value={adjustVal}
@@ -535,14 +535,14 @@ export default function Inventory() {
                                 min="0" required
                             />
                             
-                            <label style={{ display: 'block', color: '#8899aa', fontSize: '12px', marginBottom: '4px', fontFamily: "'Space Mono', monospace" }}>Reason for Correction</label>
+                            <label style={{ display: 'block', color: '#64748b', fontSize: '12px', marginBottom: '4px', fontFamily: "'Inter', system-ui, sans-serif" }}>Reason for Correction</label>
                             <select 
                                 value={adjustReason}
                                 onChange={e => setAdjustReason(e.target.value)}
                                 style={{
-                                    width: "100%", background: "#060a10", color: "#00e5ff", 
+                                    width: "100%", background: "#ffffff", color: "#0891b2", 
                                     border: "1px solid rgba(0, 229, 255, 0.2)", borderRadius: "6px", 
-                                    padding: "12px", marginBottom: "24px", fontFamily: "'Space Mono', monospace",
+                                    padding: "12px", marginBottom: "24px", fontFamily: "'Inter', system-ui, sans-serif",
                                     outline: "none"
                                 }}
                             >
@@ -555,13 +555,13 @@ export default function Inventory() {
 
                             <div style={{ display: "flex", gap: "12px" }}>
                                 <button type="button" onClick={() => setAdjustSku(null)} style={{
-                                    flex: 1, padding: "10px", background: "transparent", color: "#8899aa", 
-                                    border: "1px solid rgba(255,255,255,0.1)", borderRadius: "6px", cursor: "pointer", fontFamily: "'Space Mono', monospace"
+                                    flex: 1, padding: "10px", background: "transparent", color: "#64748b", 
+                                    border: "1px solid rgba(15,23,42,0.11)", borderRadius: "6px", cursor: "pointer", fontFamily: "'Inter', system-ui, sans-serif"
                                 }}>Cancel</button>
                                 <button type="submit" style={{
                                     flex: 1, padding: "10px", background: "linear-gradient(135deg, #00c8e0, #0088cc)", 
                                     color: "#000", fontWeight: "bold", border: "none", borderRadius: "6px", cursor: "pointer", 
-                                    fontFamily: "'Space Mono', monospace", boxShadow: "0 0 15px rgba(0, 229, 255, 0.3)"
+                                    fontFamily: "'Inter', system-ui, sans-serif", boxShadow: "0 0 15px rgba(0,229,255,0.105)"
                                 }}>Save Correction</button>
                             </div>
                         </form>
@@ -594,29 +594,29 @@ export default function Inventory() {
                 return (
                     <div style={{
                         position: "fixed", inset: 0,
-                        background: "rgba(6, 10, 16, 0.8)", backdropFilter: "blur(6px)",
+                        background: "rgba(15,23,42,0.45)", backdropFilter: "blur(6px)",
                         display: "flex", alignItems: "center", justifyContent: "center",
                         padding: "16px", zIndex: 9999
                     }}>
                         <div style={{
-                            background: "linear-gradient(145deg, #0d1520 0%, #080e18 100%)",
+                            background: "linear-gradient(145deg, #ffffff 0%, #ffffff 100%)",
                             border: "1px solid rgba(34, 197, 94, 0.15)",
-                            boxShadow: "0 0 0 1px rgba(34, 197, 94, 0.15), 0 0 60px rgba(34, 197, 94, 0.08), 0 40px 80px rgba(0,0,0,0.8)",
+                            boxShadow: "0 0 0 1px rgba(34,197,94,0.052), 0 0 60px rgba(34,197,94,0.028), 0 40px 80px rgba(15,23,42,0.09)",
                             borderRadius: "16px", padding: "24px", maxWidth: "450px", width: "100%", position: "relative"
                         }}>
-                            <button onClick={() => setArrivedModal(null)} className="absolute top-4 right-4 text-gray-500 hover:text-white">✕</button>
-                            <h3 className="text-xl font-bold text-white mb-2" style={{ fontFamily: "'Orbitron', sans-serif" }}>🚚 Truck Arrived</h3>
-                            <p className="text-sm text-gray-400 mb-4">Log physical inbound stock for <strong>{arrivedModal.sku}</strong>.</p>
+                            <button onClick={() => setArrivedModal(null)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-900">✕</button>
+                            <h3 className="text-xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>🚚 Truck Arrived</h3>
+                            <p className="text-sm text-slate-500 mb-4">Log physical inbound stock for <strong>{arrivedModal.sku}</strong>.</p>
                             
                             <form onSubmit={handleArrivedSubmit}>
-                                <label style={{ display: 'block', color: '#8899aa', fontSize: '12px', marginBottom: '4px', fontFamily: "'Space Mono', monospace" }}>Received Quantity</label>
+                                <label style={{ display: 'block', color: '#64748b', fontSize: '12px', marginBottom: '4px', fontFamily: "'Inter', system-ui, sans-serif" }}>Received Quantity</label>
                                 <input 
                                     type="number" 
                                     style={{
-                                        width: "100%", background: "#060a10", color: "#22c55e", 
+                                        width: "100%", background: "#ffffff", color: "#16a34a", 
                                         border: "1px solid rgba(34, 197, 94, 0.2)", borderRadius: "6px", 
-                                        padding: "12px", marginBottom: "16px", fontFamily: "'Space Mono', monospace",
-                                        outline: "none", boxShadow: "inset 0 2px 4px rgba(0,0,0,0.5)"
+                                        padding: "12px", marginBottom: "16px", fontFamily: "'Inter', system-ui, sans-serif",
+                                        outline: "none", boxShadow: "inset 0 2px 4px rgba(15,23,42,0.09)"
                                     }}
                                     placeholder="E.g. 200"
                                     value={arrivedQty}
@@ -624,14 +624,14 @@ export default function Inventory() {
                                     min="1" required
                                 />
 
-                                <label style={{ display: 'block', color: '#8899aa', fontSize: '12px', marginBottom: '4px', fontFamily: "'Space Mono', monospace" }}>Supplier Unit Price (COGS)</label>
+                                <label style={{ display: 'block', color: '#64748b', fontSize: '12px', marginBottom: '4px', fontFamily: "'Inter', system-ui, sans-serif" }}>Supplier Unit Price (COGS)</label>
                                 <input 
                                     type="number" 
                                     style={{
-                                        width: "100%", background: "#060a10", color: "#3b82f6", 
+                                        width: "100%", background: "#ffffff", color: "#2563eb", 
                                         border: "1px solid rgba(59, 130, 246, 0.2)", borderRadius: "6px", 
-                                        padding: "12px", marginBottom: expectedPrice > 0 ? "8px" : "16px", fontFamily: "'Space Mono', monospace",
-                                        outline: "none", boxShadow: "inset 0 2px 4px rgba(0,0,0,0.5)"
+                                        padding: "12px", marginBottom: expectedPrice > 0 ? "8px" : "16px", fontFamily: "'Inter', system-ui, sans-serif",
+                                        outline: "none", boxShadow: "inset 0 2px 4px rgba(15,23,42,0.09)"
                                     }}
                                     placeholder={`E.g. ${expectedPrice > 0 ? expectedPrice.toFixed(2) : "450.00"}`}
                                     value={arrivedPrice}
@@ -639,7 +639,7 @@ export default function Inventory() {
                                     min="0" step="0.01" required
                                 />
                                 
-                                <div style={{ fontSize: '10px', color: '#64748b', marginBottom: '16px', fontFamily: "'Space Mono', monospace" }}>
+                                <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '16px', fontFamily: "'Inter', system-ui, sans-serif" }}>
                                     {expectedPrice > 0 
                                         ? `Historical expected price: $${expectedPrice.toFixed(2)}`
                                         : `Historical expected price: Not Set in Database`
@@ -650,9 +650,9 @@ export default function Inventory() {
                                     <div style={{
                                         background: "rgba(249, 115, 22, 0.1)", border: "1px solid rgba(249, 115, 22, 0.4)",
                                         borderRadius: "6px", padding: "12px", marginBottom: "16px",
-                                        color: "#fdba74", fontSize: "12px", lineHeight: "1.5"
+                                        color: "#d36d03", fontSize: "12px", lineHeight: "1.5"
                                     }}>
-                                        <strong style={{ color: "#f97316", display: "block", marginBottom: "4px" }}>⚠️ EXTREME CAPITAL TIE-UP WARNING</strong>
+                                        <strong style={{ color: "#ea580c", display: "block", marginBottom: "4px" }}>⚠️ EXTREME CAPITAL TIE-UP WARNING</strong>
                                         Based on the AI model ({arrivedModal.avg_daily_demand} sales/day), receiving {qty} units equals a <strong>{monthsSupply}-Month supply</strong>. 
                                         This violates inventory cost-minimization equations.
                                     </div>
@@ -662,22 +662,22 @@ export default function Inventory() {
                                     <div style={{
                                         background: "rgba(225, 29, 72, 0.1)", border: "1px solid rgba(225, 29, 72, 0.4)",
                                         borderRadius: "6px", padding: "12px", marginBottom: "16px",
-                                        color: "#fecdd3", fontSize: "12px", lineHeight: "1.5"
+                                        color: "#d2041d", fontSize: "12px", lineHeight: "1.5"
                                     }}>
-                                        <strong style={{ color: "#e11d48", display: "block", marginBottom: "4px" }}>⚠️ PRICE DEVIATION WARNING</strong>
+                                        <strong style={{ color: "#a31534", display: "block", marginBottom: "4px" }}>⚠️ PRICE DEVIATION WARNING</strong>
                                         The entered price (${currentPriceVal.toFixed(2)}) is <strong>{priceDeviationPercent.toFixed(1)}% {currentPriceVal > expectedPrice ? 'higher' : 'lower'}</strong> than the historical average (${expectedPrice.toFixed(2)}). Please verify this is not a typo.
                                     </div>
                                 )}
 
                                 <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
                                     <button type="button" onClick={() => setArrivedModal(null)} style={{
-                                        flex: 1, padding: "10px", background: "transparent", color: "#8899aa", 
-                                        border: "1px solid rgba(255,255,255,0.1)", borderRadius: "6px", cursor: "pointer", fontFamily: "'Space Mono', monospace"
+                                        flex: 1, padding: "10px", background: "transparent", color: "#64748b", 
+                                        border: "1px solid rgba(15,23,42,0.11)", borderRadius: "6px", cursor: "pointer", fontFamily: "'Inter', system-ui, sans-serif"
                                     }}>Cancel</button>
                                     <button type="submit" style={{
                                         flex: 2, padding: "10px", background: showAnyWarning ? "linear-gradient(135deg, #f97316, #ea580c)" : "linear-gradient(135deg, #22c55e, #16a34a)", 
                                         color: "#000", fontWeight: "bold", border: "none", borderRadius: "6px", cursor: "pointer", 
-                                        fontFamily: "'Space Mono', monospace", boxShadow: showAnyWarning ? "0 0 15px rgba(249, 115, 22, 0.3)" : "0 0 15px rgba(34, 197, 94, 0.3)",
+                                        fontFamily: "'Inter', system-ui, sans-serif", boxShadow: showAnyWarning ? "0 0 15px rgba(249,115,22,0.105)" : "0 0 15px rgba(34,197,94,0.105)",
                                         transition: "all 0.2s"
                                     }}>
                                         {showAnyWarning ? "Force Accept Warnings && Log Stock" : "Log Inbound Stock"}

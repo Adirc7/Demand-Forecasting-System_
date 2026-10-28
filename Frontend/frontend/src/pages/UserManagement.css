@@ -10,18 +10,18 @@
 }
 
 @keyframes pulseGlow {
-    0% { box-shadow: 0 0 10px rgba(139,92,246,0.2); }
-    50% { box-shadow: 0 0 25px rgba(139,92,246,0.5); }
-    100% { box-shadow: 0 0 10px rgba(139,92,246,0.2); }
+    0% { box-shadow: 0 0 10px rgba(139,92,246,0.07); }
+    50% { box-shadow: 0 0 25px rgba(139,92,246,0.175); }
+    100% { box-shadow: 0 0 10px rgba(139,92,246,0.07); }
 }
 
 .user-wrap {
     min-height: 100vh;
-    color: #e2e8f0;
+    color: #0f172a;
     font-family: 'Inter', sans-serif;
     position: relative;
     overflow-x: hidden;
-    margin: -32px;
+    margin: 0;
     padding: 32px;
 }
 
@@ -50,14 +50,14 @@
 
 .user-card {
     position: relative;
-    background: linear-gradient(145deg, rgba(20, 15, 30, 0.7), rgba(10, 5, 15, 0.9));
+    background: linear-gradient(145deg, #ffffff, #ffffff);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(139, 92, 246, 0.2);
     border-radius: 20px;
     padding: 24px;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     animation: slideUp 0.5s ease both;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 30px rgba(15,23,42,0.072);
     overflow: hidden;
 }
 
@@ -74,7 +74,7 @@
 .user-card:hover {
     border-color: rgba(139, 92, 246, 0.5);
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(139, 92, 246, 0.15);
+    box-shadow: 0 15px 40px rgba(139,92,246,0.052);
 }
 
 .user-card:hover::before {
@@ -89,57 +89,57 @@
 }
 
 .card-email {
-    font-family: 'Outfit', monospace;
+    font-family: 'Inter', system-ui, sans-serif;
     font-size: 16px;
     font-weight: 800;
-    color: #fff;
+    color: #0f172a;
     letter-spacing: 1px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+    
 }
 
 .user-badge {
     background: rgba(34, 197, 94, 0.1);
     border: 1px solid rgba(34, 197, 94, 0.3);
-    color: #22c55e;
-    font-family: 'Outfit', monospace;
-    font-size: 10px;
+    color: #16a34a;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: 1.5px;
     padding: 4px 10px;
     border-radius: 12px;
     flex-shrink: 0;
-    box-shadow: 0 0 10px rgba(34, 197, 94, 0.1);
+    box-shadow: 0 0 10px rgba(34,197,94,0.035);
 }
 
 .user-badge.inactive {
     background: rgba(239, 68, 68, 0.1);
     border-color: rgba(239, 68, 68, 0.3);
-    color: #ef4444;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    box-shadow: 0 0 10px rgba(239,68,68,0.035);
 }
 
 .card-uid {
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(15,23,42,0.6);
     letter-spacing: 1px;
     margin-bottom: 20px;
     font-family: 'Inter', sans-serif;
 }
 
 .stat-block {
-    background: rgba(0,0,0,0.3);
+    background: rgba(15,23,42,0.03);
     padding: 12px 16px;
     border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(15,23,42,0.055);
     margin-bottom: 20px;
 }
 
 .stat-label-sm {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    color: rgba(15,23,42,0.6);
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 6px;
@@ -147,10 +147,10 @@
 }
 
 .stat-val-sm {
-    font-family: 'Outfit', monospace;
+    font-family: 'Inter', system-ui, sans-serif;
     font-size: 14px;
     font-weight: 800;
-    color: #a78bfa;
+    color: #7c3aed;
     letter-spacing: 1px;
 }
 
@@ -174,7 +174,7 @@
     border-radius: 8px;
     background: rgba(139, 92, 246, 0.05);
     cursor: pointer;
-    font-family: "'Outfit', monospace";
+    font-family: "'Inter', system-ui, sans-serif";
     letter-spacing: 1px;
     font-weight: 700;
     transition: all 0.3s ease;
@@ -182,30 +182,30 @@
 
 .action-btn:hover {
     background: rgba(139, 92, 246, 0.15);
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+    box-shadow: 0 0 15px rgba(139,92,246,0.07);
     transform: translateY(-1px);
 }
 
 .action-btn.danger {
-    color: #ef4444;
+    color: #dc2626;
     border-color: rgba(239, 68, 68, 0.3);
     background: rgba(239, 68, 68, 0.05);
 }
 
 .action-btn.danger:hover {
     background: rgba(239, 68, 68, 0.15);
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+    box-shadow: 0 0 15px rgba(239,68,68,0.07);
 }
 
 .action-btn.success {
-    color: #22c55e;
+    color: #16a34a;
     border-color: rgba(34, 197, 94, 0.3);
     background: rgba(34, 197, 94, 0.05);
 }
 
 .action-btn.success:hover {
     background: rgba(34, 197, 94, 0.15);
-    box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+    box-shadow: 0 0 15px rgba(34,197,94,0.07);
 }
 
 .add-btn {
@@ -216,11 +216,11 @@
     color: #fff;
     font-size: 12px;
     letter-spacing: 2px;
-    font-family: 'Outfit', monospace;
+    font-family: 'Inter', system-ui, sans-serif;
     font-weight: 800;
     cursor: pointer;
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 0 20px rgba(139,92,246,0.14);
     transition: all .3s cubic-bezier(0.16, 1, 0.3, 1);
     display: inline-flex;
     align-items: center;
@@ -229,14 +229,14 @@
 
 .add-btn:hover {
     background: linear-gradient(135deg, #a78bfa, #8b5cf6);
-    box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+    box-shadow: 0 0 30px rgba(139,92,246,0.21);
     transform: translateY(-2px);
 }
 
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(5, 5, 10, 0.85);
+    background: rgba(15,23,42,0.45);
     backdrop-filter: blur(12px);
     display: flex;
     justify-content: center;
@@ -246,13 +246,13 @@
 }
 
 .modal-content {
-    background: linear-gradient(145deg, rgba(20,15,30,0.85), rgba(10,5,15,0.95));
+    background: linear-gradient(145deg, #ffffff, #ffffff);
     border: 1px solid rgba(139, 92, 246, 0.3);
     padding: 40px;
     width: 90%;
     max-width: 500px;
     border-radius: 24px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(139, 92, 246, 0.15);
+    box-shadow: 0 20px 60px rgba(15,23,42,0.09), 0 0 40px rgba(139,92,246,0.052);
     position: relative;
     animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     overflow: hidden;
@@ -278,12 +278,12 @@
 }
 
 .modal-content h2 {
-    font-family: 'Outfit', monospace;
-    color: #fff;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #0f172a;
     font-size: 24px;
     font-weight: 800;
     margin-bottom: 24px;
-    text-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    
     letter-spacing: 2px;
     display: flex;
     align-items: center;
@@ -300,7 +300,7 @@
     gap: 8px;
     font-size: 11px;
     letter-spacing: 1.5px;
-    color: #cbd5e1;
+    color: #334155;
     text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 10px;
@@ -308,10 +308,10 @@
 
 .form-group input, .form-group select {
     width: 100%;
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(15,23,42,0.04);
+    border: 1px solid rgba(15,23,42,0.11);
     padding: 14px 16px;
-    color: #fff;
+    color: #0f172a;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     border-radius: 12px;
@@ -329,15 +329,15 @@
 }
 
 .form-group select option {
-    background-color: #12081c;
-    color: #fff;
+    background-color: #ffffff;
+    color: #0f172a;
     padding: 12px;
 }
 
 .form-group input:focus, .form-group select:focus {
     border-color: #8b5cf6;
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
-    background: rgba(0,0,0,0.6);
+    box-shadow: 0 0 0 4px rgba(139,92,246,0.15);
+    background: #ffffff;
 }
 
 .modal-actions {
@@ -348,19 +348,23 @@
 }
 
 .modal-actions button.cancel-btn {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #cbd5e1;
+    background: rgba(15,23,42,0.03);
+    border: 1px solid rgba(15,23,42,0.11);
+    color: #334155;
     padding: 12px 24px;
     border-radius: 12px;
     cursor: pointer;
-    font-family: 'Outfit', monospace;
+    font-family: 'Inter', system-ui, sans-serif;
     font-weight: 700;
     letter-spacing: 1px;
     transition: all 0.3s ease;
 }
 
 .modal-actions button.cancel-btn:hover {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
+    background: rgba(15,23,42,0.06);
+    color: #0f172a;
+}
+
+@media (max-width: 640px) {
+    .inv-wrap, .user-wrap { padding: 20px 16px; }
 }

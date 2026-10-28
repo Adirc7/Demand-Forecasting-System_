@@ -19,9 +19,9 @@ function AnimatedBar({ item, index, visible, maxVal }) {
                 style={{
                     width: "140px",
                     textAlign: "right",
-                    fontFamily: "'Space Mono', monospace",
+                    fontFamily: "'Inter', system-ui, sans-serif",
                     fontSize: "11px",
-                    color: "#8899aa",
+                    color: "#64748b",
                     letterSpacing: "0.03em",
                     flexShrink: 0,
                 }}
@@ -38,7 +38,7 @@ function AnimatedBar({ item, index, visible, maxVal }) {
                         top: 0,
                         bottom: 0,
                         width: "1px",
-                        background: "rgba(255,255,255,0.08)",
+                        background: "rgba(15,23,42,0.048)",
                     }}
                 />
 
@@ -78,9 +78,9 @@ function AnimatedBar({ item, index, visible, maxVal }) {
             <div
                 style={{
                     width: "42px",
-                    fontFamily: "'Space Mono', monospace",
+                    fontFamily: "'Inter', system-ui, sans-serif",
                     fontSize: "11px",
-                    color: item.positive ? "#00e5ff" : "#ff3d6b",
+                    color: item.positive ? "#0891b2" : "#d60033",
                     flexShrink: 0,
                 }}
             >
@@ -129,7 +129,7 @@ export default function WhyPopup({ alert, onClose }) {
     const shapData = rawShap.map(item => ({
         label: item.feature,
         value: item.impact,
-        color: item.impact >= 0 ? "#00e5ff" : "#ff3d6b",
+        color: item.impact >= 0 ? "#0891b2" : "#d60033",
         positive: item.impact >= 0
     }));
 
@@ -141,12 +141,12 @@ export default function WhyPopup({ alert, onClose }) {
             style={{
                 position: "fixed",
                 inset: 0,
-                background: "rgba(6, 10, 16, 0.8)",
+                background: "rgba(15,23,42,0.45)",
                 backdropFilter: "blur(6px)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontFamily: "'Space Mono', monospace",
+                fontFamily: "'Inter', system-ui, sans-serif",
                 padding: "24px",
                 zIndex: 9999
             }}
@@ -193,12 +193,12 @@ export default function WhyPopup({ alert, onClose }) {
             <div
                 style={{
                     width: "520px",
-                    background: "linear-gradient(145deg, #0d1520 0%, #080e18 100%)",
+                    background: "linear-gradient(145deg, #ffffff 0%, #ffffff 100%)",
                     borderRadius: "16px",
                     overflow: "hidden",
                     position: "relative",
                     animation: "fadeSlideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
-                    boxShadow: "0 0 0 1px rgba(0, 229, 255, 0.15), 0 0 60px rgba(0, 229, 255, 0.08), 0 40px 80px rgba(0,0,0,0.8)",
+                    boxShadow: "0 0 0 1px rgba(0,229,255,0.052), 0 0 60px rgba(0,229,255,0.028), 0 40px 80px rgba(15,23,42,0.09)",
                 }}
             >
 
@@ -233,9 +233,9 @@ export default function WhyPopup({ alert, onClose }) {
                                     <PulsingRing delay={0.7} />
                                 </div>
                                 <span style={{
-                                    fontFamily: "'Outfit', sans-serif",
-                                    fontSize: "10px",
-                                    color: alert.urgency === 'OK' ? "#22c55e" : "#ff3d6b",
+                                    fontFamily: "'Inter', system-ui, sans-serif",
+                                    fontSize: '12px',
+                                    color: alert.urgency === 'OK' ? "#16a34a" : "#d60033",
                                     letterSpacing: "0.2em",
                                     fontWeight: 600,
                                 }}>
@@ -245,10 +245,10 @@ export default function WhyPopup({ alert, onClose }) {
 
                             <h1
                                 style={{
-                                    fontFamily: "'Outfit', sans-serif",
+                                    fontFamily: "'Inter', system-ui, sans-serif",
                                     fontSize: "24px",
                                     fontWeight: 900,
-                                    color: "#ffffff",
+                                    color: "#0f172a",
                                     margin: 0,
                                     lineHeight: 1.1,
                                     animation: "glitch 8s ease-in-out infinite",
@@ -257,7 +257,7 @@ export default function WhyPopup({ alert, onClose }) {
                             >
                                 {alert.urgency === 'OK' ? "STATUS" : "REORDER"}
                                 <br />
-                                <span style={{ color: "#00e5ff" }}>EXPLANATION</span>
+                                <span style={{ color: "#0891b2" }}>EXPLANATION</span>
                             </h1>
                         </div>
 
@@ -265,7 +265,7 @@ export default function WhyPopup({ alert, onClose }) {
                             onClick={onClose}
                             style={{
                                 background: "transparent",
-                                border: "1px solid rgba(255,255,255,0.12)",
+                                border: "1px solid rgba(15,23,42,0.132)",
                                 color: "#445566",
                                 width: "32px",
                                 height: "32px",
@@ -279,11 +279,11 @@ export default function WhyPopup({ alert, onClose }) {
                                 flexShrink: 0,
                             }}
                             onMouseEnter={e => {
-                                e.target.style.borderColor = "#ff3d6b";
-                                e.target.style.color = "#ff3d6b";
+                                e.target.style.borderColor = "#d60033";
+                                e.target.style.color = "#d60033";
                             }}
                             onMouseLeave={e => {
-                                e.target.style.borderColor = "rgba(255,255,255,0.12)";
+                                e.target.style.borderColor = "rgba(15,23,42,0.132)";
                                 e.target.style.color = "#445566";
                             }}
                         >
@@ -304,9 +304,9 @@ export default function WhyPopup({ alert, onClose }) {
                             borderRadius: "4px",
                         }}
                     >
-                        <span style={{ fontSize: "10px", color: "#00e5ff", opacity: 0.6, letterSpacing: "0.1em" }}>{alert.sku}</span>
+                        <span style={{ fontSize: '12px', color: "#0891b2", opacity: 0.6, letterSpacing: "0.1em" }}>{alert.sku}</span>
                         <div style={{ width: "1px", height: "10px", background: "rgba(0,229,255,0.2)" }} />
-                        <span style={{ fontSize: "10px", color: "#8899aa", letterSpacing: "0.05em" }}>{alert.product_name}</span>
+                        <span style={{ fontSize: '12px', color: "#64748b", letterSpacing: "0.05em" }}>{alert.product_name}</span>
                     </div>
                 </div>
 
@@ -336,9 +336,9 @@ export default function WhyPopup({ alert, onClose }) {
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
                             <div style={{ fontSize: "14px", animation: "float 3s ease-in-out infinite" }}>✦</div>
                             <span style={{
-                                fontFamily: "'Outfit', sans-serif",
-                                fontSize: "10px",
-                                color: "#00e5ff",
+                                fontFamily: "'Inter', system-ui, sans-serif",
+                                fontSize: '12px',
+                                color: "#0891b2",
                                 letterSpacing: "0.18em",
                                 fontWeight: 700,
                             }}>
@@ -346,9 +346,9 @@ export default function WhyPopup({ alert, onClose }) {
                             </span>
                             <div style={{
                                 marginLeft: "auto",
-                                fontSize: "9px",
+                                fontSize: '11px',
                                 color: "#445566",
-                                fontFamily: "'Space Mono', monospace",
+                                fontFamily: "'Inter', system-ui, sans-serif",
                                 animation: "textFlicker 6s ease-in-out infinite",
                             }}>
                                 v2.5-FLASH · {alert.confidence ? alert.confidence.split(' ')[0] : 'CONFIDENTIAL'} conf
@@ -358,9 +358,9 @@ export default function WhyPopup({ alert, onClose }) {
                         <p style={{
                             margin: 0,
                             fontSize: "13px",
-                            color: "#c8d8e8",
+                            color: "#3f6b97",
                             lineHeight: 1.7,
-                            fontFamily: "'Space Mono', monospace",
+                            fontFamily: "'Inter', system-ui, sans-serif",
                         }}>
                             {alert.explanation || "Stock level has fallen below the safety reorder point. Immediate procurement action recommended to prevent stockout risk."}
                         </p>
@@ -372,38 +372,38 @@ export default function WhyPopup({ alert, onClose }) {
                     <div style={{ marginBottom: "16px" }}>
                         <div style={{ display: "flex", alignItems: "baseline", gap: "10px", marginBottom: "4px" }}>
                             <span style={{
-                                fontFamily: "'Outfit', sans-serif",
+                                fontFamily: "'Inter', system-ui, sans-serif",
                                 fontSize: "11px",
-                                color: "#ffffff",
+                                color: "#0f172a",
                                 letterSpacing: "0.12em",
                                 fontWeight: 700,
                             }}>
                                 FEATURE IMPORTANCE
                             </span>
                             <span style={{
-                                fontSize: "9px",
+                                fontSize: '11px',
                                 color: "#445566",
                                 letterSpacing: "0.1em",
-                                background: "rgba(255,255,255,0.04)",
+                                background: "rgba(15,23,42,0.024)",
                                 padding: "2px 6px",
                                 borderRadius: "3px",
-                                border: "1px solid rgba(255,255,255,0.06)",
+                                border: "1px solid rgba(15,23,42,0.066)",
                             }}>
                                 SHAP
                             </span>
                         </div>
-                        <p style={{ margin: 0, fontSize: "10px", color: "#445566", letterSpacing: "0.04em" }}>
+                        <p style={{ margin: 0, fontSize: '12px', color: "#445566", letterSpacing: "0.04em" }}>
                             Forces driving model prediction{" "}
-                            <span style={{ color: "#00e5ff" }}>▲ up</span>{" "}
+                            <span style={{ color: "#0891b2" }}>▲ up</span>{" "}
                             or{" "}
-                            <span style={{ color: "#ff3d6b" }}>▼ down</span>
+                            <span style={{ color: "#d60033" }}>▼ down</span>
                         </p>
                     </div>
 
                     <div
                         style={{
-                            background: "rgba(0,0,0,0.3)",
-                            border: "1px solid rgba(255,255,255,0.05)",
+                            background: "rgba(15,23,42,0.03)",
+                            border: "1px solid rgba(15,23,42,0.055)",
                             borderRadius: "10px",
                             padding: "20px 16px",
                             display: "flex",
@@ -417,7 +417,7 @@ export default function WhyPopup({ alert, onClose }) {
 
                         {/* X axis */}
                         <div style={{ marginTop: "4px", paddingLeft: "152px" }}>
-                            <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", position: "relative", marginBottom: "6px" }}>
+                            <div style={{ height: "1px", background: "rgba(15,23,42,0.036)", position: "relative", marginBottom: "6px" }}>
                                 {[-maxVal, -maxVal/2, 0, maxVal/2, maxVal].map(tick => (
                                     <div
                                         key={tick}
@@ -427,7 +427,7 @@ export default function WhyPopup({ alert, onClose }) {
                                             transform: "translateX(-50%)",
                                             width: "1px",
                                             height: "4px",
-                                            background: "rgba(255,255,255,0.15)",
+                                            background: "rgba(15,23,42,0.06)",
                                             top: 0,
                                         }}
                                     />
@@ -438,9 +438,9 @@ export default function WhyPopup({ alert, onClose }) {
                                     <span
                                         key={tick}
                                         style={{
-                                            fontSize: "9px",
+                                            fontSize: '11px',
                                             color: "#334455",
-                                            fontFamily: "'Space Mono', monospace",
+                                            fontFamily: "'Inter', system-ui, sans-serif",
                                         }}
                                     >
                                         {Number.isInteger(tick) ? tick : tick.toFixed(1)}
@@ -458,10 +458,10 @@ export default function WhyPopup({ alert, onClose }) {
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        borderTop: "1px solid rgba(255,255,255,0.04)",
+                        borderTop: "1px solid rgba(15,23,42,0.044)",
                     }}
                 >
-                    <div style={{ fontSize: "9px", color: "#223344", letterSpacing: "0.08em", fontFamily: "'Space Mono', monospace" }}>
+                    <div style={{ fontSize: '11px', color: "#223344", letterSpacing: "0.08em", fontFamily: "'Inter', system-ui, sans-serif" }}>
                         GEN: {new Date().toISOString().replace('T', ' ').split('.')[0]} UTC
                     </div>
 
@@ -473,15 +473,15 @@ export default function WhyPopup({ alert, onClose }) {
                             color: "#000",
                             padding: "10px 24px",
                             borderRadius: "6px",
-                            fontFamily: "'Outfit', sans-serif",
-                            fontSize: "10px",
+                            fontFamily: "'Inter', system-ui, sans-serif",
+                            fontSize: '12px',
                             fontWeight: 700,
                             letterSpacing: "0.15em",
                             cursor: "pointer",
                             position: "relative",
                             overflow: "hidden",
                             transition: "all 0.2s",
-                            boxShadow: "0 0 20px rgba(0, 229, 255, 0.25)",
+                            boxShadow: "0 0 20px rgba(0,229,255,0.087)",
                         }}
                         onMouseEnter={e => {
                             e.target.style.boxShadow = "0 0 30px rgba(0, 229, 255, 0.5)";

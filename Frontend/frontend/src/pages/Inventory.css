@@ -12,11 +12,11 @@
 
     0%,
     100% {
-        box-shadow: 0 0 8px #f97316, 0 0 20px #f9731640
+        box-shadow: 0 0 8px rgba(249,115,22,0.35), 0 0 20px rgba(249,115,22,0.088)
     }
 
     50% {
-        box-shadow: 0 0 18px #f97316, 0 0 40px #f9731660
+        box-shadow: 0 0 18px rgba(249,115,22,0.35), 0 0 40px rgba(249,115,22,0.132)
     }
 }
 
@@ -60,11 +60,11 @@
 
     0%,
     100% {
-        box-shadow: 0 0 6px #22c55e, 0 0 12px #22c55e40
+        box-shadow: 0 0 6px rgba(34,197,94,0.35), 0 0 12px rgba(34,197,94,0.088)
     }
 
     50% {
-        box-shadow: 0 0 12px #22c55e, 0 0 24px #22c55e60
+        box-shadow: 0 0 12px rgba(34,197,94,0.35), 0 0 24px rgba(34,197,94,0.132)
     }
 }
 
@@ -72,16 +72,16 @@
 .inv-wrap {
     min-height: 80vh;
     /* Don't overwrite the main Nav size */
-    color: #e2e8f0;
+    color: #0f172a;
     font-family: 'Inter', sans-serif;
     position: relative;
     overflow-x: hidden;
-    margin: -32px;
-    /* Pull outside typical padding to fill screen for the module */
+    margin: 0;
     padding: 32px;
 }
 
 .grid-bg {
+    display: none;
     position: absolute;
     inset: 0;
     pointer-events: none;
@@ -141,32 +141,29 @@
 
 .page-subtitle {
     font-size: 11px;
-    color: #f97316;
+    color: #ea580c;
     letter-spacing: 2px;
     margin-bottom: 16px;
-    text-shadow: 0 0 10px rgba(249, 115, 22, .5)
-}
+    }
 
 .page-title {
-    font-family: 'Outfit', monospace;
+    font-family: 'Inter', system-ui, sans-serif;
     font-size: 26px;
     font-weight: 900;
-    color: #fff;
-    letter-spacing: 4px;
-    text-shadow: 0 0 30px rgba(249, 115, 22, .3)
-}
+    color: #0f172a;
+    letter-spacing: 0.06em;
+    }
 
 .page-title span {
-    color: #f97316;
-    text-shadow: 0 0 20px rgba(249, 115, 22, .6)
-}
+    color: #ea580c;
+    }
 
 .title-bar {
     margin-top: 16px;
     height: 2px;
     width: 200px;
     background: linear-gradient(90deg, #f97316, transparent);
-    box-shadow: 0 0 10px rgba(249, 115, 22, .4)
+    box-shadow: 0 0 10px rgba(249,115,22,0.14)
 }
 
 .refresh-btn {
@@ -174,10 +171,10 @@
     background: transparent;
     border: 1px solid rgba(249, 115, 22, .4);
     padding: 10px 20px;
-    color: #f97316;
-    font-size: 10px;
+    color: #ea580c;
+    font-size: 12px;
     letter-spacing: 2px;
-    font-family: 'Outfit', monospace;
+    font-family: 'Inter', system-ui, sans-serif;
     font-weight: 700;
     cursor: pointer;
     border-radius: 2px;
@@ -186,7 +183,7 @@
 
 .refresh-btn:hover {
     background: rgba(249, 115, 22, .1);
-    box-shadow: 0 0 16px rgba(249, 115, 22, .3)
+    box-shadow: 0 0 16px rgba(249,115,22,0.105)
 }
 
 .cards-grid {
@@ -211,7 +208,7 @@
 
 .item-card {
     position: relative;
-    background: linear-gradient(135deg, rgba(24, 28, 40, .97), rgba(30, 24, 45, .97));
+    background: linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,255,255,0.97));
     border: 1px solid rgba(249, 115, 22, .3);
     border-radius: 20px;
     padding: 16px;
@@ -250,7 +247,7 @@
 .item-card:hover {
     border-color: rgba(249, 115, 22, .8);
     transform: scale(1.04) translateY(-4px);
-    box-shadow: 0 12px 30px rgba(249, 115, 22, .25);
+    box-shadow: 0 12px 30px rgba(249,115,22,0.087);
     z-index: 10;
 }
 
@@ -262,10 +259,10 @@
 }
 
 .card-name {
-    font-family: 'Outfit', monospace;
+    font-family: 'Inter', system-ui, sans-serif;
     font-size: 11px;
     font-weight: 700;
-    color: #e2e8f0;
+    color: #0f172a;
     letter-spacing: 1px;
     line-height: 1.4;
     flex: 1;
@@ -278,9 +275,9 @@
 .ok-badge {
     background: rgba(34, 197, 94, .1);
     border: 1px solid rgba(34, 197, 94, .4);
-    color: #22c55e;
+    color: #16a34a;
     font-family: 'Inter', system-ui, sans-serif;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 1px;
     padding: 4px 12px;
@@ -288,12 +285,12 @@
     flex-shrink: 0;
     display: flex;
     align-items: center;
-    text-shadow: none;
+    
 }
 
 .card-sku {
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(15,23,42,0.6);
     letter-spacing: 2px;
     margin-bottom: 14px
 }
@@ -306,10 +303,10 @@
 }
 
 .stat-block {
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(255,255,255,0.92);
     padding: 10px 12px;
     border-radius: 8px;
-    border: 1px solid #1e293b;
+    border: 1px solid #ccd6e5;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -318,7 +315,7 @@
 
 .stat-label-sm {
     font-size: 11px;
-    color: #94a3b8;
+    color: #556781;
     letter-spacing: 2px;
     text-transform: uppercase;
     font-family: 'Inter', system-ui, sans-serif;
@@ -330,7 +327,7 @@
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 18px;
     font-weight: 800;
-    color: #f97316;
+    color: #ea580c;
     line-height: 1
 }
 
@@ -341,8 +338,8 @@
 }
 
 .model-tag {
-    font-size: 8px;
-    color: rgba(226, 232, 240, .2);
+    font-size: 11px;
+    color: rgba(15,23,42,0.6);
     letter-spacing: 2px;
     border: 1px solid rgba(249, 115, 22, .1);
     padding: 2px 8px;
@@ -350,17 +347,16 @@
 }
 
 .explain-link {
-    font-size: 9px;
-    color: rgba(59, 130, 246, .6);
+    font-size: 11px;
+    color: rgba(9,84,205,0.6);
     letter-spacing: 1px;
     cursor: pointer;
     transition: color .2s
 }
 
 .explain-link:hover {
-    color: #3b82f6;
-    text-shadow: 0 0 8px rgba(59, 130, 246, .5)
-}
+    color: #2563eb;
+    }
 
 .divider {
     height: 1px;
@@ -381,7 +377,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 2px
 }
 
@@ -392,10 +388,13 @@
 }
 
 .stat-lbl {
-    color: rgba(226, 232, 240, .7)
+    color: rgba(15,23,42,0.6)
 }
 
 .stat-v {
-    font-family: 'Outfit', monospace;
+    font-family: 'Inter', system-ui, sans-serif;
     font-weight: 700
+}
+@media (max-width: 640px) {
+    .inv-wrap, .user-wrap { padding: 20px 16px; }
 }

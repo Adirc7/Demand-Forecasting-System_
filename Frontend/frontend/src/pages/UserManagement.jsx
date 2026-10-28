@@ -135,7 +135,7 @@ export default function UserManagement() {
         setIsAddModalOpen(true);
     };
 
-    if (loading) return <div className="p-8 text-center" style={{color: '#8b5cf6'}}>Decrypting User Matrix...</div>;
+    if (loading) return <div className="p-8 text-center" style={{color: '#7c3aed'}}>Decrypting User Matrix...</div>;
 
     return (
         <div className="user-wrap">
@@ -146,8 +146,8 @@ export default function UserManagement() {
                 <div className="page-header" style={{ marginTop: '40px', marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
 
-                        <h1 className="page-title" style={{textShadow: '0 0 30px rgba(139,92,246,.3)'}}>USER <span>MANAGEMENT</span></h1>
-                        <div className="title-bar" style={{ background: 'linear-gradient(90deg, #8b5cf6, transparent)', boxShadow: '0 0 10px rgba(139,92,246,.4)' }} />
+                        <h1 className="page-title" style={{}}>USER <span>MANAGEMENT</span></h1>
+                        <div className="title-bar" style={{ background: 'linear-gradient(90deg, #8b5cf6, transparent)', boxShadow: '0 0 10px rgba(139,92,246,0.14)' }} />
                     </div>
                     <button className="add-btn" onClick={openAddModal}>
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
@@ -156,16 +156,16 @@ export default function UserManagement() {
                 </div>
 
                 {/* SECURITY SETTINGS PANEL */}
-                <div style={{ background: 'linear-gradient(135deg, rgba(12,12,22,.98), rgba(20,8,35,.98))', border: '1px solid rgba(139,92,246,.4)', borderRadius: '12px', padding: '24px', marginBottom: '32px', animation: 'fadeInUp .4s ease both' }}>
+                <div style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98))', border: '1px solid rgba(139,92,246,.4)', borderRadius: '12px', padding: '24px', marginBottom: '32px', animation: 'fadeInUp .4s ease both' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
                         <span style={{ fontSize: '18px' }}>🔐</span>
-                        <h2 style={{ fontFamily: "'Outfit', monospace", fontSize: '14px', color: '#e2e8f0', letterSpacing: '2px', margin: 0 }}>GLOBAL SECURITY SETTINGS</h2>
+                        <h2 style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '14px', color: '#0f172a', letterSpacing: '2px', margin: 0 }}>GLOBAL SECURITY SETTINGS</h2>
                     </div>
                     
                     <div>
-                        <label style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#a78bfa', fontFamily: "'Outfit', monospace", marginBottom: '12px', letterSpacing: '1px' }}>
+                        <label style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#7c3aed', fontFamily: "'Inter', system-ui, sans-serif", marginBottom: '12px', letterSpacing: '1px' }}>
                             <span>IDLE SESSION TIMEOUT</span>
-                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '14px' }}>{sessionTimeout} MINUTES</span>
+                            <span style={{ color: '#0f172a', fontWeight: 'bold', fontSize: '14px' }}>{sessionTimeout} MINUTES</span>
                         </label>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                             <input 
@@ -174,26 +174,26 @@ export default function UserManagement() {
                                 value={sessionTimeout} 
                                 onChange={handleTimeoutChange}
                                 disabled={savingTimeout}
-                                style={{ flex: 1, accentColor: '#8b5cf6', cursor: savingTimeout ? 'wait' : 'pointer' }} 
+                                style={{ flex: 1, accentColor: '#7c3aed', cursor: savingTimeout ? 'wait' : 'pointer' }} 
                             />
-                            <div style={{ width: '100px', fontSize: '11px', fontFamily: "'Outfit', monospace", fontWeight: 'bold', letterSpacing: '1px', color: timeoutSaved ? '#22c55e' : (savingTimeout ? '#a78bfa' : 'transparent'), transition: 'color 0.3s' }}>
+                            <div style={{ width: '100px', fontSize: '11px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 'bold', letterSpacing: '1px', color: timeoutSaved ? '#16a34a' : (savingTimeout ? '#7c3aed' : 'transparent'), transition: 'color 0.3s' }}>
                                 {savingTimeout ? 'SAVING...' : (timeoutSaved ? '✓ SAVED' : '')}
                             </div>
                         </div>
-                        <p style={{ fontSize: '11px', color: 'rgba(226,232,240,.5)', marginTop: '12px', fontFamily: "'Outfit', monospace", lineHeight: '1.5' }}>
+                        <p style={{ fontSize: '11px', color: 'rgba(15,23,42,0.6)', marginTop: '12px', fontFamily: "'Inter', system-ui, sans-serif", lineHeight: '1.5' }}>
                             Users will be automatically logged out after this period of inactivity. Changes apply immediately and are enforced system-wide.
                         </p>
                     </div>
                 </div>
 
-                {err ? <div className="text-red-500 mb-4 bg-red-900/20 p-4 border border-red-500">{err}</div> : null}
+                {err ? <div className="text-red-500 mb-4 bg-red-50 p-4 border border-red-500">{err}</div> : null}
 
                 <div className="cards-grid">
                     {users.map((u, i) => (
                         <div key={u.uid} className="user-card" style={{ animationDelay: `${(i % 9) * 0.05}s` }}>
                             <div className="card-top">
                                 <div className="card-email" title={u.email}>{u.email}</div>
-                                <div className="user-badge" style={{color: u.active ? '#22c55e' : '#ef4444', borderColor: u.active ? '#22c55e' : '#ef4444', background: u.active ? 'rgba(34,197,94,.1)' : 'rgba(239,68,68,.1)'}}>
+                                <div className="user-badge" style={{color: u.active ? '#16a34a' : '#dc2626', borderColor: u.active ? '#22c55e' : '#ef4444', background: u.active ? 'rgba(34,197,94,.1)' : 'rgba(239,68,68,.1)'}}>
                                     {u.active ? 'ACTIVE' : 'INACTIVE'}
                                 </div>
                             </div>
@@ -207,7 +207,7 @@ export default function UserManagement() {
                             <div className="divider" />
 
                             <div className="card-bottom">
-                                <button className="action-btn" style={{color: '#a78bfa'}} onClick={() => openEditModal(u)}>
+                                <button className="action-btn" style={{color: '#7c3aed'}} onClick={() => openEditModal(u)}>
                                     EDIT ROLE
                                 </button>
                                 <button 
@@ -219,7 +219,7 @@ export default function UserManagement() {
                             </div>
                         </div>
                     ))}
-                    {users.length === 0 && <div className="text-center w-full" style={{gridColumn: '1 / -1', color: '#a78bfa'}}>No users found.</div>}
+                    {users.length === 0 && <div className="text-center w-full" style={{gridColumn: '1 / -1', color: '#7c3aed'}}>No users found.</div>}
                 </div>
             </main>
 
@@ -229,31 +229,31 @@ export default function UserManagement() {
                     <div className="modal-content">
                         <div className="modal-content-glow" />
                         <h2>
-                            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(139,92,246,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8b5cf6', border: '1px solid rgba(139,92,246,0.3)' }}>
+                            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(139,92,246,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7c3aed', border: '1px solid rgba(139,92,246,0.3)' }}>
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
                             </div>
                             INITIALIZE USER
                         </h2>
                         
-                        {formError && <div style={{ background: 'rgba(239,68,68,.1)', color: '#ef4444', padding: '12px 16px', borderRadius: '8px', fontSize: '12px', border: '1px solid rgba(239,68,68,.3)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{ fontSize: '16px' }}>⚠️</span> {formError}</div>}
+                        {formError && <div style={{ background: 'rgba(239,68,68,.1)', color: '#dc2626', padding: '12px 16px', borderRadius: '8px', fontSize: '12px', border: '1px solid rgba(239,68,68,.3)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{ fontSize: '16px' }}>⚠️</span> {formError}</div>}
                         
                         <div className="form-group">
                             <label>
-                                <svg className="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                <svg className="w-3.5 h-3.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                                 USER EMAIL
                             </label>
                             <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="operative@system.com" />
                         </div>
                         <div className="form-group">
                             <label>
-                                <svg className="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                <svg className="w-3.5 h-3.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                                 TEMPORARY PASSWORD
                             </label>
                             <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" />
                         </div>
                         <div className="form-group">
                             <label>
-                                <svg className="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                <svg className="w-3.5 h-3.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                                 ASSIGN ROLE
                             </label>
                             <select value={role} onChange={e => setRole(e.target.value)}>
@@ -275,22 +275,22 @@ export default function UserManagement() {
                     <div className="modal-content">
                         <div className="modal-content-glow" />
                         <h2>
-                            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(139,92,246,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8b5cf6', border: '1px solid rgba(139,92,246,0.3)' }}>
+                            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(139,92,246,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7c3aed', border: '1px solid rgba(139,92,246,0.3)' }}>
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
                             </div>
                             MODIFY CLEARANCE
                         </h2>
                         
-                        <div style={{ background: 'rgba(255,255,255,0.05)', padding: '12px 16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#8b5cf6', boxShadow: '0 0 8px #8b5cf6' }} />
-                            <div style={{ fontSize: '13px', color: '#cbd5e1', fontFamily: "'Inter', sans-serif" }}>Target: <strong style={{ color: '#fff', letterSpacing: '0.5px' }}>{selectedUser?.email}</strong></div>
+                        <div style={{ background: 'rgba(15,23,42,0.03)', padding: '12px 16px', borderRadius: '12px', border: '1px solid rgba(15,23,42,0.11)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#8b5cf6', boxShadow: '0 0 8px rgba(139,92,246,0.35)' }} />
+                            <div style={{ fontSize: '13px', color: '#334155', fontFamily: "'Inter', sans-serif" }}>Target: <strong style={{ color: '#0f172a', letterSpacing: '0.5px' }}>{selectedUser?.email}</strong></div>
                         </div>
 
-                        {formError && <div style={{ background: 'rgba(239,68,68,.1)', color: '#ef4444', padding: '12px 16px', borderRadius: '8px', fontSize: '12px', border: '1px solid rgba(239,68,68,.3)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{ fontSize: '16px' }}>⚠️</span> {formError}</div>}
+                        {formError && <div style={{ background: 'rgba(239,68,68,.1)', color: '#dc2626', padding: '12px 16px', borderRadius: '8px', fontSize: '12px', border: '1px solid rgba(239,68,68,.3)', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{ fontSize: '16px' }}>⚠️</span> {formError}</div>}
                         
                         <div className="form-group">
                             <label>
-                                <svg className="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                <svg className="w-3.5 h-3.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                                 UPDATE ROLE
                             </label>
                             <select value={role} onChange={e => setRole(e.target.value)}>

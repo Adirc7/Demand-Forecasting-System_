@@ -131,16 +131,16 @@ export default function SessionManager({ children }) {
         <>
             {children}
             {showWarning && (
-                <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm">
-                    <div className="bg-[#0a050f] border border-[#f97316] rounded-xl p-8 max-w-md w-full shadow-[0_0_30px_rgba(249,115,22,0.2)] text-center animate-in zoom-in-95 duration-200">
-                        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#f97316]/20 flex items-center justify-center">
-                            <span className="text-[#f97316] text-3xl font-bold font-['Outfit']">!</span>
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+                    <div className="bg-[#ffffff] border border-[#ea580c] rounded-xl p-8 max-w-md w-full shadow-[0_0_30px_rgba(249,115,22,0.2)] text-center animate-in zoom-in-95 duration-200">
+                        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#ea580c]/20 flex items-center justify-center">
+                            <span className="text-[#ea580c] text-3xl font-bold font-['Outfit']">!</span>
                         </div>
                         <h2 className="text-2xl font-bold text-white mb-2 font-['Outfit']">SESSION EXPIRING</h2>
                         <p className="text-slate-300 mb-6 font-['Share_Tech_Mono']">
                             You've been inactive for a while. For your security, you will be logged out in:
                         </p>
-                        <div className="text-5xl font-bold text-[#f97316] mb-8 font-['Share_Tech_Mono'] drop-shadow-[0_0_15px_rgba(249,115,22,0.4)]">
+                        <div className="text-5xl font-bold text-[#ea580c] mb-8 font-['Share_Tech_Mono'] drop-shadow-[0_0_15px_rgba(249,115,22,0.4)]">
                             00:{countdown.toString().padStart(2, '0')}
                         </div>
                         <div className="flex gap-4 w-full">
@@ -152,7 +152,7 @@ export default function SessionManager({ children }) {
                             </button>
                             <button
                                 onClick={handleStayLoggedIn}
-                                className="flex-1 py-3 px-4 rounded bg-[#f97316] text-white hover:bg-[#ea580c] transition-colors font-['Share_Tech_Mono'] font-bold shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:shadow-[0_0_20px_rgba(249,115,22,0.5)]"
+                                className="flex-1 py-3 px-4 rounded bg-[#ea580c] text-white hover:bg-[#ea580c] transition-colors font-['Share_Tech_Mono'] font-bold shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:shadow-[0_0_20px_rgba(249,115,22,0.5)]"
                             >
                                 STAY LOGGED IN
                             </button>

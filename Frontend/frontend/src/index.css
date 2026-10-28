@@ -1,28 +1,75 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+/* ---- Design tokens: clean light SaaS theme ---- */
+:root {
+  --app-bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --ink: #0f172a;
+  --ink-2: #334155;
+  --ink-3: #64748b;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --brand: #ea580c;
+  --brand-hover: #c2410c;
+  --brand-soft: #fff7ed;
+  --brand-ring: rgba(234, 88, 12, 0.22);
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --info: #2563eb;
+  --radius-card: 14px;
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-pop: 0 12px 32px -8px rgba(15, 23, 42, 0.16);
 }
 
 body {
   margin: 0;
-  color: #e2e8f0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #0a0412 0%, #1a0833 50%, #050308 100%);
-  background-size: 200% 200%;
-  animation: gradientShift 15s ease infinite;
+  color: var(--ink);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: var(--app-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   overflow-x: hidden;
+  font-feature-settings: 'cv11', 'ss01';
 }
 
 #root {
   min-height: 100vh;
 }
+
+::selection { background: var(--brand-ring); }
+
+/* Form controls: consistent, accessible focus */
+input, select, textarea, button {
+  font-family: inherit;
+}
+input, select, textarea {
+  color: var(--ink);
+}
+input::placeholder, textarea::placeholder { color: #94a3b8; }
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
+  outline: 2px solid var(--brand-ring);
+  outline-offset: 1px;
+}
+
+/* Responsive grids */
+.rgrid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.rgrid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .rgrid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rgrid-3 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 480px) { .rgrid-4 { grid-template-columns: minmax(0, 1fr); } }
+
+/* Tables */
+table { border-collapse: collapse; }
+thead th { font-weight: 600; }
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; border: 2px solid var(--app-bg); }
+::-webkit-scrollbar-track { background: transparent; }
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

@@ -8,30 +8,30 @@ import {
 // Common Theme matching Reports.jsx
 const THEME = {
   bg: {
-    primary: '#0B1120',
-    secondary: '#131C31',
-    tertiary: '#1E293B',
-    card: 'rgba(19, 28, 49, 0.95)',
+    primary: '#ffffff',
+    secondary: '#f4f6fb',
+    tertiary: '#f5f7fa',
+    card: '#f4f6fb',
   },
   border: {
-    subtle: 'rgba(255, 255, 255, 0.06)',
-    default: 'rgba(255, 255, 255, 0.12)',
-    strong: 'rgba(255, 255, 255, 0.2)',
+    subtle: 'rgba(15,23,42,0.066)',
+    default: 'rgba(15,23,42,0.132)',
+    strong: 'rgba(15,23,42,0.14)',
   },
   text: {
-    primary: '#ffffff',
-    secondary: '#e2e8f0',
-    muted: '#94a3b8',
+    primary: '#0f172a',
+    secondary: '#0f172a',
+    muted: '#556781',
     dim: '#64748b',
   },
   brand: {
-    primary: '#f97316',
+    primary: '#ea580c',
   },
-  success: { base: '#10b981', light: '#34d399' },
-  danger: { base: '#ef4444', light: '#f87171' },
-  warning: { base: '#f59e0b', light: '#fbbf24' },
-  info: { base: '#3b82f6', light: '#60a5fa' },
-  purple: { base: '#a855f7', light: '#c084fc' },
+  success: { base: '#10b981', light: '#059669' },
+  danger: { base: '#dc2626', light: '#dc2626' },
+  warning: { base: '#d97706', light: '#d29904' },
+  info: { base: '#2563eb', light: '#2563eb' },
+  purple: { base: '#9333ea', light: '#9333ea' },
 };
 
 const formatCurrency = (n) => {
@@ -62,15 +62,15 @@ const mockRevenueData = [
 ];
 
 const GRADIENTS = [
-  { id: 'grad0', start: '#6366f1', end: '#312e81' },
-  { id: 'grad1', start: '#ef4444', end: '#7f1d1d' },
+  { id: 'grad0', start: '#4f46e5', end: '#312e81' },
+  { id: 'grad1', start: '#dc2626', end: '#7f1d1d' },
   { id: 'grad2', start: '#10b981', end: '#064e3b' },
-  { id: 'grad3', start: '#f59e0b', end: '#78350f' },
-  { id: 'grad4', start: '#8b5cf6', end: '#4c1d95' },
+  { id: 'grad3', start: '#d97706', end: '#78350f' },
+  { id: 'grad4', start: '#7c3aed', end: '#4c1d95' },
   { id: 'grad5', start: '#06b6d4', end: '#164e63' }
 ];
 
-const COLORS = ['#6366f1', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4'];
+const COLORS = ['#4f46e5', '#dc2626', '#10b981', '#d97706', '#7c3aed', '#06b6d4'];
 
 const formatYAxis = (value) => {
   if (value >= 1000000) return (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
@@ -91,23 +91,23 @@ const renderGradients = () => (
 
 const renderCustomChart = (chartConfig) => {
   const chartData = chartConfig.data;
-  if (!chartData || chartConfig.error) return <div className="flex items-center justify-center h-full text-[#a0a0a0]"><span className="text-sm font-semibold">No data found or error.</span></div>;
+  if (!chartData || chartConfig.error) return <div className="flex items-center justify-center h-full text-[#475569]"><span className="text-sm font-semibold">No data found or error.</span></div>;
 
   const isPieEmpty = chartConfig.chart_type === 'pie' && (!chartData.pie || chartData.pie.length === 0);
   const isScatterEmpty = chartConfig.chart_type === 'scatter' && (!chartData.scatter || chartData.scatter.length === 0);
   const isTimeseriesEmpty = chartConfig.chart_type !== 'pie' && chartConfig.chart_type !== 'scatter' && (!chartData.timeseries || chartData.timeseries.length === 0);
 
   if (isPieEmpty || isScatterEmpty || isTimeseriesEmpty) {
-    return <div className="flex items-center justify-center h-full text-[#a0a0a0]"><span className="text-sm font-semibold">No data found for this period.</span></div>;
+    return <div className="flex items-center justify-center h-full text-[#475569]"><span className="text-sm font-semibold">No data found for this period.</span></div>;
   }
 
   if (chartConfig.chart_type === 'line') {
     return (
       <LineChart data={chartData.timeseries || []} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(126, 88, 88, 0.14)" vertical={false} />
-        <XAxis dataKey="period" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 10 }} />
-        <YAxis stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={formatYAxis} width={45} />
-        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '10px' }} iconType="circle" />
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(15,23,42,0.1)" vertical={false} />
+        <XAxis dataKey="period" stroke="#cbd5e1" tick={{ fill: '#94a3b8', fontSize: 10 }} />
+        <YAxis stroke="#cbd5e1" tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={formatYAxis} width={45} />
+        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '12px' }} iconType="circle" />
         {(chartConfig.metrics || []).map((m, i) => (
           <Line key={m} type="monotone" isAnimationActive={false} dataKey={`val${(i % 3) + 1}`} name={m} stroke={COLORS[i % COLORS.length]} strokeWidth={2} dot={{ r: 3 }} />
         ))}
@@ -117,10 +117,10 @@ const renderCustomChart = (chartConfig) => {
     return (
       <BarChart data={chartData.timeseries || []} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
         {renderGradients()}
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.1)" vertical={false} />
-        <XAxis dataKey="period" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 10 }} />
-        <YAxis stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={formatYAxis} width={45} />
-        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '10px' }} iconType="circle" />
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(15,23,42,0.11)" vertical={false} />
+        <XAxis dataKey="period" stroke="#cbd5e1" tick={{ fill: '#94a3b8', fontSize: 10 }} />
+        <YAxis stroke="#cbd5e1" tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={formatYAxis} width={45} />
+        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '12px' }} iconType="circle" />
         {(chartConfig.metrics || []).map((m, i) => (
           <Bar key={m} dataKey={`val${(i % 3) + 1}`} name={m} fill={`url(#grad${i % GRADIENTS.length})`} isAnimationActive={false} radius={[4, 4, 0, 0]} />
         ))}
@@ -130,10 +130,10 @@ const renderCustomChart = (chartConfig) => {
     return (
       <AreaChart data={chartData.timeseries || []} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
         {renderGradients()}
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.1)" vertical={false} />
-        <XAxis dataKey="period" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 10 }} />
-        <YAxis stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={formatYAxis} width={45} />
-        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '10px' }} iconType="circle" />
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(15,23,42,0.11)" vertical={false} />
+        <XAxis dataKey="period" stroke="#cbd5e1" tick={{ fill: '#94a3b8', fontSize: 10 }} />
+        <YAxis stroke="#cbd5e1" tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={formatYAxis} width={45} />
+        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '12px' }} iconType="circle" />
         {(chartConfig.metrics || []).map((m, i) => (
           <Area key={m} type="monotone" isAnimationActive={false} dataKey={`val${(i % 3) + 1}`} name={m} fill={`url(#grad${i % GRADIENTS.length})`} fillOpacity={0.6} stroke={COLORS[i % COLORS.length]} strokeWidth={2} />
         ))}
@@ -143,8 +143,8 @@ const renderCustomChart = (chartConfig) => {
     return (
       <PieChart margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
         {renderGradients()}
-        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '10px' }} iconType="circle" />
-        <Pie data={chartData.pie || []} cx="50%" cy="50%" innerRadius={45} outerRadius={75} paddingAngle={4} dataKey="value" nameKey="name" stroke="rgba(0,0,0,0.2)" strokeWidth={2} isAnimationActive={false}>
+        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '12px' }} iconType="circle" />
+        <Pie data={chartData.pie || []} cx="50%" cy="50%" innerRadius={45} outerRadius={75} paddingAngle={4} dataKey="value" nameKey="name" stroke="rgba(15,23,42,0.1)" strokeWidth={2} isAnimationActive={false}>
           {(chartData.pie || []).map((entry, index) => (
             <Cell key={`cell-${index}`} fill={`url(#grad${index % GRADIENTS.length})`} />
           ))}
@@ -155,10 +155,10 @@ const renderCustomChart = (chartConfig) => {
     return (
       <ComposedChart data={chartData.timeseries || []} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
         {renderGradients()}
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.1)" vertical={false} />
-        <XAxis dataKey="period" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 10 }} />
-        <YAxis stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={formatYAxis} width={45} />
-        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '10px' }} iconType="circle" />
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(15,23,42,0.11)" vertical={false} />
+        <XAxis dataKey="period" stroke="#cbd5e1" tick={{ fill: '#94a3b8', fontSize: 10 }} />
+        <YAxis stroke="#cbd5e1" tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={formatYAxis} width={45} />
+        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '12px' }} iconType="circle" />
         {(chartConfig.metrics || []).map((m, i) => {
           if (m.includes('(line)')) {
             return <Line key={m} type="monotone" isAnimationActive={false} dataKey={`val${(i % 3) + 1}`} name={m} stroke={COLORS[i % COLORS.length]} strokeWidth={2} dot={{ r: 3 }} />
@@ -170,10 +170,10 @@ const renderCustomChart = (chartConfig) => {
   } else if (chartConfig.chart_type === 'scatter') {
     return (
       <ScatterChart margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.1)" vertical={false} />
-        <XAxis type="number" dataKey="x" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 10 }} />
-        <YAxis type="number" dataKey="y" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={formatYAxis} width={45} />
-        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '10px' }} iconType="circle" />
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(15,23,42,0.11)" vertical={false} />
+        <XAxis type="number" dataKey="x" stroke="#cbd5e1" tick={{ fill: '#94a3b8', fontSize: 10 }} />
+        <YAxis type="number" dataKey="y" stroke="#cbd5e1" tick={{ fill: '#94a3b8', fontSize: 10 }} tickFormatter={formatYAxis} width={45} />
+        <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '12px' }} iconType="circle" />
         <Scatter name="Data" data={chartData.scatter || []} isAnimationActive={false} fill={COLORS[0]} />
       </ScatterChart>
     );
@@ -348,12 +348,12 @@ const PDFReportTemplate = forwardRef(({ metrics, businessData, historical, repor
         <StyledTable 
           headers={['No', 'Section', 'Page']}
           rows={[
-            ['01', <span className="font-bold" style={{ color: '#fff' }}>Executive Summary</span>, 'p. 2'],
-            ...(pdfSections.ai ? [['02', <span className="font-bold" style={{ color: '#fff' }}>AI Forecast Engine Health</span>, `p. ${pageMap.ai}`]] : []),
-            ...(pdfSections.financial ? [['03', <span className="font-bold" style={{ color: '#fff' }}>Financial & Sales Analytics</span>, `p. ${pageMap.financial}`]] : []),
-            ...(pdfSections.inventory ? [['04', <span className="font-bold" style={{ color: '#fff' }}>Inventory Health & Alerts</span>, `p. ${pageMap.inventory}`]] : []),
-            ...(pdfSections.customCharts && pdfCustomChartsData?.length > 0 ? [['05', <span className="font-bold" style={{ color: '#fff' }}>Custom Dashboard</span>, `p. ${pageMap.customCharts}`]] : []),
-            ...(pdfSections.snapshots ? [[pdfSections.customCharts && pdfCustomChartsData?.length > 0 ? '06' : '05', <span className="font-bold" style={{ color: '#fff' }}>Generated Report History</span>, `p. ${pageMap.snapshots}`]] : []),
+            ['01', <span className="font-bold" style={{ color: '#0f172a' }}>Executive Summary</span>, 'p. 2'],
+            ...(pdfSections.ai ? [['02', <span className="font-bold" style={{ color: '#0f172a' }}>AI Forecast Engine Health</span>, `p. ${pageMap.ai}`]] : []),
+            ...(pdfSections.financial ? [['03', <span className="font-bold" style={{ color: '#0f172a' }}>Financial & Sales Analytics</span>, `p. ${pageMap.financial}`]] : []),
+            ...(pdfSections.inventory ? [['04', <span className="font-bold" style={{ color: '#0f172a' }}>Inventory Health & Alerts</span>, `p. ${pageMap.inventory}`]] : []),
+            ...(pdfSections.customCharts && pdfCustomChartsData?.length > 0 ? [['05', <span className="font-bold" style={{ color: '#0f172a' }}>Custom Dashboard</span>, `p. ${pageMap.customCharts}`]] : []),
+            ...(pdfSections.snapshots ? [[pdfSections.customCharts && pdfCustomChartsData?.length > 0 ? '06' : '05', <span className="font-bold" style={{ color: '#0f172a' }}>Generated Report History</span>, `p. ${pageMap.snapshots}`]] : []),
           ]}
         />
       </PageContainer>
@@ -366,19 +366,19 @@ const PDFReportTemplate = forwardRef(({ metrics, businessData, historical, repor
           <div className="flex rounded-xl overflow-hidden" style={{ backgroundColor: THEME.bg.secondary, border: `1px solid ${THEME.border.default}` }}>
             <div className="w-32 flex items-center justify-center p-4 text-[10px] font-bold uppercase tracking-widest text-center" style={{ borderRight: `2px solid ${THEME.purple.base}` }}>AI Engine</div>
             <div className="p-4 text-sm leading-relaxed flex-1">
-              Forecast accuracy reached <strong style={{ color: '#fff' }}>{metrics?.Accuracy ?? 'N/A'}%</strong> with MAE of <strong style={{ color: '#fff' }}>{metrics?.MAE ?? 'N/A'}</strong> — both improving steadily. Model retraining is on schedule.
+              Forecast accuracy reached <strong style={{ color: '#0f172a' }}>{metrics?.Accuracy ?? 'N/A'}%</strong> with MAE of <strong style={{ color: '#0f172a' }}>{metrics?.MAE ?? 'N/A'}</strong> — both improving steadily. Model retraining is on schedule.
             </div>
           </div>
           <div className="flex rounded-xl overflow-hidden" style={{ backgroundColor: THEME.bg.secondary, border: `1px solid ${THEME.border.default}` }}>
             <div className="w-32 flex items-center justify-center p-4 text-[10px] font-bold uppercase tracking-widest text-center" style={{ borderRight: `2px solid ${THEME.success.base}` }}>Financials</div>
             <div className="p-4 text-sm leading-relaxed flex-1">
-              Total revenue hit <strong style={{ color: '#fff' }}>{formatCurrency(businessData?.total_revenue)}</strong>. Total inventory value is <strong style={{ color: '#fff' }}>{formatCurrency(businessData?.total_inventory_value)}</strong>. Estimated restock cost stands at <strong style={{ color: '#fff' }}>{formatCurrency(businessData?.est_restock_cost)}</strong>.
+              Total revenue hit <strong style={{ color: '#0f172a' }}>{formatCurrency(businessData?.total_revenue)}</strong>. Total inventory value is <strong style={{ color: '#0f172a' }}>{formatCurrency(businessData?.total_inventory_value)}</strong>. Estimated restock cost stands at <strong style={{ color: '#0f172a' }}>{formatCurrency(businessData?.est_restock_cost)}</strong>.
             </div>
           </div>
           <div className="flex rounded-xl overflow-hidden" style={{ backgroundColor: THEME.bg.secondary, border: `1px solid ${THEME.border.default}` }}>
             <div className="w-32 flex items-center justify-center p-4 text-[10px] font-bold uppercase tracking-widest text-center" style={{ borderRight: `2px solid ${THEME.danger.base}` }}>Inventory</div>
             <div className="p-4 text-sm leading-relaxed flex-1">
-              <strong style={{ color: '#fff' }}>{businessData?.stock_health_distribution?.low || 0}</strong> SKUs are in low stock territory. Immediate review recommended to prevent stockouts. Dead stock accounts for tied-up capital.
+              <strong style={{ color: '#0f172a' }}>{businessData?.stock_health_distribution?.low || 0}</strong> SKUs are in low stock territory. Immediate review recommended to prevent stockouts. Dead stock accounts for tied-up capital.
             </div>
           </div>
         </div>
@@ -391,7 +391,7 @@ const PDFReportTemplate = forwardRef(({ metrics, businessData, historical, repor
             `Reorder ${item.sku} immediately — ${item.stock} units left`,
             <span className="font-bold" style={{ color: THEME.danger.light }}>CRITICAL</span>,
             item.sku,
-            <span className="font-bold" style={{ color: '#fff' }}>TODAY</span>
+            <span className="font-bold" style={{ color: '#0f172a' }}>TODAY</span>
           ]) : [
             ['1', 'Review overall inventory strategy', <span className="font-bold" style={{ color: THEME.info.light }}>LOW</span>, 'MULTI', 'N/A']
           ]}
@@ -535,7 +535,7 @@ const PDFReportTemplate = forwardRef(({ metrics, businessData, historical, repor
                 headers={['SKU', 'Product', 'Sold', 'Revenue']}
                 rows={fastMovers.slice(0, 5).map(m => [
                   <span style={{ color: THEME.text.muted }}>{m.sku}</span>,
-                  <span className="font-bold" style={{ color: '#fff' }}>{m.name}</span>,
+                  <span className="font-bold" style={{ color: '#0f172a' }}>{m.name}</span>,
                   <span style={{ color: THEME.success.light }}>{m.qty_sold}</span>,
                   <span style={{ color: THEME.success.base }}>{formatCurrency(m.revenue)}</span>
                 ])}
@@ -548,7 +548,7 @@ const PDFReportTemplate = forwardRef(({ metrics, businessData, historical, repor
             headers={['SKU', 'Product', 'Current Stock', 'Days Left', 'Status', 'Action']}
             rows={depletion.map((d, i) => [
               <span style={{ color: THEME.text.muted }}>{d.sku}</span>,
-              <span className="font-bold" style={{ color: '#fff' }}>Product {d.sku}</span>,
+              <span className="font-bold" style={{ color: '#0f172a' }}>Product {d.sku}</span>,
               <span className="font-bold">{d.stock}</span>,
               <span className="font-bold" style={{ color: d.action === 'danger' ? THEME.danger.base : THEME.warning.base }}>{d.days_left}d</span>,
               <span className="font-bold" style={{ color: d.action === 'danger' ? THEME.danger.base : THEME.warning.base }}>{d.action === 'danger' ? 'CRITICAL' : 'WARNING'}</span>,
@@ -566,8 +566,8 @@ const PDFReportTemplate = forwardRef(({ metrics, businessData, historical, repor
           <div className="grid grid-cols-2 gap-6 mb-6">
              {pdfCustomChartsData.slice(0, 4).map((chart, idx) => (
                 <div key={idx} className="p-4 rounded-xl flex flex-col" style={{ backgroundColor: THEME.bg.card, border: `1px solid ${THEME.border.default}`, height: 260 }}>
-                  <h3 className="text-sm font-bold text-white mb-1">{chart.title || 'Custom Chart'}</h3>
-                  <p className="text-[10px] text-[#94a3b8] mb-4 uppercase tracking-widest font-semibold">
+                  <h3 className="text-sm font-bold text-slate-900 mb-1">{chart.title || 'Custom Chart'}</h3>
+                  <p className="text-[10px] text-[#556781] mb-4 uppercase tracking-widest font-semibold">
                     {chart.time_range ? chart.time_range.replace('_', ' ') : 'All Time'} • {chart.granularity || 'Monthly'}
                   </p>
                   <div className="flex-1 w-full relative">
@@ -591,7 +591,7 @@ const PDFReportTemplate = forwardRef(({ metrics, businessData, historical, repor
               headers={['Captured At', 'Total SKUs', 'Low Stock', 'Cold Start', 'Status']}
               rows={reports.slice(0, 8).map((r, i) => [
                 <span className="font-bold" style={{ color: i === 0 ? THEME.success.base : THEME.text.muted }}>{new Date(r.created_at).toLocaleString()}</span>,
-                <span className="font-bold" style={{ color: '#fff' }}>{r.total_skus}</span>,
+                <span className="font-bold" style={{ color: '#0f172a' }}>{r.total_skus}</span>,
                 <span>{r.low_stock_count}</span>,
                 <span>{r.cold_start_count}</span>,
                 <span className="font-bold" style={{ color: i === 0 ? THEME.success.base : THEME.text.muted }}>{i === 0 ? 'ACTIVE' : 'ARCHIVED'}</span>
@@ -603,9 +603,9 @@ const PDFReportTemplate = forwardRef(({ metrics, businessData, historical, repor
           <StyledTable 
             headers={['Metric', 'Value', 'Notes']}
             rows={[
-              ['Total Snapshots Captured', <span className="font-bold" style={{ color: '#fff' }}>{reports.length}</span>, 'Since system launch'],
-              ['Active Snapshots', <span className="font-bold" style={{ color: '#fff' }}>1</span>, 'Current baseline'],
-              ['Max SKUs Captured', <span className="font-bold" style={{ color: '#fff' }}>{Math.max(...reports.map(r => r.total_skus), 0)}</span>, 'Highest recorded snapshot'],
+              ['Total Snapshots Captured', <span className="font-bold" style={{ color: '#0f172a' }}>{reports.length}</span>, 'Since system launch'],
+              ['Active Snapshots', <span className="font-bold" style={{ color: '#0f172a' }}>1</span>, 'Current baseline'],
+              ['Max SKUs Captured', <span className="font-bold" style={{ color: '#0f172a' }}>{Math.max(...reports.map(r => r.total_skus), 0)}</span>, 'Highest recorded snapshot'],
             ]}
           />
         </PageContainer>

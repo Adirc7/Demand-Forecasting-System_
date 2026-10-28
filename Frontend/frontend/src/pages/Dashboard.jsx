@@ -7,137 +7,74 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const { user } = useAuth();
 
-    // Define the modules based on the app's existing routes
+    // Modules available in the system (shown based on the user's role)
     const allModules = [
-        { 
-            name: "Inventory Alerts", 
-            path: "/inventory", 
-            desc: "Monitor stock levels and actionable alerts.", 
-            roleMatch: ['inventory_manager', 'admin'],
-            gradient: "linear-gradient(135deg, #2563eb, #60a5fa)",
-            icon: "📦"
-        },
-        { 
-            name: "AI Forecasts", 
-            path: "/forecasts", 
-            desc: "Predictive insights powered by machine learning.", 
-            roleMatch: ['forecast_manager', 'admin'],
-            gradient: "linear-gradient(135deg, #9333ea, #c084fc)",
-            icon: "📈"
-        },
-        { 
-            name: "Record Sales", 
-            path: "/sales", 
-            desc: "Log transactions and analyze sales trends.", 
-            roleMatch: ['sales_manager', 'admin'],
-            gradient: "linear-gradient(135deg, #16a34a, #4ade80)",
-            icon: "💳"
-        },
-        { 
-            name: "Add Product", 
-            path: "/products/add", 
-            desc: "Expand your catalog with new SKUs.", 
-            roleMatch: ['product_manager', 'admin'],
-            gradient: "linear-gradient(135deg, #ea580c, #fb923c)",
-            icon: "➕"
-        },
-        { 
-            name: "System Reports", 
-            path: "/reports", 
-            desc: "Comprehensive analytics and performance metrics.", 
-            roleMatch: ['report_analyst', 'admin'],
-            gradient: "linear-gradient(135deg, #0d9488, #2dd4bf)",
-            icon: "📊"
-        },
-        { 
-            name: "User Management", 
-            path: "/users", 
-            desc: "Control access and system roles.", 
-            roleMatch: ['admin'],
-            gradient: "linear-gradient(135deg, #dc2626, #f87171)",
-            icon: "👥"
-        },
+        { name: "Inventory Alerts", path: "/inventory", desc: "Monitor stock levels and act on reorder alerts.", roleMatch: ['inventory_manager', 'admin'], tint: '#eff6ff', ink: '#2563eb', icon: "📦" },
+        { name: "AI Forecasts", path: "/forecasts", desc: "Predictive demand insights powered by machine learning.", roleMatch: ['forecast_manager', 'admin'], tint: '#f5f3ff', ink: '#7c3aed', icon: "📈" },
+        { name: "Sales", path: "/sales", desc: "Record transactions and track sales performance.", roleMatch: ['sales_manager', 'admin'], tint: '#f0fdf4', ink: '#16a34a', icon: "💳" },
+        { name: "Products", path: "/products/add", desc: "Add new SKUs and manage your product catalog.", roleMatch: ['product_manager', 'admin'], tint: '#fff7ed', ink: '#ea580c', icon: "🏷️" },
+        { name: "Reports", path: "/reports", desc: "Analytics, accuracy metrics and exportable reports.", roleMatch: ['report_analyst', 'admin'], tint: '#f0fdfa', ink: '#0d9488', icon: "📊" },
+        { name: "User Management", path: "/users", desc: "Control access, roles and security settings.", roleMatch: ['admin'], tint: '#fef2f2', ink: '#dc2626', icon: "👥" },
     ];
 
     // Check if user has access to a module
-    const hasAccess = (mod) => {
-        return user?.isAdmin || mod.roleMatch.includes(user?.role);
-    };
+    const hasAccess = (mod) => user?.isAdmin || mod.roleMatch.includes(user?.role);
+
+    const name = user?.name || user?.email?.split('@')[0] || 'there';
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
 
     return (
-        <div style={{ minHeight: 'calc(100vh - 70px)' }} className="bg-slate-900 text-white p-10 flex flex-col items-center">
-            <style>
-                {`
-                @keyframes gradientShift {
-                    0% { background-position: 0% 50%; }
-                    50% { background-position: 100% 50%; }
-                    100% { background-position: 0% 50%; }
-                }
-                `}
-            </style>
-            <div className="max-w-6xl w-full">
-                <header className="mb-12 text-center">
-                    <h1 className="text-4xl font-extrabold tracking-tight mb-3 text-white">
-                        Welcome to Dropex.AI<br/>
-                        <span style={{ 
-                            background: 'linear-gradient(270deg, #3b82f6, #a855f7, #ec4899, #f97316)',
-                            backgroundSize: '300% 300%',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            animation: 'gradientShift 4s ease infinite'
-                        }}>
-                            {user?.name || user?.email?.split('@')[0] || 'Admin'}
-                        </span>
+        <div className="min-h-[calc(100vh-64px)] bg-[var(--app-bg)] px-6 py-10 md:px-10">
+            <div className="mx-auto max-w-6xl">
+                <header className="mb-10">
+                    <p className="text-sm font-medium text-[var(--brand)] mb-2">Dropex Smart Inventory</p>
+                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+                        {greeting}, <span className="capitalize">{name}</span>
                     </h1>
-                    <p className="text-slate-400 text-lg">
-                        Select a module to manage your smart inventory system.
+                    <p className="mt-2 text-slate-500 text-base">
+                        Choose a module to get started.
                     </p>
                 </header>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {allModules.map((module) => {
                         const accessible = hasAccess(module);
                         return (
-                        <div key={module.name} className="relative group">
-                            <div 
+                            <button
+                                key={module.name}
+                                type="button"
+                                disabled={!accessible}
                                 onClick={() => accessible && navigate(module.path)}
-                                className={`bg-slate-800 rounded-2xl p-8 transition duration-300 border border-slate-700 flex flex-col justify-between h-full ${accessible ? 'cursor-pointer hover:-translate-y-2 hover:shadow-2xl hover:border-slate-500 transform relative overflow-hidden' : 'opacity-60 grayscale blur-[3px] pointer-events-none'}`}
-                                style={{ minHeight: '220px' }}
+                                className={`group text-left rounded-2xl border bg-white p-6 flex flex-col transition duration-200 ${accessible
+                                    ? 'border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-slate-300 cursor-pointer'
+                                    : 'border-slate-200 opacity-55 cursor-not-allowed'}`}
+                                style={{ minHeight: '190px' }}
                             >
-                                {/* Decorative background glow */}
-                                <div 
-                                    className={`absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-0 ${accessible ? 'group-hover:opacity-20 transition-opacity duration-500 blur-2xl' : ''}`}
-                                    style={{ background: module.gradient }}
-                                ></div>
-
-                                <div>
-                                    <div className="text-4xl mb-4 p-3 inline-block rounded-xl" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                                <div className="flex items-start justify-between">
+                                    <div
+                                        className="w-11 h-11 rounded-xl grid place-items-center text-xl"
+                                        style={{ background: module.tint, color: module.ink }}
+                                    >
                                         {module.icon}
                                     </div>
-                                    <h2 className="text-2xl font-bold mb-2 tracking-wide">{module.name}</h2>
-                                    <p className="text-slate-400 text-sm leading-relaxed">
-                                        {module.desc}
-                                    </p>
+                                    {!accessible && (
+                                        <span className="text-xs font-medium text-slate-500 bg-slate-100 rounded-full px-2.5 py-1">🔒 No access</span>
+                                    )}
                                 </div>
-
-                                <div className={`mt-6 flex items-center text-sm font-semibold tracking-wider transition duration-200 ${accessible ? 'text-slate-300 group-hover:text-white' : 'text-slate-500'}`}>
-                                    ENTER MODULE <span className="ml-2 group-hover:translate-x-1 transition-transform duration-200">→</span>
-                                </div>
-                            </div>
-
-                            {/* Lock overlay that appears on hover for inaccessible modules */}
-                            {!accessible && (
-                                <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-not-allowed">
-                                    <div className="bg-black/80 px-4 py-2 rounded-md border border-red-500 flex items-center gap-2 text-red-500 font-bold tracking-widest text-sm shadow-xl">
-                                        <span>🔒</span> ACCESS DENIED
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )})}
+                                <h2 className="mt-5 text-lg font-semibold text-slate-900">{module.name}</h2>
+                                <p className="mt-1 text-sm leading-relaxed text-slate-500 flex-1">{module.desc}</p>
+                                {accessible && (
+                                    <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium" style={{ color: module.ink }}>
+                                        Open <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                                    </span>
+                                )}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
-            
+
             <AssistantBot />
         </div>
     );

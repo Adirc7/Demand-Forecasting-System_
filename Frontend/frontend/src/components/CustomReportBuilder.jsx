@@ -103,7 +103,7 @@ const MOCK_DATA = {
   ]
 };
 
-const COLORS = ['#6366f1', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4'];
+const COLORS = ['#4f46e5', '#dc2626', '#10b981', '#d97706', '#7c3aed', '#06b6d4'];
 
 export default function CustomReportBuilder({ show, onClose, onAddChart }) {
   const [chartType, setChartType] = useState('line');
@@ -173,12 +173,12 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
   const renderPreview = () => {
     if (selectedMetrics.length === 0) {
       return (
-        <div className="flex flex-col items-center justify-center h-64 text-[#a0a0a0]">
+        <div className="flex flex-col items-center justify-center h-64 text-[#475569]">
           <svg className="w-8 h-8 mb-4 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polyline points="3 17 9 11 13 15 21 7" />
           </svg>
           <span className="text-sm font-semibold">Configure above to see a live preview</span>
-          <button className="mt-4 flex items-center justify-center w-8 h-8 rounded-full border border-[#404040] hover:bg-[#333] transition-colors">
+          <button className="mt-4 flex items-center justify-center w-8 h-8 rounded-full border border-[#404040] hover:bg-[#ffffff] transition-colors">
              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
           </button>
         </div>
@@ -190,7 +190,7 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
     let chartContent = null;
     if (isLoading) {
       chartContent = (
-        <div className="flex flex-col items-center justify-center h-full text-[#8b5cf6]">
+        <div className="flex flex-col items-center justify-center h-full text-[#7c3aed]">
           <svg className="animate-spin w-8 h-8 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
              <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -206,7 +206,7 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
       
       if (isPieEmpty || isScatterEmpty || isTimeseriesEmpty) {
         chartContent = (
-          <div className="flex flex-col items-center justify-center h-full text-[#a0a0a0]">
+          <div className="flex flex-col items-center justify-center h-full text-[#475569]">
             <svg className="w-8 h-8 mb-4 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                <circle cx="12" cy="12" r="10" />
                <line x1="12" y1="8" x2="12" y2="12" />
@@ -218,10 +218,10 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
       } else if (chartType === 'line') {
         chartContent = (
         <LineChart data={chartData.timeseries || []} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
-          <XAxis dataKey="period" stroke="#888" tick={{ fill: '#888', fontSize: 12 }} />
-          <YAxis stroke="#888" tick={{ fill: '#888', fontSize: 12 }} />
-          <Tooltip contentStyle={{ backgroundColor: '#222', borderColor: '#444' }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+          <XAxis dataKey="period" stroke="#cbd5e1" tick={{ fill: '#888', fontSize: 12 }} />
+          <YAxis stroke="#cbd5e1" tick={{ fill: '#888', fontSize: 12 }} />
+          <Tooltip contentStyle={{ backgroundColor: '#f8fafc', borderColor: '#e2e8f0' }} />
           {selectedMetrics.map((m, i) => (
             <Line key={m} type="monotone" dataKey={`val${(i % 3) + 1}`} name={m} stroke={COLORS[i % COLORS.length]} strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 6 }} />
           ))}
@@ -230,10 +230,10 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
     } else if (chartType === 'bar') {
       chartContent = (
         <BarChart data={chartData.timeseries || []} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
-          <XAxis dataKey="period" stroke="#888" tick={{ fill: '#888', fontSize: 12 }} />
-          <YAxis stroke="#888" tick={{ fill: '#888', fontSize: 12 }} />
-          <Tooltip contentStyle={{ backgroundColor: '#222', borderColor: '#444' }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+          <XAxis dataKey="period" stroke="#cbd5e1" tick={{ fill: '#888', fontSize: 12 }} />
+          <YAxis stroke="#cbd5e1" tick={{ fill: '#888', fontSize: 12 }} />
+          <Tooltip contentStyle={{ backgroundColor: '#f8fafc', borderColor: '#e2e8f0' }} />
           {selectedMetrics.map((m, i) => (
             <Bar key={m} dataKey={`val${(i % 3) + 1}`} name={m} fill={COLORS[i % COLORS.length]} radius={[4, 4, 0, 0]} />
           ))}
@@ -242,10 +242,10 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
     } else if (chartType === 'area') {
       chartContent = (
         <AreaChart data={chartData.timeseries || []} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
-          <XAxis dataKey="period" stroke="#888" tick={{ fill: '#888', fontSize: 12 }} />
-          <YAxis stroke="#888" tick={{ fill: '#888', fontSize: 12 }} />
-          <Tooltip contentStyle={{ backgroundColor: '#222', borderColor: '#444' }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+          <XAxis dataKey="period" stroke="#cbd5e1" tick={{ fill: '#888', fontSize: 12 }} />
+          <YAxis stroke="#cbd5e1" tick={{ fill: '#888', fontSize: 12 }} />
+          <Tooltip contentStyle={{ backgroundColor: '#f8fafc', borderColor: '#e2e8f0' }} />
           {selectedMetrics.map((m, i) => (
             <Area key={m} type="monotone" dataKey={`val${(i % 3) + 1}`} name={m} fill={COLORS[i % COLORS.length]} fillOpacity={0.3} stroke={COLORS[i % COLORS.length]} strokeWidth={2} />
           ))}
@@ -254,7 +254,7 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
     } else if (chartType === 'pie') {
       chartContent = (
         <PieChart margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
-          <Tooltip contentStyle={{ backgroundColor: '#222', borderColor: '#444' }} />
+          <Tooltip contentStyle={{ backgroundColor: '#f8fafc', borderColor: '#e2e8f0' }} />
           <Pie data={chartData.pie || []} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={5} dataKey="value">
             {(chartData.pie || []).map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -265,10 +265,10 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
     } else if (chartType === 'combo') {
       chartContent = (
         <ComposedChart data={chartData.timeseries || []} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
-          <XAxis dataKey="period" stroke="#888" tick={{ fill: '#888', fontSize: 12 }} />
-          <YAxis stroke="#888" tick={{ fill: '#888', fontSize: 12 }} />
-          <Tooltip contentStyle={{ backgroundColor: '#222', borderColor: '#444' }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+          <XAxis dataKey="period" stroke="#cbd5e1" tick={{ fill: '#888', fontSize: 12 }} />
+          <YAxis stroke="#cbd5e1" tick={{ fill: '#888', fontSize: 12 }} />
+          <Tooltip contentStyle={{ backgroundColor: '#f8fafc', borderColor: '#e2e8f0' }} />
           {selectedMetrics.map((m, i) => {
             if (m.includes('(line)')) {
                return <Line key={m} type="monotone" dataKey={`val${(i % 3) + 1}`} name={m} stroke={COLORS[i % COLORS.length]} strokeWidth={2} dot={{ r: 4 }} />
@@ -280,10 +280,10 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
     } else if (chartType === 'scatter') {
       chartContent = (
         <ScatterChart margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
-          <XAxis type="number" dataKey="x" stroke="#888" tick={{ fill: '#888', fontSize: 12 }} />
-          <YAxis type="number" dataKey="y" stroke="#888" tick={{ fill: '#888', fontSize: 12 }} />
-          <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={{ backgroundColor: '#222', borderColor: '#444' }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+          <XAxis type="number" dataKey="x" stroke="#cbd5e1" tick={{ fill: '#888', fontSize: 12 }} />
+          <YAxis type="number" dataKey="y" stroke="#cbd5e1" tick={{ fill: '#888', fontSize: 12 }} />
+          <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={{ backgroundColor: '#f8fafc', borderColor: '#e2e8f0' }} />
           <Scatter name="Data" data={chartData.scatter || []} fill={COLORS[0]} />
         </ScatterChart>
       );
@@ -292,14 +292,14 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
 
     return (
       <div className="flex flex-col relative w-full h-full">
-        <h3 className="text-sm font-bold text-[#e0e0e0] mb-6">{title}</h3>
+        <h3 className="text-sm font-bold text-[#334155] mb-6">{title}</h3>
         <div className="w-full" style={{ height: '300px' }}>
           <ResponsiveContainer width="100%" height="100%">
             {chartContent}
           </ResponsiveContainer>
         </div>
         {/* Scroll arrow badge overlay */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-[#404040] bg-[#1a1a1a] hover:bg-[#333] transition-colors cursor-pointer opacity-70">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-[#404040] bg-[#ffffff] hover:bg-[#ffffff] transition-colors cursor-pointer opacity-70">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </div>
       </div>
@@ -307,14 +307,14 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" style={{ background: 'rgba(0, 0, 0, 0.75)' }}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" style={{ background: 'rgba(15,23,42,0.45)' }}>
       {/* Modal Container */}
-      <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl relative" style={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}>
+      <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl relative" style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}>
         
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-gray-400 transition-all hover:bg-white/10 hover:text-white cursor-pointer z-10"
+          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-all hover:bg-slate-100 hover:text-slate-900 cursor-pointer z-10"
         >
           ✕
         </button>
@@ -323,7 +323,7 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
           {/* STEP 1: CHOOSE CHART TYPE */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#888]">1 — CHOOSE CHART TYPE</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#64748b]">1 — CHOOSE CHART TYPE</span>
             </div>
             <div className="flex flex-wrap gap-4">
               {CHART_TYPES.map(c => {
@@ -334,9 +334,9 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
                     onClick={() => handleChartTypeSelect(c.id)}
                     className="flex flex-col items-center justify-center w-24 h-24 rounded-lg transition-all"
                     style={{
-                      backgroundColor: '#242424',
-                      border: `1px solid ${isSelected ? '#8b5cf6' : '#333'}`,
-                      color: isSelected ? '#8b5cf6' : '#a0a0a0',
+                      backgroundColor: '#f8fafc',
+                      border: `1px solid ${isSelected ? '#7c3aed' : '#ffffff'}`,
+                      color: isSelected ? '#7c3aed' : '#475569',
                     }}
                   >
                     <div className="mb-2">{c.icon}</div>
@@ -350,8 +350,8 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
           {/* STEP 2: SELECT METRICS */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#888]">2 — SELECT METRICS</span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold" style={{ backgroundColor: '#312e81', color: '#818cf8' }}>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#64748b]">2 — SELECT METRICS</span>
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold" style={{ backgroundColor: '#312e81', color: '#4f46e5' }}>
                 {selectedMetrics.length} SELECTED
               </span>
             </div>
@@ -364,15 +364,15 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
                     onClick={() => toggleMetric(m)}
                     className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all"
                     style={{
-                      backgroundColor: '#242424',
-                      border: `1px solid ${isSelected ? '#8b5cf6' : '#333'}`,
-                      color: isSelected ? '#8b5cf6' : '#d4d4d4'
+                      backgroundColor: '#f8fafc',
+                      border: `1px solid ${isSelected ? '#7c3aed' : '#ffffff'}`,
+                      color: isSelected ? '#7c3aed' : '#334155'
                     }}
                   >
                     <div 
                       className="flex items-center justify-center w-4 h-4 rounded transition-colors"
                       style={{ 
-                        border: `1px solid ${isSelected ? '#8b5cf6' : '#555'}`,
+                        border: `1px solid ${isSelected ? '#7c3aed' : '#555'}`,
                         backgroundColor: isSelected ? '#8b5cf6' : 'transparent'
                       }}
                     >
@@ -390,21 +390,21 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
           </div>
 
           {/* Divider */}
-          <div className="h-px w-full" style={{ backgroundColor: '#333' }} />
+          <div className="h-px w-full" style={{ backgroundColor: '#f8fafc' }} />
 
           {/* STEP 3: CONFIGURE */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#888]">3 — CONFIGURE</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#64748b]">3 — CONFIGURE</span>
             </div>
             <div className="flex gap-6">
               <div className="flex-1 max-w-[240px]">
-                <label className="block text-[10px] font-bold uppercase text-[#888] mb-2 tracking-widest">Time Range</label>
+                <label className="block text-[10px] font-bold uppercase text-[#64748b] mb-2 tracking-widest">Time Range</label>
                 <select 
                   value={timeRange} 
                   onChange={(e) => setTimeRange(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-md text-sm font-bold text-white appearance-none cursor-pointer outline-none focus:ring-1 focus:ring-[#8b5cf6]"
-                  style={{ backgroundColor: '#242424', border: '1px solid #333' }}
+                  className="w-full px-3 py-2.5 rounded-md text-sm font-bold text-slate-900 appearance-none cursor-pointer outline-none focus:ring-1 focus:ring-[#7c3aed]"
+                  style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}
                 >
                   <option value="last_month">Last month</option>
                   <option value="last_3_months">Last 3 months</option>
@@ -414,12 +414,12 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
                 </select>
               </div>
               <div className="flex-1 max-w-[240px]">
-                <label className="block text-[10px] font-bold uppercase text-[#888] mb-2 tracking-widest">Granularity</label>
+                <label className="block text-[10px] font-bold uppercase text-[#64748b] mb-2 tracking-widest">Granularity</label>
                 <select 
                   value={granularity} 
                   onChange={(e) => setGranularity(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-md text-sm font-bold text-white appearance-none cursor-pointer outline-none focus:ring-1 focus:ring-[#8b5cf6]"
-                  style={{ backgroundColor: '#242424', border: '1px solid #333' }}
+                  className="w-full px-3 py-2.5 rounded-md text-sm font-bold text-slate-900 appearance-none cursor-pointer outline-none focus:ring-1 focus:ring-[#7c3aed]"
+                  style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}
                 >
                   <option value="daily">Daily</option>
                   <option value="weekly">Weekly</option>
@@ -431,19 +431,19 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
           </div>
 
           {/* Divider */}
-          <div className="h-px w-full" style={{ backgroundColor: '#333' }} />
+          <div className="h-px w-full" style={{ backgroundColor: '#f8fafc' }} />
 
           {/* STEP 4: PREVIEW */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#888]">4 — PREVIEW</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#64748b]">4 — PREVIEW</span>
             </div>
             <div 
               className="rounded-xl p-6 min-h-[350px] relative"
-              style={{ backgroundColor: '#242424', border: '1px solid #333' }}
+              style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}
             >
               {selectedMetrics.length === 0 ? (
-                <span className="text-sm font-bold text-[#e0e0e0] absolute top-6 left-6">Select metrics to see preview</span>
+                <span className="text-sm font-bold text-[#334155] absolute top-6 left-6">Select metrics to see preview</span>
               ) : null}
               {renderPreview()}
             </div>
@@ -456,16 +456,16 @@ export default function CustomReportBuilder({ show, onClose, onAddChart }) {
                 setChartType('line');
                 setSelectedMetrics([]);
               }}
-              className="px-5 py-2.5 rounded-lg text-sm font-bold text-[#d4d4d4] hover:bg-[#333] transition-colors"
-              style={{ border: '1px solid #444' }}
+              className="px-5 py-2.5 rounded-lg text-sm font-bold text-[#334155] hover:bg-[#ffffff] transition-colors"
+              style={{ border: '1px solid #e2e8f0' }}
             >
               Reset
             </button>
             <button 
               onClick={handleAddDashboard}
               disabled={selectedMetrics.length === 0 || isLoading}
-              className="px-5 py-2.5 rounded-lg text-sm font-bold text-[#e0e0e0] transition-colors flex items-center gap-2 cursor-pointer hover:bg-[#333] disabled:opacity-50"
-              style={{ backgroundColor: '#242424', border: '1px solid #444' }}
+              className="px-5 py-2.5 rounded-lg text-sm font-bold text-[#334155] transition-colors flex items-center gap-2 cursor-pointer hover:bg-[#ffffff] disabled:opacity-50"
+              style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}
             >
               Add to dashboard
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>

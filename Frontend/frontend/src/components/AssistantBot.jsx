@@ -135,44 +135,44 @@ Answer queries honestly using this exact live data. You must behave as if you ha
             {/* Full Screen Blur Backdrop */}
             {isOpen && (
                 <div 
-                    className="fixed inset-0 z-40 bg-black/60 backdrop-blur-md transition-all duration-500"
+                    className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-md transition-all duration-500"
                     onClick={() => setIsOpen(false)}
                 ></div>
             )}
 
             {/* Chatbot Window */}
-            <div className={`fixed bottom-24 right-8 z-50 w-[420px] bg-slate-900 border-2 border-indigo-500/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 transform ${isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 translate-y-8 pointer-events-none'}`} style={{ height: '600px', boxShadow: '0 20px 50px -12px rgba(99, 102, 241, 0.4)' }}>
+            <div className={`fixed bottom-24 right-8 z-50 w-[420px] bg-slate-50 border-2 border-indigo-500/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 transform ${isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 translate-y-8 pointer-events-none'}`} style={{ height: '600px', boxShadow: '0 20px 50px -12px rgba(99,102,241,0.14)' }}>
                 {/* Header */}
                 <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 flex justify-between items-center border-b border-indigo-400/30">
                     <div className="flex items-center gap-3">
                         <div className="relative">
-                            <div className="w-10 h-10 bg-slate-900/50 rounded-full flex items-center justify-center text-xl shadow-inner border border-white/10">🤖</div>
+                            <div className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center text-xl shadow-inner border border-slate-200">🤖</div>
                             <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-full border-2 border-indigo-600 animate-pulse"></div>
                         </div>
                         <div>
                             <h3 className="font-bold text-white tracking-wide font-['Outfit']">Dropex.AI Nexus</h3>
-                            <p className="text-xs text-indigo-100 opacity-80 uppercase tracking-widest">System Intelligence</p>
+                            <p className="text-xs text-indigo-800 opacity-80 uppercase tracking-widest">System Intelligence</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Message Log */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4 font-['Inter'] text-sm" style={{ background: 'linear-gradient(180deg, rgba(15,23,42,1) 0%, rgba(30,27,75,0.4) 100%)' }}>
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 font-['Inter'] text-sm" style={{ background: 'linear-gradient(180deg, #f8fafc 0%, #f1f0fa 100%)' }}>
                     
                     {visibleMessages.length === 0 && (
                         <div className="text-center mt-6">
                             <div className="w-16 h-16 bg-indigo-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
                                 <span className="text-2xl">✨</span>
                             </div>
-                            <h4 className="text-indigo-300 font-bold tracking-widest uppercase mb-2">Systems Online</h4>
-                            <p className="text-slate-400 text-xs mb-6 px-4">I am connected directly to Dropex's data stream. You can ask me questions about the current architecture, AI forecasts, or stability.</p>
+                            <h4 className="text-indigo-700 font-bold tracking-widest uppercase mb-2">Systems Online</h4>
+                            <p className="text-slate-500 text-xs mb-6 px-4">I am connected directly to Dropex's data stream. You can ask me questions about the current architecture, AI forecasts, or stability.</p>
                             
                             <div className="flex flex-col gap-2">
                                 {questions.map((q, i) => (
                                     <button 
                                         key={i}
                                         onClick={() => handleSend(q)}
-                                        className="text-left bg-slate-800/80 hover:bg-indigo-600/20 text-indigo-200 border border-indigo-500/20 hover:border-indigo-400/50 p-3 rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-sm text-xs"
+                                        className="text-left bg-white hover:bg-indigo-600/20 text-indigo-700 border border-indigo-500/20 hover:border-indigo-400/50 p-3 rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-sm text-xs"
                                     >
                                         💬 {q}
                                     </button>
@@ -184,11 +184,11 @@ Answer queries honestly using this exact live data. You must behave as if you ha
                     {visibleMessages.map((msg, idx) => (
                         <div key={idx} className={`flex gap-2 items-start ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             {msg.role !== 'user' && (
-                                <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-sm shadow-md border border-slate-600 shrink-0">
+                                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-sm shadow-md border border-slate-300 shrink-0">
                                     🤖
                                 </div>
                             )}
-                            <div className={`max-w-[75%] p-3 rounded-2xl whitespace-pre-wrap ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-tr-sm shadow-[0_4px_15px_rgba(79,70,229,0.3)]' : 'bg-slate-800/90 text-slate-200 border border-slate-700/50 rounded-tl-sm shadow-md'}`}>
+                            <div className={`max-w-[75%] p-3 rounded-2xl whitespace-pre-wrap ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-tr-sm shadow-[0_4px_15px_rgba(79,70,229,0.3)]' : 'bg-white text-slate-700 border border-slate-200 rounded-tl-sm shadow-md'}`}>
                                 {msg.parts[0].text}
                             </div>
                             {msg.role === 'user' && (
@@ -201,10 +201,10 @@ Answer queries honestly using this exact live data. You must behave as if you ha
                     
                     {loading && (
                         <div className="flex gap-2 items-start justify-start">
-                            <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-sm shadow-md border border-slate-600 shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-sm shadow-md border border-slate-300 shrink-0">
                                 🤖
                             </div>
-                            <div className="bg-slate-800/90 border border-indigo-500/30 p-4 rounded-2xl rounded-tl-sm shadow-[0_0_10px_rgba(99,102,241,0.2)]">
+                            <div className="bg-white border border-indigo-500/30 p-4 rounded-2xl rounded-tl-sm shadow-[0_0_10px_rgba(99,102,241,0.2)]">
                                 <span className="flex gap-1 animate-pulse">
                                     <span className="w-2 h-2 bg-indigo-400 rounded-full"></span>
                                     <span className="w-2 h-2 bg-indigo-400 rounded-full animation-delay-200"></span>
@@ -217,7 +217,7 @@ Answer queries honestly using this exact live data. You must behave as if you ha
                 </div>
 
                 {/* Input Area */}
-                <div className="p-4 bg-slate-900 border-t border-slate-700/50">
+                <div className="p-4 bg-slate-50 border-t border-slate-200">
                     <form 
                         onSubmit={(e) => { e.preventDefault(); handleSend(inputValue); }}
                         className="flex items-center gap-2"
@@ -227,12 +227,12 @@ Answer queries honestly using this exact live data. You must behave as if you ha
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             placeholder="Type a query to Nexus..." 
-                            className="flex-1 bg-slate-800 border border-slate-600 focus:border-indigo-500 text-sm text-white rounded-full px-4 py-3 outline-none transition-all shadow-inner focus:shadow-[0_0_10px_rgba(99,102,241,0.3)]"
+                            className="flex-1 bg-white border border-slate-300 focus:border-indigo-500 text-sm text-slate-900 rounded-full px-4 py-3 outline-none transition-all shadow-inner focus:shadow-[0_0_10px_rgba(99,102,241,0.3)]"
                         />
                         <button 
                             type="submit" 
                             disabled={!inputValue.trim() || loading}
-                            className="w-11 h-11 bg-gradient-to-br from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white rounded-full flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_15px_rgba(99,102,241,0.4)] hover:shadow-[0_6px_20px_rgba(99,102,241,0.6)] transition-all active:scale-95"
+                            className="w-11 h-11 bg-gradient-to-br from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white rounded-full flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_15px_rgba(99,102,241,0.4)] hover:shadow-[0_6px_20px_rgba(18,21,197,0.6)] transition-all active:scale-95"
                         >
                             <svg className="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                         </button>
@@ -243,7 +243,7 @@ Answer queries honestly using this exact live data. You must behave as if you ha
             {/* Floating Action Button */}
             <button 
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-8 right-8 z-50 w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] flex items-center justify-center text-3xl hover:scale-110 hover:shadow-[0_0_30px_rgba(168,85,247,0.8)] transition-all duration-300 border-2 border-indigo-400/30"
+                className="fixed bottom-8 right-8 z-50 w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full shadow-[0_0_20px_rgba(18,21,197,0.6)] flex items-center justify-center text-3xl hover:scale-110 hover:shadow-[0_0_30px_rgba(110,10,205,0.8)] transition-all duration-300 border-2 border-indigo-400/30"
             >
                 {isOpen ? '✕' : '🤖'}
             </button>

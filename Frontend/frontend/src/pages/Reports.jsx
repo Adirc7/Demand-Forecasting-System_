@@ -41,64 +41,64 @@ import SortableChartCard from '../components/SortableChartCard';
 const THEME = {
   bg: {
     primary: 'transparent',
-    secondary: '#271d30ff',
-    tertiary: 'rgba(255, 255, 255, 0.05)',
-    card: 'linear-gradient(135deg, rgba(34, 34, 46, 0.97), rgba(18, 8, 28, 0.97))',
-    elevated: 'linear-gradient(145deg, rgba(12, 12, 22, 0.99), rgba(18, 8, 28, 0.99))',
+    secondary: '#f8fafc',
+    tertiary: 'rgba(15,23,42,0.03)',
+    card: 'linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,255,255,0.97))',
+    elevated: 'linear-gradient(145deg, rgba(255,255,255,0.99), rgba(255,255,255,0.99))',
   },
   border: {
-    subtle: 'rgba(255, 255, 255, 0.06)',
-    default: 'rgba(255, 255, 255, 0.15)',
-    strong: 'rgba(24, 19, 19, 0.25)',
+    subtle: 'rgba(15,23,42,0.066)',
+    default: 'rgba(15,23,42,0.14)',
+    strong: 'rgba(15,23,42,0.1)',
   },
   text: {
-    primary: '#ffffff',
-    secondary: '#e2e8f0',
-    muted: '#94a3b8',
+    primary: '#0f172a',
+    secondary: '#0f172a',
+    muted: '#556781',
     dim: '#64748b',
   },
   brand: {
-    primary: '#f97316',
-    primaryLight: '#fb923c',
+    primary: '#ea580c',
+    primaryLight: '#ea580c',
     primaryDark: '#ea580c',
-    gradient: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+    gradient: 'linear-gradient(135deg, #ea580c 0%, #ea580c 100%)',
   },
   success: {
     base: '#10b981',
-    light: '#34d399',
+    light: '#059669',
     dark: '#059669',
     bg: 'rgba(16, 185, 129, 0.1)',
     border: 'rgba(16, 185, 129, 0.3)',
   },
   danger: {
-    base: '#ef4444',
-    light: '#f87171',
+    base: '#dc2626',
+    light: '#dc2626',
     dark: '#dc2626',
     bg: 'rgba(239, 68, 68, 0.1)',
     border: 'rgba(239, 68, 68, 0.3)',
   },
   warning: {
-    base: '#f59e0b',
-    light: '#fbbf24',
+    base: '#d97706',
+    light: '#d29904',
     dark: '#d97706',
     bg: 'rgba(245, 158, 11, 0.1)',
     border: 'rgba(245, 158, 11, 0.3)',
   },
   info: {
-    base: '#3b82f6',
-    light: '#60a5fa',
-    dark: '#2563eb',
+    base: '#2563eb',
+    light: '#2563eb',
+    dark: '#0f3fa8',
     bg: 'rgba(59, 130, 246, 0.1)',
     border: 'rgba(59, 130, 246, 0.3)',
   },
   purple: {
-    base: '#a855f7',
-    light: '#c084fc',
-    dark: '#9333ea',
+    base: '#9333ea',
+    light: '#9333ea',
+    dark: '#5f11a6',
     bg: 'rgba(168, 85, 247, 0.1)',
     border: 'rgba(168, 85, 247, 0.3)',
   },
-  charts: ['#3b82f6', '#10b981', '#f59e0b', '#a855f7', '#ef4444', '#06b6d4', '#f97316'],
+  charts: ['#2563eb', '#10b981', '#d97706', '#9333ea', '#dc2626', '#06b6d4', '#ea580c'],
 };
 
 const formatCurrency = (n) => {
@@ -122,7 +122,7 @@ const Badge = ({ children, variant = 'default', size = 'md', icon }) => {
     warning: { bg: THEME.warning.bg, text: THEME.warning.light, border: THEME.warning.border },
     info: { bg: THEME.info.bg, text: THEME.info.light, border: THEME.info.border },
     purple: { bg: THEME.purple.bg, text: THEME.purple.light, border: THEME.purple.border },
-    default: { bg: 'rgba(255, 255, 255, 0.05)', text: THEME.text.secondary, border: THEME.border.subtle },
+    default: { bg: 'rgba(15,23,42,0.03)', text: THEME.text.secondary, border: THEME.border.subtle },
   };
 
   const sizes = {
@@ -213,7 +213,7 @@ const Alert = ({ type = 'info', title, children }) => {
     >
       <div
         style={{ background: style.dot }}
-        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
+        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-slate-900"
       >
         {style.icon}
       </div>
@@ -233,7 +233,7 @@ const Card = ({ title, subtitle, children, actions, className = '' }) => {
       style={{
         background: THEME.bg.elevated,
       }}
-      className={`overflow-hidden rounded-2xl shadow-xl border border-white/10 transition-all duration-300 hover:border-purple-500 hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] hover:-translate-y-1 ${className}`}
+      className={`overflow-hidden rounded-2xl shadow-xl border border-slate-200 transition-all duration-300 hover:border-purple-500 hover:shadow-[0_0_20px_rgba(168,85,247,0.25)] hover:-translate-y-1 ${className}`}
     >
       {(title || actions) && (
         <div
@@ -282,7 +282,7 @@ const Table = ({ columns, data }) => {
             <tr
               key={`row-${i}`}
               style={{ borderBottom: `1px solid ${THEME.border.subtle}` }}
-              className="transition-colors hover:bg-white/5"
+              className="transition-colors hover:bg-slate-50"
             >
               {row.map((cell, j) => (
                 <td
@@ -361,12 +361,12 @@ const Module = ({ title, subtitle, badge, icon, defaultOpen = false, children })
       style={{
         background: THEME.bg.card,
       }}
-      className="overflow-hidden rounded-2xl shadow-xl border border-white/10 transition-all duration-300 hover:border-purple-500 hover:shadow-[0_0_20px_rgba(168,85,247,0.25)]"
+      className="overflow-hidden rounded-2xl shadow-xl border border-slate-200 transition-all duration-300 hover:border-purple-500 hover:shadow-[0_0_20px_rgba(168,85,247,0.25)]"
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
         style={{ borderBottom: isOpen ? `1px solid ${THEME.border.subtle}` : 'none' }}
-        className="flex w-full items-center gap-4 p-6 text-left transition-colors hover:bg-white/5"
+        className="flex w-full items-center gap-4 p-6 text-left transition-colors hover:bg-slate-50"
       >
         {icon && (
           <div
@@ -412,7 +412,7 @@ const Modal = ({ show, onClose, title, subtitle, maxWidth = "max-w-md", children
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm" style={{ background: 'rgba(0, 0, 0, 0.8)' }}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm" style={{ background: 'rgba(15,23,42,0.45)' }}>
       <div
         style={{
           background: THEME.bg.secondary,
@@ -422,7 +422,7 @@ const Modal = ({ show, onClose, title, subtitle, maxWidth = "max-w-md", children
       >
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-gray-400 transition-all hover:bg-white/10 hover:text-white cursor-pointer"
+          className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-all hover:bg-slate-100 hover:text-slate-900 cursor-pointer"
         >
           ✕
         </button>
@@ -437,7 +437,7 @@ const Modal = ({ show, onClose, title, subtitle, maxWidth = "max-w-md", children
 };
 
 const CheckOption = ({ label, checked, onChange, radio, name }) => (
-  <label className="flex cursor-pointer items-center gap-3 rounded-lg p-3 transition-colors hover:bg-white/5">
+  <label className="flex cursor-pointer items-center gap-3 rounded-lg p-3 transition-colors hover:bg-slate-50">
     <input
       type={radio ? 'radio' : 'checkbox'}
       name={name}
@@ -621,7 +621,7 @@ export default function Reports() {
           scale: 2,
           useCORS: true,
           logging: false,
-          backgroundColor: '#0B1120',
+          backgroundColor: '#ffffff',
           width: 794,
           height: 1123
         });
@@ -798,7 +798,7 @@ export default function Reports() {
             style={{
               background: THEME.brand.gradient,
             }}
-            className="flex items-center gap-2 rounded-xl px-6 py-3 font-bold text-white shadow-xl shadow-orange-500/30 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/50 disabled:opacity-50 cursor-pointer"
+            className="flex items-center gap-2 rounded-xl px-6 py-3 font-bold text-slate-900 shadow-xl shadow-orange-500/30 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/50 disabled:opacity-50 cursor-pointer"
           >
             <span>📸</span> {generating ? 'Processing...' : 'Capture Snapshot'}
           </button>
@@ -812,17 +812,17 @@ export default function Reports() {
             <span className="text-xs font-bold uppercase tracking-widest" style={{ color: THEME.text.muted }}>
               View
             </span>
-            <div className="flex gap-2 rounded-xl bg-black/30 p-1.5">
+            <div className="flex gap-2 rounded-xl bg-slate-900/5 p-1.5">
               {['weekly', 'monthly', 'yearly'].map((g) => (
                 <button
                   key={g}
                   onClick={() => setGranularity(g)}
                   style={{
-                    background: granularity === g ? THEME.brand.gradient : 'rgba(255, 255, 255, 0.05)',
+                    background: granularity === g ? THEME.brand.gradient : 'rgba(15,23,42,0.055)',
                     color: granularity === g ? 'white' : THEME.text.secondary,
-                    border: granularity === g ? '1px solid transparent' : '1px solid rgba(255, 255, 255, 0.1)'
+                    border: granularity === g ? '1px solid transparent' : '1px solid rgba(15,23,42,0.11)'
                   }}
-                  className="rounded-lg px-4 py-2 text-sm font-semibold capitalize transition-all cursor-pointer hover:bg-white/10"
+                  className="rounded-lg px-4 py-2 text-sm font-semibold capitalize transition-all cursor-pointer hover:bg-slate-100"
                 >
                   {g}
                 </button>
@@ -889,12 +889,12 @@ export default function Reports() {
                     handleGenerateAiSummary();
                   }
                 }}
-                className="w-full bg-black/40 border border-purple-500/30 rounded-xl pl-4 pr-12 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors"
+                className="w-full bg-white border border-slate-300 rounded-xl pl-4 pr-12 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 transition-colors"
               />
               <button
                 onClick={handleGenerateAiSummary}
                 disabled={loadingAi || !customAiPrompt.trim()}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg text-purple-400 hover:bg-purple-500/20 hover:text-purple-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg text-purple-600 hover:bg-purple-500/20 hover:text-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 title="Send query"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -923,13 +923,13 @@ export default function Reports() {
           <div
             className="mt-6 rounded-xl p-6 relative"
             style={{
-              background: 'rgba(0, 0, 0, 0.3)',
+              background: 'rgba(15,23,42,0.03)',
               border: `1px solid ${THEME.purple.border}`,
             }}
           >
             <button
               onClick={() => setAiSummary('')}
-              className="absolute top-6 right-6 flex items-center justify-center h-8 w-8 rounded-full bg-white/5 text-gray-400 hover:bg-purple-500/20 hover:text-purple-400 transition-all cursor-pointer"
+              className="absolute top-6 right-6 flex items-center justify-center h-8 w-8 rounded-full bg-slate-100 text-slate-500 hover:bg-purple-500/20 hover:text-purple-700 transition-all cursor-pointer"
               title="Close Summary"
             >
               ✕
@@ -941,8 +941,8 @@ export default function Reports() {
                   className="mb-4 last:mb-0"
                   dangerouslySetInnerHTML={{
                     __html: line
-                      .replace(/\*\*(.*?)\*\*/g, '<strong style="color: #f5f5f7; font-size: 0.95rem;">$1</strong>')
-                      .replace(/\*(.*?)\*/g, '<em style="color: #c084fc">$1</em>')
+                      .replace(/\*\*(.*?)\*\*/g, '<strong style="color: #0f172a; font-size: 0.95rem;">$1</strong>')
+                      .replace(/\*(.*?)\*/g, '<em style="color: #9333ea">$1</em>')
                   }}
                 />
               ))}
@@ -969,7 +969,7 @@ export default function Reports() {
             value={formatCurrency(businessData?.total_inventory_value)}
             change="+4.2% vs last period"
             changeType="positive"
-            gradient="linear-gradient(135deg, #3b82f6, #2563eb)"
+            gradient="linear-gradient(135deg, #2563eb, #0f3fa8)"
             onClick={() => setKpiModal({ title: 'Inventory Value', dataKey: 'value', data: historical?.inventory_chart, format: formatCurrency, color: THEME.info.base })}
           />
           <MetricCard
@@ -978,7 +978,7 @@ export default function Reports() {
             value={formatCurrency(businessData?.est_restock_cost)}
             change="7-day forecast"
             changeType="neutral"
-            gradient="linear-gradient(135deg, #f59e0b, #d97706)"
+            gradient="linear-gradient(135deg, #d97706, #d97706)"
             onClick={() => setKpiModal({ title: 'Restock Cost', dataKey: 'value', data: historical?.restock_cost_chart, format: formatCurrency, color: THEME.warning.base })}
           />
           <MetricCard
@@ -987,7 +987,7 @@ export default function Reports() {
             value={businessData?.stock_health_distribution?.low?.toString() || (metrics ? '38' : '--')}
             change="+6 vs last week"
             changeType="negative"
-            gradient="linear-gradient(135deg, #ef4444, #dc2626)"
+            gradient="linear-gradient(135deg, #dc2626, #dc2626)"
             onClick={() => setKpiModal({ title: 'Low Stock Items', dataKey: 'value', data: historical?.low_stock_chart, format: (v) => v, color: THEME.danger.base })}
           />
           <MetricCard
@@ -996,7 +996,7 @@ export default function Reports() {
             value={metrics?.Accuracy != null ? `${metrics.Accuracy}%` : 'N/A'}
             change="+1.2pp improvement"
             changeType="positive"
-            gradient="linear-gradient(135deg, #a855f7, #9333ea)"
+            gradient="linear-gradient(135deg, #9333ea, #5f11a6)"
             onClick={() => setKpiModal({ title: 'AI Accuracy Trend', dataKey: 'accuracy', data: metrics?.accuracy_trend, format: (v) => `${v}%`, color: THEME.purple.light, xAxisKey: 'period' })}
           />
           <MetricCard
@@ -1005,7 +1005,7 @@ export default function Reports() {
             value={businessData?.stock_health_distribution?.cold?.toString() || '14'}
             change="Week 3 graduation"
             changeType="neutral"
-            gradient="linear-gradient(135deg, #71717a, #52525b)"
+            gradient="linear-gradient(135deg, #64748b, #52525b)"
           />
         </div>
       )}
@@ -1026,9 +1026,9 @@ export default function Reports() {
                   Model improving steadily | Fleet performance improving month-over-month.
                 </p>
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="default" size="md">MAE: <span className="text-white ml-1">{metrics.MAE}</span></Badge>
-                  <Badge variant="default" size="md">RMSE: <span className="text-white ml-1">{metrics.RMSE}</span></Badge>
-                  <Badge variant="purple" size="md">Accuracy: <span className="text-white ml-1">{metrics.Accuracy}%</span></Badge>
+                  <Badge variant="default" size="md">MAE: <span className="text-slate-900 ml-1">{metrics.MAE}</span></Badge>
+                  <Badge variant="default" size="md">RMSE: <span className="text-slate-900 ml-1">{metrics.RMSE}</span></Badge>
+                  <Badge variant="purple" size="md">Accuracy: <span className="text-slate-900 ml-1">{metrics.Accuracy}%</span></Badge>
                   <Badge variant="danger" size="md">3 SKUs flagged for retraining</Badge>
                   <Badge variant="info" size="md">14 cold-start SKUs graduating at week 3</Badge>
                 </div>
@@ -1039,15 +1039,15 @@ export default function Reports() {
           </Alert>
 
           <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
-            <div style={{ background: THEME.bg.tertiary }} className="rounded-xl p-6 text-center border border-white/10 transition-all duration-300 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:-translate-y-1 cursor-default">
+            <div style={{ background: THEME.bg.tertiary }} className="rounded-xl p-6 text-center border border-slate-200 transition-all duration-300 hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:-translate-y-1 cursor-default">
               <div className="mb-2 text-4xl font-black" style={{ color: THEME.info.light }}>{metrics?.MAE ?? '—'}</div>
               <div className="text-xs uppercase tracking-widest" style={{ color: THEME.text.muted }}>MAE</div>
             </div>
-            <div style={{ background: THEME.bg.tertiary }} className="rounded-xl p-6 text-center border border-white/10 transition-all duration-300 hover:border-amber-500 hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:-translate-y-1 cursor-default">
+            <div style={{ background: THEME.bg.tertiary }} className="rounded-xl p-6 text-center border border-slate-200 transition-all duration-300 hover:border-amber-500 hover:shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:-translate-y-1 cursor-default">
               <div className="mb-2 text-4xl font-black" style={{ color: THEME.warning.light }}>{metrics?.RMSE ?? '—'}</div>
               <div className="text-xs uppercase tracking-widest" style={{ color: THEME.text.muted }}>RMSE</div>
             </div>
-            <div style={{ background: THEME.bg.tertiary }} className="rounded-xl p-6 text-center border border-white/10 transition-all duration-300 hover:border-purple-500 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:-translate-y-1 cursor-default">
+            <div style={{ background: THEME.bg.tertiary }} className="rounded-xl p-6 text-center border border-slate-200 transition-all duration-300 hover:border-purple-500 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:-translate-y-1 cursor-default">
               <div className="mb-2 text-4xl font-black" style={{ color: THEME.purple.light }}>{metrics?.Accuracy != null ? `${metrics.Accuracy}%` : '—'}</div>
               <div className="text-xs uppercase tracking-widest" style={{ color: THEME.text.muted }}>Forecast Accuracy</div>
             </div>
@@ -1193,7 +1193,7 @@ export default function Reports() {
                 <PieChart>
                   <defs>
                     <filter id="pieShadow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feDropShadow dx="0" dy="10" stdDeviation="6" floodColor="#000" floodOpacity="0.6" />
+                      <feDropShadow dx="0" dy="10" stdDeviation="6" floodColor="#ffffff" floodOpacity="0.6" />
                     </filter>
                     <linearGradient id="pie-healthy" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor={THEME.success.light} stopOpacity={1} />
@@ -1248,7 +1248,7 @@ export default function Reports() {
                     ].filter(d => d.value > 0) : mockStockHealth}
                     cx="50%" cy="50%" innerRadius={70} outerRadius={100}
                     dataKey="value" paddingAngle={3} label={({ name, value }) => `${name}: ${value}`} labelLine={false}
-                    stroke="rgba(255,255,255,0.15)" strokeWidth={1}
+                    stroke="rgba(15,23,42,0.14)" strokeWidth={1}
                     filter="url(#pieShadow)"
                     activeIndex={activePieIndex}
                     activeShape={{ outerRadius: 108 }}
@@ -1314,7 +1314,7 @@ export default function Reports() {
           title="Generated Report History"
           subtitle="History of generated reports · Audit trail"
           badge={<Badge variant="default">{reports.length} Reports</Badge>}
-          icon={{ element: '📸', bg: 'rgba(113, 113, 122, 0.2)' }}
+          icon={{ element: '📸', bg: 'rgba(15,23,42,0.02)' }}
         >
           <Card>
             {reports.length > 0 ? (
@@ -1329,7 +1329,7 @@ export default function Reports() {
                   <button
                     key={`snap-delete-${i}`}
                     onClick={() => handleDeleteReport(r.id)}
-                    className="text-red-500 hover:text-red-400 transition-colors"
+                    className="text-red-500 hover:text-red-600 transition-colors"
                     title="Delete Report"
                   >
                     ✕
@@ -1411,7 +1411,7 @@ export default function Reports() {
             <CheckOption key={`pdf-${key}`} label={label} checked={pdfSections[key]} onChange={(e) => setPdfSections((p) => ({ ...p, [key]: e.target.checked }))} />
           ))}
         </div>
-        <button onClick={handlePdfExport} disabled={generating} style={{ background: THEME.brand.gradient }} className="mt-6 w-full rounded-xl py-3 font-bold text-white shadow-xl transition-all hover:scale-105 disabled:opacity-50 cursor-pointer">
+        <button onClick={handlePdfExport} disabled={generating} style={{ background: THEME.brand.gradient }} className="mt-6 w-full rounded-xl py-3 font-bold text-slate-900 shadow-xl transition-all hover:scale-105 disabled:opacity-50 cursor-pointer">
           {generating ? '⏳ Generating PDF...' : '📄 Generate PDF Report'}
         </button>
       </Modal>
@@ -1427,7 +1427,7 @@ export default function Reports() {
             {monthOptions.map((m) => <option key={`month-${m.val}`} value={m.val}>{m.label}</option>)}
           </select>
         )}
-        <button onClick={() => handleCsvExport(csvRange, targetMonth)} disabled={generating} style={{ background: THEME.brand.gradient }} className="mt-6 w-full rounded-xl py-3 font-bold text-white shadow-xl transition-all hover:scale-105 disabled:opacity-50 cursor-pointer">
+        <button onClick={() => handleCsvExport(csvRange, targetMonth)} disabled={generating} style={{ background: THEME.brand.gradient }} className="mt-6 w-full rounded-xl py-3 font-bold text-slate-900 shadow-xl transition-all hover:scale-105 disabled:opacity-50 cursor-pointer">
           {generating ? '⏳ Exporting CSV...' : '📊 Export Dataset'}
         </button>
       </Modal>
